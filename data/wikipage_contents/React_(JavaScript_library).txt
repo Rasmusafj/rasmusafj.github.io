@@ -1,0 +1,269 @@
+{{Infobox software
+| name = React
+| logo = React-icon.svg
+| logo size = 140px
+| author = Jordan Walke
+| developer = Facebook and community
+| released = {{Start date and age|2013|5|29}}<ref name="initialrelease">{{cite web|url=https://www.youtube.com/watch?v=GW0rj4sNH2w|last1=Occhino|first1=Tom|last2=Walke|first2=Jordan|title=JS Apps at Facebook|website=YouTube|access-date=22 Oct 2018}}</ref>
+| latest release version = 16.6.3
+| latest release date = {{Start date and age|2018|11|12}}<ref name="ghrelease">{{cite web |url=https://github.com/facebook/react/releases |title=Releases – Facebook/React |website=[[GitHub]]}}</ref><!-- DO NOT CHANGE THIS REFERENCE: the GitHub release page can remain as a static reference for all foreseeable releases-->
+| latest preview version = 
+| latest preview date = <!-- {{Start date and age|2016|04|7}}<ref name="ghrelease"/> -->
+<!--| status = Active -->| programming language = [[JavaScript]]
+| platform = [[Cross-platform]]
+| size = 109.7 KiB production<br />774.7 KiB development <!-- both react.*.js and react-dom.*.js -->
+| genre = [[JavaScript library]]
+| license = [[MIT License]]
+| website = {{URL|reactjs.org}}
+}}
+
+In [[computing]], '''React''' (also known as '''React.js''' or '''ReactJS''') is a [[JavaScript library]]<ref name="react">{{Cite web|url= https://reactjs.org|title=React - A JavaScript library for building user interfaces.|website=React|access-date=7 April 2018}}</ref> for building [[user interfaces]]. It is maintained by [[Facebook]] and a community of individual developers and companies.<ref>{{cite web |url=https://www.infoworld.com/article/2608181/javascript/react--making-faster--smoother-uis-for-data-driven-web-apps.html |title=React: Making faster, smoother UIs for data-driven Web apps |last=Krill |first=Paul |date=May 15, 2014 |website=[[InfoWorld]]}}</ref><ref>{{cite web |url=https://www.infoq.com/news/2013/06/facebook-react |title=Facebook's React JavaScript User Interfaces Library Receives Mixed Reviews |last=Hemel |first=Zef |date=June 3, 2013 |website=InfoQ}}</ref><ref>{{cite web |url=https://thenewstack.io/javascripts-history-and-how-it-led-to-reactjs/ |title=JavaScript’s History and How it Led To ReactJS |last=Dawson |first=Chris |date=July 25, 2014 |website=The New Stack}}</ref>
+
+React can be used as a base in the development of [[single-page application|single-page]] or mobile applications. Complex React applications usually require the use of additional libraries for [[state management]], [[Web_framework#URL_mapping|routing]], and interaction with an [[API]].<ref>{{Cite news|url=https://medium.freecodecamp.org/integrating-create-react-app-redux-react-router-redux-observable-bootstrap-altogether-216db97e89a3|title=How to integrate create-react-app with all the libraries you need to make a great app|last=Dere|first=Mohan|date=2018-02-19|work=freeCodeCamp|access-date=2018-06-14}}</ref><ref>{{Cite web|url=https://medium.com/about-codecademy/react-router-to-redux-first-router-2fea05c4c2b7|title=React Router to Redux First Router|last=Samp|first=Jon|date=2018-01-13|website=About Codecademy|access-date=2018-06-14}}</ref>
+
+==History==
+React was created by Jordan Walke, a software engineer at Facebook. He was influenced by [[XHP]], an [[HTML]] component framework for [[PHP]].<ref>{{cite web|title=React (JS Library): How was the idea to develop React conceived and how many people worked on developing it and implementing it at Facebook?|url=https://www.quora.com/React-JS-Library/How-was-the-idea-to-develop-React-conceived-and-how-many-people-worked-on-developing-it-and-implementing-it-at-Facebook/answer/Bill-Fisher-17|website=Quora}}</ref> It was first deployed on Facebook's newsfeed in 2011 and later on [[Instagram.com]] in 2012.<ref>{{cite web|url=https://www.youtube.com/watch?v=A0Kj49z6WdM|title=Pete Hunt at TXJS}}</ref> It was open-sourced at JSConf US in May 2013.
+
+[[#React Native|React Native]], which enables native [[Android (operating system)|Android]], [[iOS]], and [[Universal Windows Platform|UWP]] development with React, was announced at Facebook's React.js Conf in February 2015 and open-sourced in March 2015.
+
+On April 18, 2017, Facebook announced [[React Fiber]], a new core algorithm of React framework library for building [[user interface]]s.<ref>{{Cite news|url=https://techcrunch.com/2017/04/18/facebook-announces-react-fiber-a-rewrite-of-its-react-framework/|title=Facebook announces React Fiber, a rewrite of its React framework|publisher=TechCrunch|author=Frederic Lardinois|date=18 April 2017|access-date=19 April 2017}}</ref> React Fiber was to become the foundation of any future improvements and feature development of the React framework.<ref>{{cite web|title = React Fiber Architecture|url = https://github.com/acdlite/react-fiber-architecture| website=Github|access-date = 19 April 2017}}</ref>{{Update inline|reason=Last commit was in 2016. Is this statement still true?|date=June 2018}}
+
+==Basic usage==
+The following is a rudimentary example of React usage in HTML with [[React_(JavaScript_library)#JSX|JSX]] and JavaScript.
+<syntaxhighlight lang="html">
+<div id="myReactApp"></div>
+
+<script type="text/babel">
+  class Greeter extends React.Component { 
+    render() { 
+      return <h1>{this.props.greeting}</h1>
+    } 
+  } 
+
+  ReactDOM.render(<Greeter greeting="Hello World!" />, document.getElementById('myReactApp'));
+</script>
+</syntaxhighlight>
+The <code>Greeter</code> class is a React component that accepts a property <code>greeting</code>. The <code>ReactDOM.render</code> method creates an instance of the <code>Greeter</code> component, sets the <code>greeting</code> property to <code>'Hello World'</code> and inserts the rendered component as a child element to the DOM element with id <code>myReactApp</code>.
+
+When displayed in a web browser the result will be
+<syntaxhighlight lang="html">
+<div id="myReactApp">
+  <h1>Hello World!</h1>
+</div>
+</syntaxhighlight>
+
+==Notable features==
+===One-way data binding with props===
+Properties (commonly, ''props'') are passed to a component from the parent component. Components receive props as a single set of immutable values<ref>{{cite web|url=https://reactjs.org/docs/components-and-props.html#props-are-read-only|website=React|title=Components and Props|publisher=Facebook|accessdate=7 April 2018}}</ref> (a JavaScript object).
+
+=== Stateful components ===
+States hold values throughout the component and can be passed to child components through props:
+<syntaxhighlight lang="js">
+class ParentComponent extends React.Component {
+  state = { color: 'green' };
+  render() {
+    return (
+      <ChildComponent color={this.state.color} />
+    );
+  }
+}
+</syntaxhighlight>
+
+===Virtual DOM===
+Another notable feature is the use of a "virtual [[Document Object Model]]", or "virtual DOM". React creates an in-memory data structure cache,
+computes the resulting differences, and then updates the browser's displayed DOM efficiently.<ref name=workingwiththebrowser>{{cite web |url=https://reactjs.org/docs/refs-and-the-dom.html |title=Refs and the DOM |website=React Blog}}</ref> This allows the programmer to write code as if the entire page is rendered on each change, while the React libraries only render subcomponents that actually change.
+
+=== Lifecycle methods ===
+Lifecycle methods are [[Hooking|hooks]] which allow execution of code at set points during the component's lifetime.
+
+* <code>shouldComponentUpdate</code> allows the developer to prevent unnecessary re-rendering of a component by returning false if a render is not required.
+* <code>componentDidMount</code> is called once the component has 'mounted' (the component has been created in the user interface, often by associating it with a [[Document Object Model|DOM]] node). This is commonly used to trigger data loading from a remote source via an [[API]].
+* <code>render</code> is the most important lifecycle method and the only required one in any component. It is usually called every time the component's state is updated, reflecting changes in the user interface.
+
+===JSX===
+JSX (JavaScript eXtension) is an extension to the JavaScript language syntax.<ref>{{cite web|title=Draft: JSX Specification|url=https://facebook.github.io/jsx/|website=JSX|publisher=Facebook|accessdate=7 April 2018}}</ref> Similar in appearance to HTML, JSX provides a way to structure component rendering using syntax familiar to many developers. React components are typically written using JSX, although they do not have to be (components may also be written in pure JavaScript). JSX is similar to another extension syntax created by Facebook for PHP, [[XHP]].
+
+An example of JSX code:
+<syntaxhighlight lang="js">
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <p>Header</p>
+        <p>Content</p>
+        <p>Footer</p>
+      </div>
+    );
+  }
+}
+</syntaxhighlight>
+
+;Nested elements
+Multiple elements on the same level need to be wrapped in a single container element such as the <code><nowiki><div></nowiki></code> element shown above, or returned as an array<ref>{{cite web |url=https://reactjs.org/blog/2017/09/26/react-v16.0.html#new-render-return-types-fragments-and-strings |title=React v16.0§New render return types: fragments and strings |last=Clark |first=Andrew |date=September 26, 2017 |website=React Blog}}</ref>.
+
+;Attributes
+JSX provides a range of element attributes designed to mirror those provided by HTML. Custom attributes can also be passed to the component<ref>{{cite web |url=https://reactjs.org/blog/2017/09/26/react-v16.0.html#support-for-custom-dom-attributes |title=React v16.0§Support for custom DOM attributes |last=Clark |first=Andrew |date=September 26, 2017 |website=React Blog}}</ref>. All attributes will be received by the component as props.
+
+;JavaScript expressions
+JavaScript expressions (but not statements) can be used inside JSX with curly brackets <code>{}</code>:
+<syntaxhighlight lang="js">
+  <h1>{10+1}</h1>
+</syntaxhighlight>
+
+The example above will render 
+<syntaxhighlight lang="html">
+  <h1>11</h1>
+</syntaxhighlight>
+
+;Conditional statements
+[[Conditional (computer programming)|If–else statements]] cannot be used inside JSX but conditional expressions can be used instead.
+The example below will render <code>{ i === 1 ? 'true' : 'false' }</code> as the string <code>'true'</code> because <code>i</code> is equal to 1.
+<syntaxhighlight lang="js">
+class App extends React.Component {
+  render() {
+    const i = 1;
+    return (
+      <div>
+        <h1>{ i === 1 ? 'true' : 'false' }</h1>
+      </div>
+    );
+  }
+}
+</syntaxhighlight>
+Functions and JSX can be used in conditionals:
+<syntaxhighlight lang="js">
+class App extends React.Component {
+  render() {
+    const sections = [1, 2, 3];
+    return (
+      <div>
+        { 
+          sections.length > 0
+            ? sections.map(n => <div>Section {n}</div>)
+            : null
+        }
+      </div>
+    );
+  }
+}
+</syntaxhighlight>
+The above will render:
+<syntaxhighlight lang="html">
+<div>
+  <div>Section 1</div>
+  <div>Section 2</div>
+  <div>Section 3</div>
+</div>
+</syntaxhighlight>
+
+Code written in JSX requires conversion with a tool such as [[Babel (compiler)|Babel]] before it can be understood by web browsers.<ref>{{Cite book|url=https://books.google.com/books?id=Tg9QDwAAQBAJ|title=React for Real: Front-End Code, Untangled|last=Fischer|first=Ludovico|date=2017-09-06|publisher=Pragmatic Bookshelf|isbn=9781680504484|language=en}}</ref> This processing is generally performed during a [[software build]] process before the application is [[Software deployment|deployed]].
+
+===Architecture beyond HTML===
+The basic architecture of React applies beyond rendering HTML in the browser. For example, Facebook has dynamic charts that render to <code><nowiki><canvas></nowiki></code> tags,<ref>{{cite web|url=https://facebook.github.io/react/blog/2013/06/05/why-react.html|title=Why did we build React? – React Blog|publisher=}}</ref> and Netflix and [[PayPal]] use universal loading to render identical HTML on both the server and client.<ref name=paypal-isomorphic-reactjs>{{cite web|title=PayPal Isomorphic React|url=https://www.paypal-engineering.com/2015/04/27/isomorphic-react-apps-with-react-engine/}}</ref><ref name=netflix-isomorphic-reactjs>{{cite web|title=Netflix Isomorphic React|url=http://techblog.netflix.com/2015/01/netflix-likes-react.html}}</ref>
+
+==Common idioms==
+React does not attempt to provide a complete 'application framework'. It is designed specifically for building user interfaces<ref name="react" /> and therefore does not include many of the tools some developers might consider necessary to build an application. This allows the choice of whichever libraries the developer prefers to accomplish tasks such as performing network access or local data storage. Common patterns of usage have emerged as the library matures.
+
+===Use of the Flux architecture===
+To support React's concept of unidirectional data flow (which might be contrasted with [[AngularJS|AngularJS's]] bidirectional flow), the Flux architecture represents an alternative to the popular [[model-view-controller]] architecture. Flux features ''actions'' which are sent through a central ''dispatcher'' to a ''store'', and changes to the store are propagated back to the view<ref name="flux">{{cite web|url=https://facebook.github.io/flux/docs/in-depth-overview.html|title=In Depth OverView|publisher=Facebook|accessdate=7 April 2018|website=Flux}}</ref>. When used with React, this propagation is accomplished through component properties.
+
+Flux can be considered a variant of the [[Observer_pattern|observer pattern]]<ref>{{cite web|last1=Johnson|first1=Nicholas|title=Introduction to Flux - React Exercise|url=http://nicholasjohnson.com/react/course/exercises/flux/|website=Nicholas Johnson|accessdate=7 April 2018}}</ref>.
+
+A React component under the Flux architecture should not directly modify any props passed to it, but should be passed callback functions that create ''actions'' which are sent by the dispatcher to modify the store. The action is an object whose responsibility is to describe what has taken place: for example, an action describing one user 'following' another might contain a user id, a target user id, and the type <code>USER_FOLLOWED_ANOTHER_USER</code><ref>{{cite web|last1=Abramov|first1=Dan|title=The History of React and Flux with Dan Abramov|url=http://threedevsandamaybe.com/the-history-of-react-and-flux-with-dan-abramov/|website=Three Devs and a Maybe|accessdate=7 April 2018}}</ref>. The stores (which can be thought of as models) can alter themselves in response to actions received from the dispatcher.
+
+This pattern is sometimes expressed as "properties flow down, actions flow up". Many implementations of Flux have been created since its inception, perhaps the most well-known being [[Redux (JavaScript library)|Redux]] which features a single store, often called a [[single source of truth]].<ref>{{cite web|title=State Management Tools - Results|url=https://stateofjs.com/2017/state-management/results|website=The State of JavaScript|accessdate=7 April 2018}}</ref>
+
+==React Native==
+React Native was announced by Facebook in 2015,<ref name="initial_rn_post">{{cite web|url=https://code.facebook.com/posts/1014532261909640/react-native-bringing-modern-web-techniques-to-mobile/|title=React Native: Bringing modern web techniques to mobile|publisher=}}</ref> applying the React architecture to native [[Android (operating system)|Android]]<ref>{{cite web|url=https://code.facebook.com/posts/1189117404435352/react-native-for-android-how-we-built-the-first-cross-platform-react-native-app/|title=Android Release for React Native}}</ref>, [[iOS]], and [[Universal Windows Platform|UWP]]<ref>{{cite web |author=Windows Apps Team |date=April 13, 2016 |title=React Native on the Universal Windows Platform |url=https://blogs.windows.com/buildingapps/2016/04/13/react-native-on-the-universal-windows-platform/ |website=blogs.windows.com |accessdate=2016-11-06}}</ref> applications.
+
+===History===
+
+In 2012 [[Mark Zuckerberg]] commented, "The biggest mistake we made as a company was betting too much on HTML5 as opposed to native".<ref>{{cite web|title=Zuckerberg's Biggest Mistake? 'Betting on HTML5'|url=https://mashable.com/2012/09/11/html5-biggest-mistake|publisher=Mashable|accessdate=7 April 2018}}</ref> He promised that [[Facebook]] would soon deliver a better mobile experience.
+
+Inside [[Facebook]], Jordan Walke found a way to generate [[iOS]] [[User_interface|UI]] elements from a background [[JavaScript]] [[Thread_(computing)|thread]]. They decided to organize an internal [[hackathon]] to perfect this [[prototype]] in order to be able to build[[Mobile_app| native apps]] with this technology.<ref>{{cite web|title=A short Story about React Native|url=https://jobninja.com/blog/short-story-react-native/|accessdate=16 January 2018}}</ref>
+
+After a few months of development, [[Facebook]] released the first version for the React.js Conf 2015. During a technical talk,<ref>{{cite web|last1=Christopher|first1=Chedeau|title=A Deep Dive into React Native|url=https://www.youtube.com/watch?v=7rDsRXj9-cU|website=YouTube|accessdate=16 January 2018}}</ref> Christopher Chedeau explained that [[Facebook]] was already using React Native in production for their Group App and their Ads Manager App.<ref name="initial_rn_post" />
+
+===Working principles===
+
+The working principles of React Native are basically the same as React except that it is not manipulating the [[Document_Object_Model|DOM]] via the [[React_(JavaScript_library)#Virtual_DOM|VirtualDom]] but some native views. It runs in a [[background process]] (which interprets the [[JavaScript]] written by the developers) directly on the end-device and communicates with the native platform via a [[Serialization|serializable]], [[Asynchrony_(computer_programming)|asynchronous]] and [[Batch_processing| batched]] Bridge<ref>{{cite web|title=Bridging in React Native|url=https://tadeuzagallo.com/blog/react-native-bridge/|accessdate=16 January 2018|date=14 October 2015}}</ref><ref>{{cite web| url= https://parsed.io/react-native-vs-flutter/| title= React Native Framework }} Thursday, 13 September 2018 </ref>.
+
+It can be seen that [[Facebook]] corrected the error that [[Mark Zuckerberg]] mentioned in 2012:{{or|date=March 2018}} React Native doesn't rely on HTML5 at all, everything is written in JavaScript, and relies on native SDKs.
+
+===Hello World===
+
+A [["Hello,_World!"_program| Hello, World]] program in React Native looks like this:
+
+<syntaxhighlight lang="js" line="1">
+import React, { Component } from 'react';
+import { AppRegistry, Text } from 'react-native';
+
+export default class HelloWorldApp extends Component {
+  render() {
+    return (
+      <Text>Hello world!</Text>
+    );
+  }
+}
+
+// Skip this line if using Create React Native App
+AppRegistry.registerComponent('HelloWorld', () => HelloWorldApp);
+
+// The ReactJS code can also be imported into another component with the following code:
+
+import HelloWorldApp from './HelloWorldApp';
+</syntaxhighlight>
+
+==Future development==
+Project status can be tracked via the core team discussion forum.<ref>{{Cite web|title = Meeting Notes|url = https://discuss.reactjs.org/c/meeting-notes|website = React Discuss|accessdate = 2015-12-13}}</ref> However, major changes to React go through the Future of React repository issues and [[Pull request|pull requests]].<ref>{{Cite web|title = reactjs/react-future - The Future of React|url = https://github.com/reactjs/react-future|website = GitHub|accessdate = 2015-12-13}}</ref><ref>{{Cite web|title = facebook/react - Feature request issues|url = https://github.com/facebook/react/labels/Type:%20Feature%20Request|website = GitHub|accessdate = 2015-12-13}}</ref> This enables the React community to provide feedback on new potential features, experimental APIs and JavaScript syntax improvements.
+
+===Sub projects===
+The status of the React sub-projects used to be available in the project wiki.<ref>{{Cite web|title = facebook/react Projects wiki|url = https://github.com/facebook/react/wiki/Projects|website = GitHub|accessdate = 2015-12-13}}</ref>
+
+===Facebook CLA===
+Facebook requires contributors to React to sign the Facebook [[Contributor License Agreement|CLA]].<ref>{{Cite web|title = facebook/react - CONTRIBUTING.md|url = https://github.com/facebook/react/blob/master/CONTRIBUTING.md#contributor-license-agreement-cla|website = GitHub|accessdate = 2015-12-13}}</ref><ref>{{Cite web|title = Contributing to Facebook Projects|url = https://code.facebook.com/cla|website = Facebook Code|accessdate = 2015-12-13}}</ref>
+
+==Criticism==
+A criticism of React is that it has high memory (RAM) requirements, since it uses the concept of a "Virtual DOM". This is where "a representation of a UI is kept in memory and synced with the 'real' DOM by a library such as ReactDOM".<ref>https://reactjs.org/docs/faq-internals.html</ref>
+
+==Licensing controversy==
+The initial public release of React in May 2013 used a standard [[Apache License|Apache License 2.0]]. In October 2014, React 0.12.0 replaced this with a [[BSD licenses#3-clause|3-clause BSD license]] and added a separate PATENTS text file that permits usage of any Facebook patents related to the software:<ref>{{cite web|title=React CHANGELOG.md|url=https://github.com/facebook/react/blob/master/CHANGELOG.md#0120-october-28-2014|website=GitHub}}</ref>
+
+<blockquote>''"The license granted hereunder will terminate, automatically and without notice, for anyone that makes any claim (including by filing any lawsuit, assertion or other action) alleging (a) direct, indirect, or contributory infringement or inducement to infringe any patent: (i) by Facebook or any of its subsidiaries or affiliates, whether or not such claim is related to the Software, (ii) by any party if such claim arises in whole or in part from any software, product or service of Facebook or any of its subsidiaries or affiliates, whether or not such claim is related to the Software, or (iii) by any party relating to the Software; or (b) that any right in any patent claim of Facebook is invalid or unenforceable."''</blockquote>
+
+This unconventional clause caused some controversy and debate in the React user community, because it could be interpreted to empower Facebook to revoke the license in many scenarios, for example, if Facebook sues the licensee prompting them to take "other action" by publishing the action on a blog or elsewhere. Many expressed concerns that Facebook could unfairly exploit the termination clause or that integrating React into a product might complicate a startup company's future acquisition.<ref>{{cite web|title=A compelling reason not to use ReactJS|first=Austin|last=Liu|url=https://medium.com/bits-and-pixels/a-compelling-reason-not-to-use-reactjs-beac24402f7b|website=Medium}}</ref>
+
+Based on community feedback, Facebook updated the patent grant in April 2015 to be less ambiguous and more permissive:<ref>{{cite web|title=Updating Our Open Source Patent Grant|url=https://code.facebook.com/posts/1639473982937255/updating-our-open-source-patent-grant/}}</ref>
+
+<blockquote>''"The license granted hereunder will terminate, automatically and without notice, if you (or any of your subsidiaries, corporate affiliates or agents) initiate directly or indirectly, or take a direct financial interest in, any Patent Assertion: (i) against Facebook or any of its subsidiaries or corporate affiliates, (ii) against any party if such Patent Assertion arises in whole or in part from any software, technology, product or service of Facebook or any of its subsidiaries or corporate affiliates, or (iii) against any party relating to the Software. [...] A "Patent Assertion" is any lawsuit or other action alleging direct, indirect, or contributory infringement or inducement to infringe any patent, including a cross-claim or counterclaim."<ref>{{cite web|title=Additional Grant of Patent Rights Version 2|url=https://github.com/facebook/react/blob/b8ba8c83f318b84e42933f6928f231dc0918f864/PATENTS|website=GitHub}}</ref>''</blockquote>
+
+The [[Apache Software Foundation]] considered this licensing arrangement to be incompatible with its licensing policies, as it "passes along risk to downstream consumers of our software imbalanced in favor of the licensor, not the licensee, thereby violating our Apache legal policy of being a universal donor", and "are not a subset of those found in the [Apache License 2.0], and they cannot be sublicensed as [Apache License 2.0]".<ref>{{Cite web|url=https://www.apache.org/legal/resolved.html|title=ASF Legal Previously Asked Questions|publisher=Apache Software Foundation|language=en|access-date=2017-07-16}}</ref>. In August 2017, Facebook dismissed the Apache Foundation's downstream concerns and refused to reconsider their license<ref>{{Cite web|url=https://code.facebook.com/posts/112130496157735/explaining-react-s-license/|title=Explaining React's License|website=Facebook|access-date=2017-08-18|language=en}}</ref><ref>{{Cite web|url=https://github.com/facebook/react/issues/10191#issuecomment-323486580|title=Consider re-licensing to AL v2.0, as RocksDB has just done|website=Github|language=en|access-date=2017-08-18}}</ref>. The following month, [[WordPress]] decided to switch their Gutenberg and Calypso projects away from React.<ref>{{Cite web|url= https://techcrunch.com/2017/09/15/wordpress-to-ditch-react-library-over-facebook-patent-clause-risk/|title=  WordPress to ditch React library over Facebook patent clause risk |website=TechCrunch|language=en|access-date=2017-09-16}}</ref>
+
+On September 23, 2017, Facebook announced that the following week, it would re-license Flow, Jest, React, and Immutable.js under a standard [[MIT License]]; the company stated that React was "the foundation of a broad ecosystem of open source software for the web", and that they did not want to "hold back forward progress for nontechnical reasons."<ref>{{Cite web|url= https://code.facebook.com/posts/300798627056246/relicensing-react-jest-flow-and-immutable-js/|title=  Relicensing React, Jest, Flow, and Immutable.js |website=Facebook Code|language=en|date=2017-09-23}}</ref>
+
+On September 26, 2017, React 16.0.0 was released with the MIT license.<ref>{{cite web |url=https://reactjs.org/blog/2017/09/26/react-v16.0.html#mit-licensed|title=  React v16.0§MIT licensed |last=Clark |first=Andrew |date=September 26, 2017 |website=React Blog}}</ref> The MIT license change has also been backported to the 15.x release line with React 15.6.2.<ref>{{cite web |url=https://reactjs.org/blog/2017/09/25/react-v15.6.2.html |title=React v15.6.2 |last=Hunzaker |first=Nathan |date=September 25, 2017 |website=React Blog}}</ref>
+
+==See also==
+*[[AngularJS]]
+*[[Vue.js]]
+
+==References==
+{{Reflist|2}}
+
+==External links==
+{{Portal|Free software}}
+* {{Official website}}
+
+
+{{JS templating |state=autocollapse}}
+{{Rich Internet applications}}
+{{Application frameworks}}
+{{ECMAScript}}
+{{Facebook navbox}}
+
+[[Category:2015 software]]
+[[Category:Ajax (programming)]]
+[[Category:Facebook software]]
+[[Category:JavaScript web frameworks]]
+[[Category:Rich Internet application frameworks]]
+[[Category:Software using the BSD license]]

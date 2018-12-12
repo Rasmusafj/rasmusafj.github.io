@@ -1,0 +1,181 @@
+{{Infobox software
+| name = MongoDB
+| logo = MongoDB-Logo.svg
+| logo size = 250px
+| screenshot = 
+| caption = 
+| author = 
+| developer = [[MongoDB Inc.]]
+| released = {{Start date and age|2009|02|11}}<ref>{{cite web|title=State of MongoDB March, 2010|url=https://db-engines.com/en/system/Couchbase%3BMongoDB|website=[[DB-Engines ranking|DB-Engines]]|language=en-us}}</ref>
+| latest release version = 4.0.4<ref>{{cite web|url=https://docs.mongodb.com/manual/release-notes/4.0/ |title=Release Notes for MongoDB 4.0 — MongoDB Manual |publisher=MongoDB}}</ref>
+| latest release date = {{release date and age|2018|11|08|df=yes}}
+| latest preview version = 4.1.5<ref>{{cite web|url=https://github.com/mongodb/mongo/releases/tag/r4.1.5|title=Release 4.1.5 tag · GitHub|publisher=MongoDB}}</ref>
+| latest preview date = {{release date and age|2018|11|07|df=yes}}
+| status = Active
+| programming language = [[C++]], [[C (programming language)|C]] and [[JavaScript]]
+| operating system = [[Windows Vista]] and later, [[Linux]], [[OS X]] 10.7 and later, [[Solaris (operating system)|Solaris]],<ref>{{Cite web |url=http://www.oracle.com/technetwork/articles/servers-storage-admin/sol-howto-mongodb-zones-1954559.html |website=Oracle |title=How to Set Up a MongoDB NoSQL Cluster Using Oracle Solaris Zones }}</ref> [[FreeBSD]]<ref>{{Cite web|url=https://www.freebsdnews.com/2016/04/01/how-to-mongodb-on-freebsd-10-x/|website=FreeBSD News |title=How-To: MongoDB on FreeBSD 10.x}}</ref>
+| language = English
+| genre = [[Document-oriented database]]
+| license = Various; see [[#Licensing|§ Licensing]]
+}}
+
+'''MongoDB''' is a [[cross-platform]] [[document-oriented database]] program. It is issued under the ''[https://www.mongodb.com/licensing/server-side-public-license Server Side Public License (SSPL)]'' version 1, which was submitted for OSI certification but later withdrawn in lieu of SSPL version 2<ref>{{cite web|title=[License-review] Approval: Server Side Public License, Version 2 (SSPL v2)|url=http://lists.opensource.org/pipermail/license-review_lists.opensource.org/2018-November/003836.html|accessdate=10 December 2018}}</ref>. Classified as a [[NoSQL]] database program, MongoDB uses [[JSON]]-like documents with [[database schema|schemata]]. MongoDB is developed by [[MongoDB Inc.]].
+
+==History==
+{{See also|MongoDB Inc.#History}}
+10gen software company began developing MongoDB in 2007 as a component of a planned [[platform as a service]] product. In 2009, the company shifted to an open source development model, with the company offering commercial support and other services. In 2013, 10gen changed its name to MongoDB Inc.<ref name=gigaom-rename>{{cite web|title=10gen embraces what it created, becomes MongoDB Inc.|url=http://gigaom.com/2013/08/27/10gen-embraces-what-it-created-becomes-mongodb-inc/|work=Gigaom|accessdate=29 January 2016}}</ref> 
+
+On October 20, 2017, MongoDB became a publicly-traded company, listed on NASDAQ as MDB with an IPO price of $24 per share.<ref>{{cite web|last1=Witkowski|first1=Wallace|title=MongoDB shares rally 34% in first day of trading above elevated IPO price|url=https://www.marketwatch.com/story/mongodb-shares-rally-above-already-elevated-ipo-price-2017-10-19|website=MarketWatch|publisher=Dow Jones|accessdate=26 February 2018|date=21 October 2017}}</ref>
+
+==Main features==
+
+=== [[Ad hoc]] queries ===
+MongoDB supports field, [[Range query (database)|range query]], and [[regular expression]] searches.<ref name="MongoDB find">{{cite web|url = https://dzone.com/articles/why-mongodb-is-worth-choosing-find-reasons|title = Why MongoDB is the way to go |publisher=DZone |author=Davis Kerby }}</ref> Queries can return specific fields of documents and also include user-defined [[JavaScript]] functions. Queries can also be configured to return a random sample of results of a given size.
+
+=== Indexing ===
+Fields in a MongoDB document can be indexed with primary and secondary indices.
+
+=== Replication ===
+MongoDB provides high availability with replica sets.<ref>{{cite web|url=http://clusterhq.com/2016/03/14/ridiculously-fast-mongodb-replica-recovery-with-flocker/|title=Ridiculously fast MongoDB replica recovery Part 1 of 2|first=|date=|website=|publisher=ClusterHQ|archive-url=|archive-date=|dead-url=|access-date=|author=}}</ref> A replica set consists of two or more copies of the data. Each replica set member may act in the role of primary or secondary replica at any time. All writes and reads are done on the primary replica by default. Secondary replicas maintain a copy of the data of the primary using built-in replication. When a primary replica fails, the replica set automatically conducts an election process to determine which secondary should become the primary. Secondaries can optionally serve read operations, but that data is only eventually consistent by default.
+
+=== [[Load balancing (computing)|Load balancing]]<ref>{{Cite web|url=https://severalnines.com/blog/turning-mongodb-replica-set-sharded-cluster|title=Turning MongoDB Replica Set to a Sharded Cluster|last=|first=|date=|website=Severalnines|archive-url=|archive-date=|dead-url=|access-date=}}</ref> ===
+MongoDB scales horizontally using [[sharding]]. The user chooses a shard key, which determines how the data in a collection will be distributed. The data is split into ranges (based on the shard key) and distributed across multiple shards. (A shard is a master with one or more slaves.). Alternatively, the shard key can be hashed to map to a shard – enabling an even data distribution.
+
+MongoDB can run over multiple servers, balancing the load or duplicating data to keep the system up and running in case of hardware failure. 
+
+=== File storage ===
+MongoDB can be used as a [[file system]], called [[GridFS]], with load balancing and data replication features over multiple machines for storing files.
+
+This function, called [[grid file system]],<ref>{{cite web|url=https://www.compose.com/articles/gridfs-and-mongodb-pros-and-cons/|title=GridFS & MongoDB: Pros & Cons|first=|date=|website=Compose|publisher=|archive-url=|archive-date=|dead-url=|access-date=|author=}}</ref> is included with MongoDB drivers. MongoDB exposes functions for file manipulation and content to developers. GridFS can be accessed using mongofiles utility or plugins for [[Nginx]]<ref>{{cite web|url=https://github.com/mdirolf/nginx-gridfs |title=NGINX plugin for MongoDB source code |website=GitHub}}</ref> and [[lighttpd]].<ref>{{cite web|url=http://bitbucket.org/bwmcadams/lighttpd-gridfs/src/ |title=lighttpd plugin for MongoDB source code |website=Bitbucket}}</ref> GridFS divides a file into parts, or chunks, and stores each of those chunks as a separate document.<ref>{{cite web|url=http://www.expertstown.com/mongodb-overview/ |title=MongoDB overview |work=Expertstown |author=Malick Md}}</ref>
+
+=== Aggregation ===
+MongoDB provides three ways to perform aggregation: the aggregation pipeline, the map-reduce function, and single-purpose aggregation methods.<ref>{{Cite web|url=https://docs.mongodb.com/manual/aggregation/|title=Aggregation — MongoDB Manual|website=docs.mongodb.com|language=en|access-date=2018-08-14}}</ref> 
+
+[[Map-reduce]] can be used for batch processing of data and aggregation operations. But according to MongoDB's documentation, the Aggregation Pipeline provides better performance for most aggregation operations.<ref>{{Cite web|url=https://docs.mongodb.com/manual/core/map-reduce/|title=Map-Reduce — MongoDB Manual|website=docs.mongodb.com|language=en|access-date=2018-08-14}}</ref>
+
+The aggregation framework enables users to obtain the kind of results for which the [[SQL]] GROUP BY clause is used. Aggregation operators can be strung together to form a pipeline – analogous to [[Pipeline (Unix)|Unix pipes]]. The aggregation framework includes the $lookup operator which can join documents from multiple documents, as well as statistical operators such as standard deviation.
+
+=== Server-side JavaScript execution ===
+JavaScript can be used in queries, aggregation functions (such as [[MapReduce]]), and sent directly to the database to be executed.
+
+=== Capped collections ===
+MongoDB supports fixed-size collections called capped collections. This type of collection maintains insertion order and, once the specified size has been reached, behaves like a [[circular queue]].
+
+=== Transactions ===
+Support for multi-document [[ACID (computer science)|ACID]] transactions were added to MongoDB with the General Availability of the 4.0 release in June 2018.<ref>[https://wikibon.com/mongodb-drives-nosql-deeply-enterprise-opportunities/ MongoDB Drives NoSQL More Deeply into Enterprise Opportunities]</ref>
+
+== Editions ==
+
+=== MongoDB Community Server ===
+The MongoDB Community Edition is free and available for Windows, Linux, and OS&nbsp;X.<ref>{{Cite news|url=https://www.mongodb.com/download-center#community|title=MongoDB Download Center|work=MongoDB|access-date=2018-08-14|language=en-us}}</ref>
+
+=== MongoDB Enterprise Server ===
+MongoDB Enterprise Server is the commercial edition of MongoDB, available as part of the MongoDB Enterprise Advanced subscription.<ref>{{Cite news|url=https://www.mongodb.com/download-center#enterprise|title=MongoDB Download Center|work=MongoDB|access-date=2018-08-14|language=en-us}}</ref> 
+
+==Architecture==
+
+===Programming language accessibility===
+MongoDB has official drivers for major programming languages and development environments.<ref name="github.io">{{cite web|url=https://github.com/mongodb/mongo |title=GitHub - mongodb/mongo |author=MongoDB |publisher=GitHub }}</ref> There are also a large number of unofficial or community-supported drivers for other programming languages and frameworks.
+
+===Serverless access===
+MongoDB Stitch<ref name="MongoDB Stitch">{{cite web|url=https://www.zdnet.com/article/mongodb-stitch-serverless-compute-with-a-big-difference/ |title=MongoDB Stitch: Serverless compute with a big difference |author=Simon Bisson |publisher=ZDNet }}</ref> provides [[Serverless_computing|serverless]] access to MongoDB and other services. Client librairies are available for JavaScript<ref name="github.io - Stitch JavaScript SDK">{{cite web|url=https://github.com/mongodb/stitch-js-sdk/ |title=MongoDB Stitch JavaScript SDK |author=MongoDB |publisher=GitHub }}</ref>, iOS<ref name="github.io - Stitch iOS SDK">{{cite web|url=https://github.com/mongodb/stitch-ios-sdk/ |title=MongoDB Stitch iOS SDK |author=MongoDB |publisher=GitHub }}</ref>, and Android<ref name="github.io - Stitch Android SDK">{{cite web|url=https://github.com/mongodb/stitch-android-sdk/ |title=MongoDB Stitch Android SDK |author=MongoDB |publisher=GitHub }}</ref>.
+
+===Management and graphical front-ends===
+[[Image:Robomongo 0.8.5 - insertion.png|thumb|Record insertion in MongoDB with Robomongo 0.8.5.]]
+The primary interface to the database has been the mongo shell. Since MongoDB 3.2, MongoDB Compass is introduced as the native GUI. There are products and third-party projects that offer user interfaces for administration and data viewing.<ref>{{cite web|last1=Ma|first1=Jason|title=Visualizing Your Data With MongoDB Compass|url=https://dzone.com/articles/visualizing-your-data-with-mongodb-compass|website=Dzone|publisher=Dzone.com}}</ref>
+
+==Licensing==
+As of October 2018, MongoDB is released under the Server Side Public License, a license developed by the project. It replaces the [[GNU Affero General Public License]], and is nearly identical to the [[GNU General Public License version 3]], but requires that those making the software publicly available as a service must make the service's source code available under this license.<ref>{{Cite news|url=https://www.zdnet.com/article/its-mongodbs-turn-to-change-its-open-source-license/|title=It's MongoDB's turn to change its open source license|last=Baer|first=Tony|work=ZDNet|access-date=2018-10-16|language=en}}</ref><ref>{{Cite news|url=https://techcrunch.com/2018/10/16/mongodb-switches-up-its-open-source-license/|title=MongoDB switches up its open source license|work=TechCrunch|access-date=2018-10-16|language=en-US}}</ref> The language drivers are available under an [[Apache License]]. In addition, MongoDB Inc. offers proprietary licenses for MongoDB. The last AGPL3 licensed versions are 4.0.3 (stable) & 4.1.4.
+
+==Bug reports and criticisms==
+
+=== Security ===
+Due to the default security configuration of MongoDB, allowing anyone to have full access to the database, data from tens of thousands of MongoDB installations has been stolen. Furthermore, many MongoDB servers have been [[ransomware|held for ransom]].<ref>{{cite web|last1=Krebs|first1=Brian|title=Extortionists Wipe Thousands of Databases, Victims Who Pay Up Get Stiffed|url=https://krebsonsecurity.com/2017/01/extortionists-wipe-thousands-of-databases-victims-who-pay-up-get-stiffed/|website=krebsonsecurity.com|publisher=Brian Krebs|accessdate=11 January 2017}}</ref><ref>{{cite web|last1=Constantin|first1=Lucian|title=Ransomware groups have deleted over 10,000 MongoDB databases|url=http://www.computerworld.com/article/3155260/security/ransomware-groups-have-deleted-over-10000-mongodb-databases.html|website=Computer World|publisher=IDG|accessdate=11 January 2017}}</ref>
+
+=== Technical criticisms ===
+In some failure scenarios where an application can access two distinct MongoDB processes, but these processes cannot access each other, it is possible for MongoDB to return stale reads. In this scenario it is also possible for MongoDB to roll back writes that have been acknowledged.<ref>{{cite web |url=https://aphyr.com/posts/322-call-me-maybe-mongodb-stale-reads|author=Kyle Kingsbury|title=Call me maybe: MongoDB stale reads|date=2015-04-20|accessdate=2015-07-04}}</ref> This issue was addressed since version 3.4.0 released in November 2016<ref>https://docs.mongodb.com/manual/release-notes/3.4/</ref> (and back-ported to v3.2.12).<ref>{{Cite web|url=https://jepsen.io/analyses/mongodb-3-4-0-rc3|title=MongoDB 3.4.0-rc3|last=Kingsbury|first=Kyle|date=2017-02-07|website=Jepsen|archive-url=|archive-date=|dead-url=|access-date=}}</ref>
+
+Before version 2.2, [[concurrency control]] was implemented on a per-server process basis. With version 2.2, concurrency control was implemented at the database level.<ref>{{cite web|url=https://scalegrid.io/blog/atomicity-isolation-concurrency-in-mongodb |title=Atomicity, isolation & concurrency in MongoDB |website=scalegrid.io}}</ref> Since version 3.0,<ref>{{cite web |url=https://www.datanami.com/2015/02/03/mongodb-goes-pluggable-storage-engines |title=MongoDB Goes Pluggable with Storage Engines |date=2015-03-05 |publisher=datanami.com}}</ref> pluggable storage engines were introduced, and each storage engine may implement concurrency control differently.<ref>{{cite web |url=https://www.datanami.com/2015/02/03/mongodb-goes-pluggable-storage-engines |title=MongoDB Goes Pluggable with Storage Engines |date=2015-03-05 |publisher=datanami.com}}</ref> With MongoDB 3.0 concurrency control is implemented at the collection level for the MMAPv1 storage engine,<ref>{{cite web|url=http://www.arborian.com/2016/03/11/mongodb-mmapv1-wiredtiger-and-queues |title=MongoDB, MMAPv1, WiredTiger, Locking, and Queues |author=Arborian Consulting |publisher=Arborian Consulting}}</ref> and at the document level with the [[WiredTiger]] storage engine.<ref>{{cite web|url=http://objectrocket.com/blog/company/mongodb-wiredtiger |title= MongoDB 3.0 WiredTiger Compression and Performance |author=Kenny Gorman |publisher=Objectrocket.com/ }}</ref> With versions prior to 3.0, one approach to increase concurrency is to use [[Shard (database architecture)|sharding]].<ref>{{cite web|url=http://www.mikitamanko.com/blog/2013/12/06/mongodb-performance-bottlenecks-optimization-strategies-for-mongodb/ |title=MongoDB performance bottlenecks, optimization Strategies for MongoDB |author=Mikita Manko |publisher=mikitamanko.com}}</ref> In some situations, reads and writes will yield their locks. If MongoDB predicts a page is unlikely to be in memory, operations will yield their lock while the pages load. The use of lock yielding expanded greatly in 2.2.<ref>{{cite web|url=https://scalegrid.io/blog/atomicity-isolation-concurrency-in-mongodb/ |title=Atomicity, isolation & concurrency in MongoDB |author=scalegrid.io |publisher=scalegrid.io}}</ref>
+
+Up until version 3.3.11, MongoDB could not do [[collation]]-based sorting and was limited to byte-wise comparison via memcmp,<ref>{{cite web|title=memcmp|url=http://en.cppreference.com/w/c/string/byte/memcmp|work=cppreference.com|accessdate=26 April 2014|date=31 May 2013}}</ref> which would not provide correct ordering for many non-English languages when used with a Unicode encoding. The issue was fixed on August 23, 2016.
+
+MongoDB queries against an index are not atomic and can miss documents which are being updated while the query is running and match the query both before and after an update.<ref>[https://blog.meteor.com/mongodb-queries-dont-always-return-all-matching-documents-654b6594a827 MongoDB queries don’t always return all matching documents!]</ref>
+
+==Prominent Users==
+MongoDB is known to be used by the [[City of Chicago]], [[Codecademy]], [[Foursquare]], [[IBM]], [[Orange S.A.]], [[The Gap, Inc.]], [[Uber]], and [[Urban Outfitters]].<ref>{{cite web |url=https://www.datavail.com/blog/whos-using-mongodb-and-why/ |title=Who’s Using MongoDB and Why? |author=Esayas Aloto |date=November 4, 2015 |publisher=[[Datavail]] |accessdate=November 12, 2018}}</ref><ref>{{cite web |url=https://stackshare.io/mongodb |title=Companies that use MongoDB & MongoDB Integrations |publisher=StackShare |accessdate=November 12, 2018}}</ref>
+
+==MongoDB World==
+MongoDB World is an annual developer conference hosted by MongoDB, Inc.<ref>[http://www.mongodbworld.com MongoDB World]</ref>
+
+==See also==
+{{Portal|Free software}}
+* [[List of server-side JavaScript implementations]]
+* [[MEAN (software bundle)|MEAN]], a [[solutions stack]] using MongoDB as the database
+* [[Server-side scripting]]
+* [[TokuMX]], a fork of MongoDB with stronger consistency and new index structures
+
+==References==
+{{Reflist|30em}}
+
+==Bibliography==
+{{Refbegin}}
+* {{citation
+| first1    = Kyle
+| last1     = Banker
+| date      = March 28, 2011
+| title     = MongoDB in Action
+| edition   = 1st
+| publisher = [[Manning]]
+| page     = 375
+| isbn      = 978-1-935182-87-0 
+}}
+* {{citation
+| first1    = Kristina
+| last1     = Chodorow
+| first2    = Michael
+| last2     = Dirolf
+| date      = September 23, 2010
+| title     = MongoDB: The Definitive Guide
+| edition   = 1st
+| publisher = [[O'Reilly Media]]
+| page     = 216
+| isbn      = 978-1-4493-8156-1
+}}
+* {{citation
+| first1    = Mitch
+| last1     = Pirtle
+| date      = March 3, 2011
+| title     = MongoDB for Web Development
+| edition   = 1st
+| publisher = [[Addison-Wesley Professional]]
+| page     = 360
+| isbn      = 978-0-321-70533-4
+}}
+* {{citation
+| first1    = Tim
+| last1     = Hawkins
+| first2    = Eelco
+| last2     = Plugge
+| first3    = Peter
+| last3     = Membrey
+| date      = September 26, 2010
+| title     = The Definitive Guide to MongoDB: The NoSQL Database for Cloud and Desktop Computing
+| edition   = 1st
+| publisher = [[Apress]]
+| page     = 350
+| isbn      = 978-1-4302-3051-9
+}}
+{{Refend}}
+
+==External links==
+* {{Official website}}
+{{NodeJs}}
+
+{{Authority control}}
+
+[[Category:2009 software]]
+[[Category:Database-related software for Linux]]
+[[Category:Distributed computing architecture]]
+[[Category:Document-oriented databases]]
+[[Category:NoSQL]]
+[[Category:Structured storage]]

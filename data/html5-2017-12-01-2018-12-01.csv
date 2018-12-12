@@ -1,0 +1,2114 @@
+author,comment,timestamp
+TopHatPanda,"i'm on my phonenow so this might not be the fully correct syntax.
+
+html:
+
+    <div id=money>0</div>
+    <button id=increment>more money!!!</button>
+
+JS:
+
+    var amount = 1
+    var total = 0
+    var btn = document.querySelector('button#increment');
+    var money = document.querySelector('div#money');
+
+    btn.addEvenrListener(""click"", incrementValue);
+    
+    function IncrementValue() { 
+        total+= amount;
+        money.innerHTML = '$ ' +total;
+    }",1543534994.0
+hopeishigh,"[https://css-tricks.com/html5-progress-element/](https://css-tricks.com/html5-progress-element/)
+
+In HTML 5 you could do that, I think the value for the status would need to be returned from a database query. Alternatively you could do this with javascript as well, but that's the HTML 5 css-tricks tutorial on the idea, just plug the values for the progress position in, using whatever server language you are using. So in your case with 4 values, a max of 100 could be something like 0 for received, 25 for in progress, 50 for testing, 75 for shipped, 100 for delivered. Possibly adding sometype of pretty label or label indications for those positions. ",1543424048.0
+ysmsb,"Hey,  
+Are you using shopify by any chance?
+
+I work for an ecommerce business and recently built something similar.  
+You can definitely get this done, but you will need some javascript as well to handle the logic of updating the bar.
+
+&#x200B;",1543442723.0
+zorndyuke,/r/javascript ?,1543304564.0
+De_Wouter,"First, check out your developer console and network tab for any errors.
+
+Second, why are you referring to local files on your C drive? That's asking for trouble. Use relative paths.",1543054180.0
+BradHip,"I guess no one has a clue about this one, bummer!",1543447364.0
+GuybrushThreepwo0d,There is a \`background-image\` rule for the CSS class \`.site-header--container\`,1542623885.0
+Matosawitko,"Which browser are you using, and how did you perform this ""check""?
+
+I just looked in Chrome, Firefox, Internet Explorer 11 and Microsoft Edge. Every one of them had an ""Inspect Element"" menu item when you right-click on the top bar. This menu item opens the developer tools, and not only shows the CSS that is active on the element, but its original source. And they all prominently display the `background-image` rule and the associated image path. It's even rendered as a clickable URL, which makes it stand out a bit.
+
+I'm partial to the Chrome developer tools, but all of them have quite powerful features like this.",1542640443.0
+dwkeith,It can be done with HTML+CSS https://stackoverflow.com/questions/8160514/is-there-css-for-typesetting-the-latex-logo-in-html,1542693816.0
+DesigningWeb,"If I’m understanding correctly the answer is simple.
+
+On the second page, In the HTML change the a tag for that specific page to a p tag. You can do the same thing for the first page.",1542593445.0
+atalmadge1977,"This really depends on what you’re trying to do.
+
+My first reaction is onclick=“return false” but that’s mostly frustrating to users. Why not have the link show conditionally? That way there is no confusion.
+
+If you’re building navigation you’ll want to use CSS to style the active page/tab/whatever.",1542585805.0
+halkeye,"These are supposed to be practice questions for interviews? Or some questions interviewers should ask 
+
+Based on the screenshots, I would suggest adding links to official documention to find out more info. Being able to recite obscure info isn't that useful, but understanding what's going on is probably better.",1542095789.0
+zorndyuke,"Small UX feedback: Decrease the content height to be approx 15-25px over the buttons, so you don't have code hiding behind the buttons and add a min. 5-10px scrollbar (if it doesn't exist already).  
+
+I didn't download it so I can't judge the quality, but as long as it doesn't contain bulls* it is a good thing. The more possible questions there are aviable, the better. In best case you can answer every question without any problems.",1542896219.0
+kbrosnan,"This sounds like homework or an interview question. It would not be fair to your peers to answer this fully. 
+
+I would investigate ways to delay the action of moving to the selected floor until you think the users are done inputing floors. You also need to think about the order to stop on the selected floors.",1541624737.0
+oliver_higgenbottom,"Think about finite state machines.  This is way simpler than you are making it: at any given floor, an elevator has 3 choices - go up 1 floor, go down one floor, or stop and open doors.   it should know what floor it's on, what floors have been selected inside of the elevator,  and the state of all floors (ie if the call button has been pushed). You should be able to take it from there.   You might want to read this too for fun: https://en.m.wikipedia.org/wiki/Elevator_algorithm",1541666552.0
+daiz-,"Look at it from a practical point of view and consider what you're currently not doing. 
+
+When you get to a floor the button should revert back to its individual state. This means you need to track what floors you haven't been to yet, and do some processing once you get there both to turn off the button and figure out where to go next. 
+
+There's many ways you can go about this, but I think it's in your best interest to dwell on it a little more and ask us if we think you're on the right track. If I told you exactly what to do you'd probably be disappointed you didn't think of something sooner. ",1541625542.0
+senning,"I'd break apart the button press in to a direction and a destination (Go Up, Stop at 8), instead of a command (Go to 8). The elevator can then check as it's approaching each floor whether it should stop. You could reject button presses for floors opposite from the current direction of travel (like most real elevators do) or apply some other logic to go to them afterwards.",1541629100.0
+Sepparated,"Hey! Cool that you Are trying to learn a new field that’s always helpful and makes fun!
+So, without sounding mean, cause I hat these answer myself and get it a lot but: you should really learn how to google the right way. That’s one of the most important things in coding. No matter what. 
+Your best bet for your problem is here: 
+https://www.w3schools.com/html/tryit.asp?filename=tryhtml_images_trulli
+
+Bookmark the page you will need it a lot! 
+And check your „“ 😉",1541423514.0
+ichsagedir,"This is not a src for an image this is a whole Page. You need to specify an image (jpg, png, whatever) for an image. ",1541423325.0
+frownonline,"There should also be a closing quote after the image filename before the closing '>'. In your example, you're after the path to the logo on that Wiki page, I assume?
+
+`<img src=""`[`https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg`](https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg)`"" alt=""Chelsea F.C."">`
+
+&#x200B;",1541426269.0
+MichaelParkadze,You didn’t close the link with a (“) to begin with..,1541426277.0
+icantthinkofone,"Note: the `<img>` tag does not use or need a closing slash and never has.
+
+Also note: writing HTML is not ""programming"".",1541424765.0
+thegroove226,"[https://www.w3schools.com/howto/howto\_js\_navbar\_sticky.asp](https://www.w3schools.com/howto/howto_js_navbar_sticky.asp)
+
+There you go.",1541410636.0
+frownonline,"No JS needed, as the 'top: 0;' rule informs the nav when to become sticky.
+
+[https://jsfiddle.net/frownonline/wLc8qfs9/](https://jsfiddle.net/frownonline/wLc8qfs9/)",1541425443.0
+dwkeith,"EPub is a wrapper around xHTML5 to add DRM and make it a single file. Just like web pages, how simple the markup ends up being is up to the publisher (many books are auto-exported from the publisher’s content system with horrid formatting and code)
+
+The ePub spec explicitly states that it is built on the HTML spec, so no fragmentation has occurred on the spec side. Readers, like browsers, tend to add their own features and most importantly DRM. Digital Rights Management is what is causing fragmentation. If they used the same model that HTML5 Video uses for DRM, this would go away (and I could buy books anywhere for any device and read with any approved app) unfortunately they chose to follow a DRM model more close to music in order to have vender lock-in.",1541370687.0
+unbihexium,"I think it has to do with the way the books are structured (chapters and pages) vs websites (links and views). I mean, on a website, a page is a collection of text that can sprawl across multiple <p> tags and a user just scrolls through it till he reads it all.
+
+However, an ebook is expected to be a replica of the physical book [citation needed]. Thus, if you check any epub reader, based on your font settings, a page of the book may be spread across multiple ""pages"" that you have flipped.
+
+Not sure if I've answered your question, but having worked with integrating epub.js, this is what I think why things exists as they do. ",1541370204.0
+Koshy246,It’s easier to run than html and it’s more just dedicated to reading,1541735170.0
+anlumo,"Most ebook readers aren't capable of running a full web renderer, since that's a black art to implement and requires a lot of computing power. That's why a standard was created that restricted HTML to a well-defined minimum version (and used XHTML for easier parsing). Then, in order to allow images and a separate metadata description like the book title and author to be included, they wrapped a ZIP archive around it and called it epub.",1541384948.0
+icantthinkofone,Wrong sub. Ask CSS questions on /r/css,1541285569.0
+sugoi__,"I think you need to specify the sandbox attribute when generating the iframe, I don't think you can actually reload it just by adding an attribute",1541175043.0
+hopeishigh,No name value on the element,1541011985.0
+hakiman3,sublime text,1540677662.0
+SleepyGhostss,"Also, this is just when my browser is slightly squeshed, we are learning about viewport.
+
+This is my CSS coding right now
+
+ 
+
+Body {  
+ background-color: #6d6875;  
+ max-width: 600px;  
+ margin: 0 auto;  
+}  
+table, th, td, tr {  
+ border: 1px solid #555;  
+ border-collapse: collapse;  
+ padding: .5rem;  
+   
+}  
+td:nth-of-type(n+2) {  
+ text-align: center;  
+}  
+ thead {  
+ background: #F67280;  
+ color: #fff;  
+}  
+ tbody {  
+ Background: #b5838d;  
+ color: #fff;  
+}  
+tr:hover {background-color: #e5989b;}  
+header {  
+ padding: 0px;  
+ text-align: center;  
+ Color: #dadcac;  
+}  
+Section {  
+ background-color: #6C5B7B;  
+ padding: 5px;  
+ position: relative;  
+ width: 750px;  
+ right: 10px;  
+ margin-top: 5px;  
+}  
+aside {   
+ background-color: #4f347a;  
+ padding: 15px;  
+ width: 170px;  
+ position: absolute;  
+ top: 80px;  
+ bottom: 50px;  
+ left: 0px;  
+}",1540610846.0
+lachlanhunt,"You can build a user interface with a combination of HTML, CSS and JavaScript. Whether they are the right tool for your job depends on a lot of different factors.
+
+Is it useful to have a browser based application? Do you want your users to be able to access the application from any browser, or would it be better to have a native application? Do you need to be able to access the service from anywhere, our only from specific computers in your office?
+
+Do you need it to be cross platform? Is it for desktop and/or mobile use?
+
+Where and how is data stored? Is it stored in a centralised service, or is it just stored locally for every user?
+
+Your options are to build a web application that is accessed through a web browser. You would need to host it on a server somewhere.
+
+You could build an Electron app, which uses a combination of web technologies and nodejs to provide a native application experience.
+
+Or you could build a native app using any language suitable for the platform you're developing for.",1540498755.0
+jcunews1,Download the SVG format of the icon and use that as the background image.,1540284574.0
+nerduk,"Font awesome icons aren't embedded as a background image, but rather using the CSS content attribute, which basically injects the font character.
+
+I'm not sure why you are trying to repeat it, but if it is necessary I think your best option is to create a background image in a custom container.
+
+Hope this helps you understand slightly better.",1540248522.0
+hopeishigh,"Font awesome is a font not an image. It would be like repeating the A or B. nerduk is right, they use the css property 'content' with a character from their font to create their image. ",1541432817.0
+arviddesign,On mobile you need to have two boxes so you can see that it's hover by clicking the other one.,1539867639.0
+cbleslie,benderNeat.gif,1539865283.0
+RoguePolony,nice,1541512033.0
+sevensky7,"hey guys, thanks! that's my pen. Great to see it posted here :) ",1542313455.0
+Lord_Dumpinbuttz,"When I add want to add an hr tag in emails I use the following instead to make sure it renders across all formats '<div class=""hr"" style=""height 1px;border-bottom:1px solid #cccccc;"">nbsp;</div>' 
+
+Edit: removed ampersand so nbsp was visible. Sorry I'm on mobile with my fat thumbs. ",1539618887.0
+PM_ME_YOUR_HIGHFIVE,they ignore borders too?,1539608226.0
+Bry_an_2314,Very complete and informative article. ,1539339971.0
+Matt2000Taylor,I would say this article outlines a trend that is going on for years and is yet to develop further. In any case the described approach optimises the development process to a large extent.,1539352954.0
+duqq,"This is awesome, care to share how you did it?",1539033773.0
+TheSpanxxx,"HyperText Markup Language.
+
+It literally says says what it is in its name. ",1538951268.0
+ironman208,"But this is real most of the people, who new in this field. And who don't know about HTML and other stuff. They say, html is programming language. 😂",1540311988.0
+kelly_2222,He should be burned.,1540435253.0
+cbleslie,But it is. It's just hyper declarative. ,1538916159.0
+Dragnucs,Could you please make the application a Free & Open Source software?,1538850122.0
+jcunews1,"HTML5 video can not do a preview. Any video presented on the HTML page will be played in full length. However, with JavaScript, it can be controlled to play at specific time range. See:
+
+https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Video_and_audio_content",1538834677.0
+ic0nex,Why don’t you put it in the same file as your source code and then just call it from within your file. Also you can not call the drive where the file is located. You have to navigate from where your source code is to where the image is. Ex ) if the ../image.jpg moves you one file up and looks for image.jpg. This is called file pathing. ,1538683959.0
+Djur-e-kul,"It's the space in the file name. While I agree you should keep images in the same folder as your code (or in a folder called ""images"" if there are many), I believe the src attribute only allows valid URLs, which cannot contain spaces. Therefore you would have to encode ""Bombe Machine.jpg"" into ""Bombe%20Machine.jpg"". Or just rename it with an underscore or something.
+
+[Source](https://stackoverflow.com/questions/4172579/href-syntax-is-it-okay-to-have-space-in-file-name)",1538727113.0
+SorcererAxis8,Ok I figured out what was wrong. Thanks guys!,1538742423.0
+cresquin,"Yes, just nest your hierarchy in your page and CSS under different elements and add them to the class paths.",1538601353.0
+lordkyl,"You should just go through it and clean it up. It's not hard to extract the bits you want out of a big file, just for a header. Then, in your new project you can break out your styles into separate files so you don't have to do this again, then bundle and minifiy before deployment.",1538657572.0
+Boldewyn,"Tl;dr: No, not without a lot of work-arounds.
+
+There _are_ options, but they all have drawbacks / require some work / have sketchy browser support / ...
+
+1. The classic: Put the header in an `<iframe>`. To have header links change the whole page, add `target=""_parent""` to any `<a>` in the header.
+
+2. The “wasn’t there something in the spec about scoped CSS?” solution: Put your CSS in a `<style scoped>` element and place it _inside_ the header / container, that should have the styles applied. Disadvantage: The feature was deprecated and isn’t supported in any browser anymore.
+
+    **Edit:** 2a. Use JS libraries, that have `<style scoped>` support, namely [Vue](https://vue-loader.vuejs.org/guide/scoped-css.html). Disadvantage: Some kB of JS only for this feature and you bind yourself to a JS framework and its toolset.
+
+3. The “OK then. Let’s scope it manually” [solution](https://stackoverflow.com/a/45692033/113195): Give an ID to each of the header and the container, then do a regex search ’n replace in the CSS files to prefix all selectors with the appropriate ID. Disadvantages: CSS will become larger, `body .foo` selectors might become `#header body .foo` and not matching anything, any styles from a common stylesheet will most probably lose the specificity battle.
+
+4. The newcomer: Scoped styles in Shadow DOMs. That solution needs JS, though. See [MDN](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) for an intro. Basic gist: Remake one of your components into a web component and load the CSS into its Shadow DOM for scoping. More or less just a fancy `<iframe>` variant.",1538597437.0
+zorndyuke,"In this case you have to split the needed parts in logical files and only include what you need.  
+
+If it's really not combineable, then simply create another class with the same style. It may be the same properties, but you have the flexibility to change things without risking breaking other stylings.  
+
+Usually you can create a semantic class, which can be used on multiple places or you have an element/modifier that has specific rules for a specific structure.  
+
+> conflicting fonts  
+
+This could be a good modifier class, like `.content--modernize` which includes things line font, font-size, font-weight adjustments.  
+
+Let's say you want your text look like barock timeline, so you use [Barock Font](https://www.wfonts.com/font/feinsliebchen-barock), so you have something like `.content-barockize`, which adds everything necessary. Don't name the class `.font-barock` or similiar. There is a reason why you shouldn't be using inline styling and naming classes like the css rule is a similiar bad practice.  
+
+Always describe the property, don't specify it. [Read this for more](https://css-tricks.com/semantic-class-names/).  
+Your goal is to never touch the HTML-structure again. If the structure and classes are semantic, you never should have the need to touch the HTML.  
+
+I love the `class=""left""` example. If you want the text to appear on the right, you now can't simply change the css class property, but you need to change the html class name. Why? Because the used class name is specifing it's styling, not describing it. Describing it like `class=""quote""`, you can simply decide if you want:  
+
+> This is a Quote  
+> ~ by zorndyuke  
+
+or just adjust the CSS (not the HTML!) and have  
+
+> ---------------------This is a Quote  
+> ----------------------~ by zorndyuke  
+
+(The hyphen should represend a blank area, since we want our quote to be right aligned)
+
+
+",1539255357.0
+wh33t,"You could iframe the header? Not sure if that's a good route however but might be worth considering.
+
+It would be better practice to go through the CSS and rename accordingly to make it so the header can be more portable.",1538596949.0
+realbriank,"You need to detect if it's in a mobile device or not, then decide how you will render your site differently. Also that is not as simple as it sounds. You can find libraries that will do a lot of the work but I don't suggest you use them blindly without learning what is really happening. ",1538590733.0
+mvsux,"Those are called hamburger menus, just knowing what something is called helps a lot to google it.  
+You'll probably need mediaqueries to make the menu behave different on smaller screen, it can/should be done without JS, usually this involves an invisible checkbox that has the menu icon as a label and uses CSS to make it's menu available when checked.
+
+Try to figure out how these work to learn some advanced CSS
+
+https://foundation.zurb.com/sites/docs/responsive-navigation.html
+
+https://getbootstrap.com/docs/4.0/components/navbar/",1538656802.0
+cyancey76,"Try googling for “pure css hamburger menu”. What you want can be done simply without JavaScript or the need to include a framework.
+
+Use media queries to check the size of the browser viewport and have different styles for mobile and desktop. Combo breakpoints are roughly < 768 for mobile, > 768 for tablet and > 1024 for desktops.
+
+Another option is to make 2 menus and show one on mobile and the other for desktop. This is less desirable than having 1 menu that adapts.",1538594311.0
+Asiantran98,Use bootstrap look up tutorials on nav bar using bootstrap it's Mobile friendly and just copying some code,1538582386.0
+guitnut,"Do you mean hamburger menu? You can download one but do credit the creator in the footer of your site.  
+Here is a tutorial you might find useful - https://www.w3schools.com/howto/howto_js_topnav_responsive.asp
+
+When in larger screens I would say from 1024px wide use a media query to style the navigation to show the menu without the button. ",1538585133.0
+mr-peabody,"Crude, but I hope you get the idea.[http://jsfiddle.net/4unwrpfh/1/](http://jsfiddle.net/4unwrpfh/1/)",1537985071.0
+web-dev123,"With CSS animation it's certainly possibly - [https://codepen.io/daysahead/pen/mJqBge](https://codepen.io/daysahead/pen/mJqBge)  
+
+
+\*Edit: [20 More - Not all auto though](https://corpocrat.com/2015/12/09/20-cool-pure-css-sliders-without-jqueryjavascript/)",1537996274.0
+cresquin,Happy cake day!,1538038631.0
+Kno010,"This would probably be possible using css animations, but maybe look into making the slideshow a video instead? You can make the video autoplay and without controls, and it should be like a slideshow :)",1537996967.0
+TotesMessenger,"I'm a bot, *bleep*, *bloop*. Someone has linked to this thread from another place on reddit:
+
+- [/r/webdev] [Any way to create a simple auto playing slideshow with only HTML and CSS, no JavaScript?](https://www.reddit.com/r/webdev/comments/9j4q1k/any_way_to_create_a_simple_auto_playing_slideshow/)
+
+&nbsp;*^(If you follow any of the above links, please respect the rules of reddit and don't vote in the other threads.) ^\([Info](/r/TotesMessenger) ^/ ^[Contact](/message/compose?to=/r/TotesMessenger))*",1537983918.0
+simply-jake,nth-child(2),1537963752.0
+daviian,Codepen pls.,1537897141.0
+audi8c,"I think what are you trying to tell is when you reduce your screen size to a certain level it's becoming erie, then for that you need to use is media query. And yes it will be much better if you show the code at codepen",1537899548.0
+jahermitt,"As others have pointed out e will need to see your code, but as a suggestion is there any reason that you can’t use flexbox?",1537906741.0
+Asiantran98,Your div is inside nav ,1537926421.0
+Linuxllc,"This actually sounds boring. Especially to the students.
+
+&#x200B;
+
+I created a webpage call Self-Taught-Typing. Now this just teach the student at it's own pace, how to touch type. I do have links on the index page to test your typing speeds after going through the course. I crated this for myself. Since I couldn't find a decent typing webpage to just practice on. So I come here time by time to keep up my typing speeds. I can type 65wpm but, not any faster, doesn't matter how hard I try. But I'm very comfortable at the typing speeds I produce.
+
+&#x200B;
+
+Most what I have is just the honest system. You have to be true to yourself, to exceed your progress in life.
+
+&#x200B;
+
+[http://www.angelfire.com/in/rampant81/typing.html](http://www.angelfire.com/in/rampant81/typing.html)",1537889530.0
+Linuxllc,"Something like this?
+
+[http://ttl4.sunburst.com/docs/user\_guide.pdf](http://ttl4.sunburst.com/docs/user_guide.pdf)",1537890546.0
+gvfordo,"You can't build something like this just with html, you will need to use JavaScript to do things like time the test, keep track of errors, and do input validation checks before sending somewhere.
+
+You can find example JavaScript projects for typing speed tests and races.  I'd find and work though those kind of tutorials. ",1537898788.0
+borgari,"I would like for all the text shown here to be on separate lines (""Media and Design"" and ""Come See Life Through My lens"" on the next). it seems to work in my web version, but not on the mobile version (I'm using HTML5). The <br> tags don't seem to work. What do I do? Is it something in the CSS or is there an easier fix?",1537827773.0
+citylims,LOL,1537556842.0
+anti-anti,"Also, if you indent your code by 4 spaces it will retain the correct formatting:
+
+    like this
+      and this
+
+But generally it's a good idea to use codepen or something similar, to make it easier for people to help you.",1537558942.0
+kbrosnan,Putting the code in https://codepen.io/pen/ or at least a pastebin service like https://www.pastery.net/,1537552966.0
+anti-anti,"Where are `WebGLUtils`, `WebGLDebugUtils` and `initShaders` defined?",1537558401.0
+hopeishigh,"First, using HTML 5 for non layout tasks is bad practice, second if it's possible you will need either CSS or JS as it's like saying can I build a Remote Control with bricks. HTML, for the most part should be layout, css view, JS view/interactive elements",1537407042.0
+jcunews1,"No. Not possible using HTML alone. Even with CSS. The main problem is that HTML is a passive script. It can not do conditionals.
+
+Without JavaScript, the HTML must be constructed dynamically by a backend that can do conditionals.",1537494699.0
+anlumo,"You need a trigger for the bar to start filling up. Maybe you could use the :active pseudo element for that, but the user would have to click on something for the animation to start.",1537376004.0
+SciPhiPlants,Only way I can think of is with css,1537406728.0
+Linuxllc,"with a little of CSS.
+
+[https://css-tricks.com/html5-progress-element/](https://css-tricks.com/html5-progress-element/)
+
+&#x200B;",1537361202.0
+dontchooseanickname,"Use a css animation maybe. The problem becomes to serve the page with the right duration pre-initialized. This does not work with [progress](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) as `value` is not animatable.
+
+    <html><body>
+    <style type=""text/css"">
+    @keyframes countdown { 
+        0% { width: 0%; }
+        100% { width: 100%; }
+    }
+    .countdown {
+        animation: 60s countdown; 
+        /* 86400 for 1 day countdown */
+    }
+    </style>
+    <div style='height:64px;width:512px;border:1px solid silver;'>
+    <div style='height:64px;background-color:blue;
+        ' class='countdown'></div>
+    </div>
+    </body>
+    </html>
+
+",1537506387.0
+HappyTopHatMan,sounds like a prime candidate for a select element,1537184971.0
+Luke-At-UCS,"[You can put a `pattern` attribute on an `input`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Input#attr-pattern). For example, a text field that only accepts uppercase, two letter abbreviations might look like this:
+
+    <input type=""text"" pattern=""[A-Z]{2}"" />
+
+You don't need javascript for it and you can style error states with CSS using `:invalid`. For example:
+
+    <label for=""state"">
+      State: 
+      <input id=""state"" required pattern=""[A-Z]{2}"" />
+      <span class=""error-message"">Two-letters! Uppercase!</span>
+    <label>
+    <style>
+      .error-message { display: block; opacity: 0; }
+      input:invalid + .error-message { opacity: 1; }
+    </style>
+
+{ edit: Also, note that this - just like any javascript option - is *client-side* validation, which only serves as a hint to the user. You still need server-side validation, no matter what you do on the front end, as noted by /u/zorndyuke }",1537208131.0
+zorndyuke,"People suggesting to use the `pattern` attribute or Javascript. Both ""can"" be valid, but take into account that both of them are client-side checks and can be easily manipulated/disabled within a few seconds and can't replace a server-side check.",1537269674.0
+baphometh,"Validate your form using JavaScript, make the submit unavailable if not in the possible choices. Or maybe use radio button if you have limited choice that are always the same?",1537153877.0
+jahermitt,"Maybe it's because I'm tired but this is making little to no sense to me.  To the point that I don't know what to ask for clarification.  What it seems to me your asking for is:
+
+To have a class for a playbill <section class=""playbill""> 
+
+section.playbill {}
+
+with a rule for <h1> headings 
+
+section.playbill h1 {}
+
+That you already have down. then you need each playbill section to have an id identifier <section class=""playbill"" id=""play1"">  
+
+\#play1 {background-color:hsl(#,#,#);}
+
+etc.    
+
+
+Does this help or is it off point?",1537146422.0
+x_sigtyr_x,"Have you tried: 
+
+#play1 { background-color:hsl(#,#,#); }
+
+And so on..",1537146067.0
+dugarrow,"also that \\ after logo is not in my actual code, not sure why it pasted on here",1537116031.0
+skeletorcares,Absolutely not adjusting designs specifically for a bad device design. Absolutely not! ,1536984057.0
+Ambiguous_User_Name,"Well, right now it's impossible to see the nav bar because you made the ul background-color: black and in the li items you put the text outside of the <a> tag and so it's not getting the white color you specified, because the text is not inside. Since the text is outside, it also means the text is not part of the link, so you can't click it.
+
+Example: <li> <a href=""side2.html""> </a>Oppgave 1.b</li>
+
+Instead of <li> <a href=""side2.html"">Oppgave 1.b </a></li>
+
+&#x200B;
+
+Do the following and you should see the nav links:
+
+&#x200B;
+
+<ul> //Everything in ul is slight motification of what w3schools has.  
+
+
+    	<li> <a class=""active"" href= ""side1.html""> Frontside, side 1.</a></li>
+    
+    	<li> <a href=""side2.html""> Oppgave 1.b</a></li>
+    
+    	<li> <a href=""side3.html"">Oppgave 1.c </a></li>
+    
+    	<li> <a href=""side4.html"">Oppgave 1.d </a></li>
+
+&#x200B;
+
+    </ul>",1536785697.0
+zorndyuke,"Small Tip for the future:  
+
+- Use something like [CodePen.io](https://codepen.io) or [JsFiddle.net](http://jsfiddle.net/) to show your code.  
+
+So other people can see what the results look like and do fast adjustments and test the behaviour without wasting time and probally motivation to help.  
+
+Also add the solution into a separate part of your question, so people can see what the solution is without reading the comments (that can be very big in some threads) and also if someone finds this thread via Google or similiar, they don't waste time searching for the right answer.",1537182353.0
+WardenUnleashed,"If you have chrome, you can open up the developers tools and look at the network tab, then when you click the download button, You should fire off a request to the resource you are trying to download and can use that url...unless it's a post request. Then you kinda out of luck.",1536768627.0
+7TonRobot,"Have a look at HLS (HTTP Live Streaming). You should be able to generate the M3U playlist programmatically. The only hitch is that the video player must support HLS. Safari supports it natively but other browsers will require a special player.
+
+https://developer.apple.com/documentation/http_live_streaming/example_playlists_for_http_live_streaming/creating_a_master_playlist",1536688686.0
+TheBestCodeIsNoCode,"See [here](https://bugs.chromium.org/p/chromium/issues/detail?id=683994#c34) and [here](https://bugs.chromium.org/p/chromium/issues/detail?id=464835#c68)
+
+tl;dr: Chrome has a major regression in canvas performance. And that's a regression of a temporary mitigation to the original regression in canvas performance.",1536693635.0
+dreadmin,"Your code is being read as text not sent to PHP. You need to configure your web server (probably Apache, maybe nginx) to send PHP files to PHP in some way, whether that's mod_php (if that's even still a thing) or to php-fpm listening on a socket.
+
+Basically the web service needs to pass that to PHP, which then interprets the code, generates the output and passes it back to the web service, which in turn delivers it to the browser. 
+
+Sounds like you're skipping that interpretation step and just delivering the file back to the browser.",1536547786.0
+,[deleted],1536548200.0
+wh33t,In order for PHP to be computed it must run through the PHP parser. Clearly you do not have that set up correctly or you are accessing the script incorrectly. ,1536553540.0
+owen800q,"Make sure your server has been installed php
+You can test by using php built in server running the command php -S localhost ",1536574997.0
+jackandjill22,Hm. ,1536862530.0
+Alijah69,seems like school work,1536524079.0
+daneelsen,"I made a little canvas game. That feels to me to be near the edge of basic canvas performance.
+
+[https://landgreen.github.io/sidescroller/index.html](https://landgreen.github.io/sidescroller/index.html)
+
+&#x200B;
+
+I'm looking to upgrade to webGL, possibly with the pixi.js library.  I'm not sure if I will get any speed up.  Maybe some of the shaders will look nice.  If anyone has advice on webGL I'd love to hear it.
+
+&#x200B;
+
+&#x200B;",1536407142.0
+anlumo,"I haven't done any tests, but logic would suggest that WebGL is the fastest way to get things onto the screen in a web browser.
+
+Shaders run natively on the GPU, so that's the only thing where you don't pay for the JavaScript VM right now (since all native sandboxes are gone in modern browsers).",1536426644.0
+dontchooseanickname,"On recents ""computers / phones"", WebGL should perform better (assuming you're as smart a coder - in WebGL or in Canvas).
+
+- Hackers use graphic cards to compute hashes and e.g. PixiJS advises ""...content with the fastest, most flexible 2D WebGL renderer ..."" : if you don't know your users, you should probably bet on WebGL
+
+- If you _do_ know your users, for instance ""only AppleTV and PS4 with the browser emulation ( ;) )"" then just benchmark it.
+
+A quick googling provides [this canvas FPS](https://jsfiddle.net/thvphuub/2/embedded/result/) vs [this webgl FPS](https://jsfiddle.net/thvphuub/3/embedded/result/)
+
+Also, have you seen [HexGL](http://hexgl.bkcore.com/play) ? Coders seem to praise for WebGL.
+And have you seen [Epic Zen Garden](https://s3.amazonaws.com/mozilla-games/ZenGarden/EpicZenGarden.html) ?
+
+So 2 cents again : bet on canvas for compatibility, but bet on WebGL for speed (AFAIK)",1536426737.0
+Triforcey,"Find a library that uses WebGL. Any library really, whatever you like best.",1536471224.0
+vinnl,"It's not quite clear to me exactly what it is you want to do. Do you want the image to be its regular size on a wide screen, and to decrease in size on a smaller screen? Maybe you could share some mockups of what it should look like in different sizes?
+
+(As an unrelated tip: [read this article](https://css-tricks.com/magic-numbers-in-css/).)",1535976069.0
+lonniebiz,"Align items with ""stretch"" instead of ""flex-start"" and design around that fact. Also, set min-height to zero on flex items. Understand all concepts discussed [here](https://stackoverflow.com/a/36247448/217867).",1536255019.0
+Kyder99,"Width: 100vw;
+Height: 10vh;
+
+??",1535669623.0
+icantthinkofone,Delete line 32 of your HTML and you're good to go!,1535676797.0
+thatMatthewS,"U should really give us the oroginal code, cause here is no way we can tell you what is the problem :/",1536390537.0
+Gmaster_64,"Here is the html
+
+ <div class=""card"">  
+ <h4 class=""askCEOHeader card-title "" >Ask your CEO</h4>  
+ <img class=""askyourceoImage"" src=""ask.png"">  
+
+
+<blockquote><p class=""quotationCEO"">   
+The most powerful and enduring brands are built from the heart.</p>  
+  </blockquote>   
+   
+ <div class=""askHere"" style=""padding-left:10px;"">  
+ <a href=""Ask.htm"" style=""color:#fff;"" class="" btn-sm btn btn-outline-secondary ""  
+ \> Ask your questions here. </a>  
+   
+ </div>  
+ </div>  
+",1535663284.0
+PM_ME_A_WEBSITE_IDEA,"Do you know JavaScript? If not, I would definitely recommend you pick that up. There aren't many jobs out there solely for HTML/CSS.",1535132172.0
+Ur_Avg_Coder,"I think it's a good idea to learn JavaScript, yes. That's if you're into front-end, which I suspect. However, it can also be beneficial to learn just a bit of back-end, like PHP for example. For projects, sometimes just trying stuff for yourself; like a personal website to display your skills, is a great way to start building it up.",1535132800.0
+walkerXx1,"Hi, I am just preparing HTML and CSS courses for beginners on www.bettercoder.io. If you would like to help me with that and solve real problems, ping me a msg.",1535238809.0
+finroller,"Look for small businesses in your area. They often have really lousy or no websites at all. Offer assistance for free or at low rates. In the end you both profit from this.
+
+As for the experience vs certificates: would you rather ride in a car with a driver that has driven for years or a driver who has read about driving for years? :)",1537644696.0
+bouncing_bear89,"I would look into using the .htaccess file to do this kind of authorization. Assuming you’re using Apache. 
+
+Here’s an example. 
+
+https://rimuhosting.com/howto/htaccess.jsp",1534467465.0
+hvyboots,"Just add [a .htaccess and .htpasswd file](http://www.htaccess-guide.com/password-protection/)? You'll learn something useful in the process, because this is the way that an actual web admin would do it if you went to them with a really simple issue like this.
+
+Just be aware… if you get up past 100 users, YOU SHOULD REALLY SWITCH TO A MORE COMPLEX METHOD. Because it's literally searching that list every time they try and access any page in the password protected area. It's not sorted at all, so it's the slowest, most processor intensive search possible.",1534470949.0
+galaxymover,"Well, since it's not meant to be secure anyway: when they click on the submit/login button after typing in the password, only redirect them if the password matches a hardcoded string. This is the easiest/dirtiest way of doing it. Of course, they could just know the URL of the other page and go there directly, or even look at the source code of the page and just copy/paste the password they find there.
+
+DISCLAIMER: This is not secure in anyway besides just being a deterrent. This is like printing a picture of a lock and taping it to your door.",1534467523.0
+DrPennybags,"index.html = coming soon
+index2.html = site with info to share
+
+Share the url to index2.html to only those that you want to have access. Of course you could name the index2 file to whatever you want. Easy!",1534478668.0
+fiddlydigital,"If you have a page for employees that you want behind any kind of 'closed door' (regardless of how soft) - don't have it publicly accessible.
+
+Have it on the company network and only accessible on that infrastructure - e.g. When on an office device or via vpn. 
+
+This may not be the advice you're looking for but anything else is just plain reckless!
+
+
+
+",1534488664.0
+garcialo,"In a real store, the employee-only section that customers can't see is typically in the back, not in the front.
+
+Maybe consider putting the login link in the footer to be less tempting for people that shouldn't be there. Don't call attention to it by putting it prominently at the top of the page and don't give it an attention grabbing treatment.",1534513188.0
+zorndyuke,"Dont host your images on other hosts otherwise you have a dirty dependency to them. They can deactivate, delete or block the Image from being used from outside.  
+Put the Image on your own host. On the same place where you placed your HTML Files. Like in `/public/images/skeleton/border_black.png` etc.  
+
+So it's on your own dependency and not others.",1534451076.0
+smmmike,"Yes, you would need the images hosted somewhere. 
+
+[The HTML <img> element embeds an image into the document.](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img)",1534450400.0
+FunkeDope,What you actually need to do is hire a web developer.,1534514424.0
+VAS0LINE,"You can also encode the image in base64 and paste it directly into the HTML: [https://css-tricks.com/data-uris/](https://css-tricks.com/data-uris/)
+
+But don't actually do this.",1534456686.0
+hopeishigh,"You need to upload it to a web server, that basically means save it to a folder (the right one) that's going to look something like /var/home/www/html/pages/assets/I'm going/ and then your file there, or perhaps your site has an image upload tool. Another thing you will want to do in most cases is minify the image so it doesn't hurt your visitors data and page load times, I'd suggest using a site called tinypng and then saving it.",1534504710.0
+Alex6095,It should be a fairly simple PHP script. http://form.guide/email-form/php-form-to-email.html,1534433912.0
+santamorine,"Looks very good!  
+",1534180903.0
+chrisgaraffa,"Hey! If you open up your browser's development console (It'll be called Tools, Inspector, or something like that in the menus), you'll probably see an error that says something like ""TypeError: demoElement is null""
+
+That's because your JavaScript is running as soon as the browser sees it - and that's before it gets to the paragraph with an id of ""demo""!
+
+To fix this, do one of two things. The easiest (and most performant - which you'll want to keep in mind) is to move your <script> tag to just before the closing </body> tag.
+
+Or, you can wrap your code in an [event listener](https://developer.mozilla.org/en-US/docs/Web/API/EventListener) for the window's 'load' event, which will make it wait until the browser has loaded your page before running the code:
+
+    window.addEventListener('load', function()  {
+        var demoElement = document.getElementById(""demo"");
+        var cityNames = [""Adelaide"", ""Melbourne"", ""Hobart""];
+        demoElement.innerHTML = cityNames;
+    });",1534177711.0
+onosendi,Holy indented HTML.,1537319908.0
+bytemage,[https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global\_Objects/Array/join](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Array/join),1534171722.0
+rdalot,"I will tell you just some things I would change first.  
+
+
+I would apply css grid to make those 2 columns below the iframe and to separate each row as you want. After that, you can use flexbox to horizontally center those images maybe.  
+
+
+Take out those borders you have around each column and apply some subtle fancy box-shadows to each image.  
+
+
+Make body margin 0 also to make your frame full width and to stretch the rest of your content as well. You can try to make this content a little boxed in with css grid as well, to take around 80% of the width maybe.  
+
+
+You might add some padding to each text as well, as to increase line-height to 1.5 maybe, and justify the text. Change the font, that one is kind of outdated :P  
+",1534039346.0
+mr-bope,"Couldn’t get a look at the structure/code as am on mobile. But judging by the second link.
+All you need is to set a fixed width for the main div container. And then set the images to position relative, float left, width 100% and height auto.
+
+Is this what you wanted it have I misunderstood the question?
+
+I would not recommend the use of grids as it is only supported by the latest browsers. However nice it might be to use it.",1534080534.0
+zealous-system,Nice information.,1536829607.0
+MattNotGlossy,"It depends on where you go. Small business or non-city business is more likely to look at your resume fully than big or city business is. That's simply due to the volume of applications they'll get. Having a degree says you have at least a minimum level of knowledge for the job you're applying for.
+
+Aside from that, a degree also implies a bunch of soft-skills that are harder to learn on your own but super important to the workplace: working in a team, meeting deadlines, accountability for the quality of your work, communication, etc.
+
+Source: I'm working as a full time web dev who's completed a degree after having self-taught about half of my course. ",1533505915.0
+CyrisXD,"I'm 100% self taught, but I was lucky enough for a company to give me a chance. I've since been with them for 7 years and still growing. I'm now the lead developer there. 
+
+As much as I enjoyed teaching myself and learning on the job when tasks were given to me, that I had no idea how to do. Things would've gone a lot faster and quicker if I had went to study officially. 
+
+I never had anyone else to rely on, to explain things to me so my 7 years has been a very long trial and error process. ",1533504144.0
+Linuxllc,"Most companies won't give you a second look. You can try to stand out by showing some kind of work. But, even then. No one would look your way. Try to be your own boss and see what happens then.
+
+I was a brick mason. Never had to show any resume or documents that I was a brick mason. I just show up with my tools. Boss points where to start working. Looks over your shoulder for about the first 5 minutes. Just to see if you know what your doing. After that your good to go with a job.
+
+Wish it was that easy as a IT.",1533503221.0
+ClickHereForBacardi,"I've worked with completely autodidact people as well as people with masters'. I don't know how substantial the difference in pay was, but common among the autodidacts was that they had solid and extensive experience. So ultimately your biggest challenge without a degree is gonna be getting your foot in the door.
+
+If you are willing to find small time gigs to work your way up from, it can be a viable route. Just know that the work you don't put into a degree, you will have to put in on your own time to actually get up to speed with your peers.",1533509477.0
+SquidlyStopa,"Been working as a full time front end web dev for a large gov’t contractor for about a year and a half. I went to college for communications which is quite the opposite from dev work. 
+
+It took me about 1-2 years before I actually felt comfortable saying I could code. Another 1-2 years to actually feel like I could call myself a developer. 
+
+I also got pretty lucky with some job opportunities so that helped. ",1533520578.0
+Driamer,"Depends where you are looking for a job really. I believe the degree is important in most big cities in the states, but at least in several countries here in Europe it's all about the portfolio and skills. Many places the demand for developers is way higher than the supply and so getting at least a junior position is very easy. If you're any good you can quickly advance from there. 
+
+But honestly, it really mostly depends where you are and what the demand/supply of developers are there.",1533507521.0
+helpfulsj,"Your job prospects will always be higher with a degree. Once you get your first real job in the field. In two or three years you will have enough skills and experience to apply for most jobs.
+
+I was able to get a job in my field before I graduated while I was going part-time and working full-time. I just took all my major classes first to learn the skills and looked for jobs where I could program that were NOT software engineering roles. Get your foot in the door and start writing code and solve some problems.
+
+If your going to get a degree I would check out WGU they build in certification into their degree and that can make you stand out before you graduate.
+
+If you don't get a degree do freelance work for people close to you and small businesses. 
+
+You can contribute to open source
+
+Start your projects that solve a real problem
+",1533517815.0
+TravisChenoweth,What kind of job are you looking to get in IT? Since this is the HTML5 sub you might be asking the wrong group of people... ,1533504192.0
+catenoid75,"I would say that a new developer with a degree don't need such a extensive portfolio, where as a developer without a degree you would need a very impressive portfolio.",1533547998.0
+djcp,"I have a degree but in economics. I work as a lead engineer at a pretty well known PAaS. I would say half my coworkers are in the same boat, with a few not even having a 4 year degree.
+
+Build a resume, make connections, demonstrate an ability to learn and be a good human being to work with. A specific degree really isn't that important once you've done the above (which is not easy).
+
+Don't believe anyone that says a cs degree is a requirement.",1533555770.0
+HappyTopHatMan,"Depends upon what you want to do. If you want to freelance and run your own business or work as part of a contract shop you shouldn't have too much trouble getting in and gaining experience. If you want to get into the salary corporate world, get a BS in computer science. The most important thing you can do in this field is stay flexible, adapt, learn, and don't get stuck in your ways. People who don't do this fall behind on the tech stack and then can't get hired.
+
+A BS doesn't actually make you a better programmer, it's just a continuation of the highschool degree for a stupid amount of money, but it does help with making more jobs available to you.",1533556491.0
+unearth1y,What if you have a degree in chemical engineering and then self taught yourself programming?,1533867850.0
+zorndyuke,"Little tip: be more specific. Don't put three keywords into the title and hope for a full solution. Explain your problem from the very scratch, what do you want? What is the problem? What have you tried? Show your code and maybe, maybe we can add some helpfull directions for you to find the solution.  
+
+Otherwise ""Zoomable image"" sounds as if it's not a HTML5 problem and we may can't help you (we probally can, but you know.. noone feels responsible as long as you give no effort at all).",1532936079.0
+gray191411,"I'm not sure what you mean completely, but I'd personally recommend setting image width with viewport sizing like this: width: 30vw;
+
+It scales to webpage size, and you can set it like 70 or 80vw for a more full page feel. I would use either a @media query or a separate linkage of another CSS sheet. For example: 
+
+`<link href=""480.css"" type=""text/css"" rel=""stylesheet"" media=""screen and (max-width: 480px) and (min-width: 150px)/>` 
+
+Let's say you have three images across in a container. They're flex objects, set flex-direction: row; I would set 
+
+img {
+
+  width: 30vw;
+
+}
+
+and then in your 
+
+@media only screen and (max-width: 480px) {
+
+img {
+
+  width: 75vw;
+
+}
+
+This tells the browser to render the image as almost full screen for mobile devices but large, clear, but a normal size for one image in a row on a desktop. If you want it big on both, just set the normal img call in style.css to 70 or 80vw. Hope this helps! 
+
+If you're not familiar with flexbox, I'd check out [https://developer.mozilla.org/en-US/docs/Web/CSS/CSS\_Flexible\_Box\_Layout/Basic\_Concepts\_of\_Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox)
+
+and also
+
+[https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS\_layout/Flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox)
+
+These should get you going in the right direction. 
+
+On my main business site, that is how I size my images. Look at my site, r/https://grayaerialvisual.com on your desktop and your phone, if you're interested, and see how it's different! Good luck.",1533618164.0
+HappyTopHatMan,"[https://stackoverflow.com/questions/21479102/how-to-add-zoom-in-out-on-click-to-all-img-html-tags](https://stackoverflow.com/questions/21479102/how-to-add-zoom-in-out-on-click-to-all-img-html-tags)
+
+Google is really neat :) ",1532951722.0
+gray191411,"Also make sure this is in your meta tag:
+
+`<meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">`
+
+This will tell mobile browsers and other devices not to treat it as a desktop site when you've specified other CSS files or @media queries... ex ( max-width: 480px). My mobile sites didn't work until I specified that call.",1533618354.0
+getzoomo,"If you don't mind using other free service, give Zoomo a try.  It comes with responsive zoomable image viewer.
+
+Example: [https://www.zoomo.ca/image/J5Nx](https://www.zoomo.ca/image/J5Nx)",1533009815.0
+Earhacker,"It's possible, and fairly common, to build an attractive, standards-compliant, static website with just HTML and CSS. But such websites are static; they never change and have very little user interaction beyond just clicking links.
+
+To build a website with user interaction, i.e. a web *app* rather than web *site*, you need JavaScript. JavaScript is the only programming language which works in the browser. Every web app you use - Facebook, Gmail, the new Reddit, Spotify - they're all browser apps built with JavaScript. You can build a web app with ""vanilla"" JavaScript (and you totally should, it's a good learning exercise) but in industry, developers are more likely to use a JavaScript framework or library such as React, Angular or jQuery (which is a little outdated now).
+
+That takes care of the web app *client*, i.e. everything that the user sees. But web apps will most commonly do the bulk of their processing and data handling on a *server.* The server is also responsible for making the actual HTML, CSS and JS files available to the client. A server-side app is more than likely capable of generating HTML dynamically. Imagine you have a blog. You wouldn't write a new HTML file for each blog post. You'd end up with dozens of HTML files, and most of their contents would be repeated every time (the same header and footer, the same navbar...). It's a much better idea to write *one* HTML file for your blog posts, and make the server dynamically change the content of the HTML file depending on which blog post the user wants to read.
+
+PHP is a language designed for exactly this. PHP is really good at fetching data from a database (probably MySQL) and generating HTML content from it. Again, you can do this with plain ol' PHP, but you're more likely to do it with a framework like WordPress, Laravel or Symfony.
+
+But these days, any language at all can do the ""fetch data, build HTML"" job of PHP. Python has the Flask and Django frameworks, Ruby has Rails and Sinatra, Java has Spark and Spring, C# has .NET MVC... You can even do it with JavaScript, with the Express framework for Node.
+
+So to answer your question of what languages to learn, it really makes no difference. You'll need HTML, CSS and at least a little bit of JavaScript. That's a lot to learn and definitely enough to start looking for internships and entry level jobs. And every software developer will at some point in their career be asked to write some HTML, CSS and JS. But for the actual guts of your web app, your language choice really makes no difference. ",1532640416.0
+TrevorNiemi,"If you want a static website HTML, CSS is all you need.  Assuming you want to have a dynamic website you will need to also learn JavaScript and/or PHP.",1532654810.0
+amrasouli79,A very important tip is web every second update. you must now just html or css or javascript and php do not create a web development. for example in list years we have completely new version of javascript ( the correct name of javascript is EM5) that mean EMA script 5 and new version is EM 6 (2015 - 17) and if you thing javascript just have something like jquary and jquary ui ... this is false .we have some Framework like angular and React and Vue JS and ... and we also run JS on server ( read about Node JS ). I think better than php.This is a sample example that say try and  try to learn how you can learn the thing that you want... Need more help. send message,1532978499.0
+EclipseMain,"CSS and maybe a framework/static site generator if you want one.
+
+If you wanna build a forum/social network, you'll need JavaScript, some backend programming language (Python), and SQL.",1534859299.0
+BigBowlOfShutup,"To build a basic website you brobanly need html, css, javascript and php.",1536144656.0
+oldmanwillow21,"I use Python and Ruby for work, and I'm getting more into Go. I also know how to program using PHP. My personal favorite server-side language is Perl coupled with the Catalyst framework. Mojolicious and Dancer are other Perl web frameworks with less of a learning curve. Any of the languages I mentioned will work well for you. Figure out which one you enjoy working with the most, and go with it, unless the job market dictates  a more marketable choice.",1532670890.0
+jerryFrankson,"/u/Earhacker has probably the most complete answer out there. It's true that you can fetch data from a database with Python, Ruby, etc. but pretty much every big CMS (Content Management System) uses PHP, so unless you want to build your own, I'd go with that. There's a few interesting contenders, especially those that use NodeJS, but as of now, PHP is your best bet.",1532679351.0
+hopeishigh,"You mean you want to take data from one window on one domain and inject it into a window on another domain?
+
+If so, I would hope not. Generally speaking that would be malware.
+
+Now I would think if you wanted to post data to another service you could use some type or curl or API connection to directly dump user submitted data to other resources, but if you're wanting to do this with javascript that would probably not be a good idea and you would probably get warnings about Cross Origin Scripting, possibly insecure data transfer via the HTTPS -> HTTP violation, and might not be allowed by their Content Security Policy / Iframe rules.
+
+\*\* Caveat, if you have full control over bother environments you could potentially set a cookie on the user and then reference that cookie on your other service. ",1532617188.0
+smilbandit,If you have control of both webpages you could put that second page in a hidden iframe and use [postmessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage). You need access to the other page also to put javascript code to handle the postmessage events.,1532796924.0
+Linesider1,I’ve never seen a review system do this. It would be great though. ,1536106116.0
+Kyder99,"Sure, learn HTML and CSS by reading Jon Duckett's book on the topic. Its an easy read and flows like a big colorful magazine. It's not the most up to date, but it'll suffice and you can easily youtube your way through the rest.",1531616325.0
+james2406,"You could try something like [Webflow](https://webflow.com/). If you’re okay with the pricing, it allows you to create completely custom responsive websites!",1531658739.0
+JM0nk3y77,I've used sites like https://www.htmlgoodies.com/ to learn the basics and free hosting sites like https://neocities.org/ to mess around and build.  ,1531629763.0
+ccccaaa,"What kind of site are you wanting? (pages, features, design, etc) I am a freelancer and can do this for you depending on those factors.",1531631859.0
+CarpetThorb,"I'll need to put up nano wallet addresses up for people to donate to, and that's about it. It's going to be a charitable site. For families around the world I would also need hosting but cost isn't a problem.",1531634457.0
+pNaN,"The other guys are right, but their examples might be a bit convoluted.
+
+I also thought requestAnimationFrame (raf) was hard to understand to begin with, but then I ""grokked"" it. It's actually quite simple. It will separate math from animation. You can still do math outside of the function, but anything that moves any element should be pushed through raf. So it's easier on the browser,
+
+So imagine if you got an element moving from x-axis position -200px, to position 0 in 300 ms.(silly, yes, use css transition instead) You can do it with an interval, which would calculate and position the element for every tick. But the browser can't paint your application that fast. If you push it, it will look sluggish.
+
+Introducting **raf**!
+
+you can still do math (which doesn't cost much) but the actual animation (which costs a lot) doesn't trigger unless the browser has room for it. The way to use it, is to make the function calling **raf** recursively call itself.
+
+    // ----------------------------------------------------
+    // untested pseudocode
+    // ----------------------------------------------------
+
+    let myX = 0;             // this is just a variable
+
+    function setNewX() {
+        myX = doSomeMath();  // change that one variable
+        myAnim();            // a call to the browser to start the animation
+    }
+
+    function myAnim() {
+        requestAnimationFrame( moveElem ); //calls moveElem when the browser is ready
+    }
+
+    function moveElem() {
+        moveElemX( myX );   // moves the actual element to the variable
+        myAnim();           // recursive call to another raf
+    }
+
+    myAnim();               // init the code
+
+*Oh god, I'm drunk, and this took forever. If my pseudocode doesn't help at all, I'm sorry...*",1531621821.0
+madsci,"requestAnimationFrame works like a regular one-shot timer, but it's smarter (cuts the frame rate when it's not visible, for starters) and specifically intended for visual animations.
+
+It doesn't really 'run in a loop', you're requesting a callback and if you want it to get called again you have to request another callback.
+
+Whatever function you give it is going to get called on the next frame.  What you build with that and how you structure it is up to you.",1531595611.0
+Silverfell,"I'll put in my two cents: https://www.freecodecamp.org/
+
+Exceptional lesson structure, bite-sized lessons. Really great stuff, helps with HTML, CSS, JS, and a lot more.",1531527787.0
+ClickHereForBacardi,"If you're completely new to frontend work, Codecademy is a pretty cool place to start, yes.",1531511667.0
+ipromiseimnotakiller,"There are more than a few places to learn HTML for free. 
+One of my favorites is http://htmldog.com",1531518401.0
+aknproject,I recommend Udacity. It's useful.,1531672769.0
+Taamell,"I personally used code avengers. Great UI and it's a little pricey but hey I found it very viable. 
+
+Edit: I'm also a beginner, I've finished one course of HTML/CSS And I've got two more to go. It has your input output and instructions all on one screen. Really cool way to see how your code effects your output in realtime",1531509878.0
+catvsaliens,https://www.w3schools.com is another one stop shop for anything related to Frontend development.,1531549438.0
+De_Wouter,"You should learn from multiple sources but codecademy would be a decent place to start for sure. The most important part is that you just, start.",1531590784.0
+WicCaesar,Very cool! Good luck on your project!,1531487314.0
+0beah,"SCENE 5 UPLOADED!
+
+# Check out Episode 1 Scene 5: [Here](http://grimmtonic.com)
+",1532091574.0
+finepointdesign,Finepoint Design is a company specialized in the development and implementation of digital strategies and online marketing. We promote your website through personalized campaigns that allow generating a greater number of visits to later convert them into customers. We also offer html5 background web service to the client. Our major goal is to provide only increase the productivity and profitability of each of our customers.,1531460109.0
+CaptainIncredible,"Depends.
+
+But a table is a table.  Got tabular data you want to show on a website?  Maybe you have a spreadsheet of population per county with some demographic info.  Use tables.  That's what they are for.
+
+Wanna make em flexible, sortable, filterable, and viewable on mobile?  I've been using https://fooplugins.github.io/FooTable/docs/getting-started.html",1531447971.0
+ichsagedir,"If you have to display a table use a table, that's what table is here for. That's the most modern you can be when it comes to tabular data. ",1531467370.0
+g105b,"There is nothing not modern about html tables. They have a bad reputation because back in the day they were abused to create complex layouts before the web was ready for complex layouts.
+
+Today, if you need to display a table, use a table.",1531477019.0
+Disgruntled__Goat,"Yes, for tables use a table tag. They’re best for accessibility. 
+
+For responsive tables, I always use a wrapper div with `overflow-x: auto`. I find it works pretty well (though it may not be appropriate in all cases). But I’ve yet to see a table converted to a different format on mobile that actually works well - repeating “header: value” down the page just looks bad IMO.",1531489218.0
+mvsux,What lead you to this question?,1531468975.0
+sozesghost,"The resulting cells don't look right and it's because you are modyfing the state as you are iterating and checking the neighbours. You want to have the current state and next state, modify the next state as a result of neighbours and then swap them.",1531375871.0
+wagedomain,"Googling around a bit, it seems like this is a problem with Outlook itself. Mailto creates a body with the signature, then when you create the new body text it overwrites the existing empty body + signature with your body.
+
+Maybe there's a workaround but according to StackOverflow answers I've seen there wasn't a known solution to this problem as of fairly recently. It might work with other mail clients though.",1531340221.0
+arcticblue,Is that Kevin's real phone number?,1531353642.0
+DilatedTeachers,"You can add body text as part of the parameter string within the <a> tag
+
+https://blog.escapecreative.com/customizing-mailto-links/
+
+&body=Your+awesome+message+goes+here.%0D%0A%0D%0AThis+is+on+a+new+line.+Go+to+http%3A%2F%2Fwww.google.com%2F
+
+Edit: sorry, in the mailto",1531340414.0
+mattpilz,"All modern browsers for all platforms support HTML5, but how complete the implementation is still varies. You should give mobile Chrome or Firefox a try as they compliment the PC versions. You can enter the URL (address) of the game through your mobile browser and if it doesn't work the developer should offer some details as to why not. You didn't mention the game name so I can't check.",1531288587.0
+bytemage,"I think it's totally dependent on the context. Duh ;)
+
+I very much dislike a ""klick here"" where only the ""here"" is linked. The context is probably the whole container.
+
+But a text that links single words to a glossary, a definition or simply more information is great.
+
+There are instances where a blank area does react when I didn't expect it to, but they are rare.
+
+Linking an image, a headline and some text each on their own to the same function is very much pointless though. The gaps in between might even be a nuisance.
+
+But generally, I'm all for large, bold clickable areas. So, more pro-container, to get back to the actual question ...",1530903509.0
+zorndyuke,"Usually I link only the part I want to get linked, but sometimes I want something linked that has a bigger bunch of structure in it and I dont want to put an anchor around it and cant simply have it look like I want with CSS.  
+
+For that moments I use [Faux linking](https://codepen.io/mrsteveheyes/pen/bVpjJV). Btw. Just Googled this code example, I dont own the credits but it's what I mean. ",1530933341.0
+soviet_gamer,When you link entire images the link would have importance to that image instead of linking an entire container this would also be more simplified to link an image ,1530885996.0
+nothingbuttherainsir,"Well, if we stick with the weather forecast example, then here’s a possible scenario:
+
+You’re building a local news channel website and on the home page there’s a section with the weather forecast, and an article that is the 3 day forecast and each day is also an article. If each day were structured as an independent article, it could then be used in the 3 day, 7 day, and long term forecast, but also be used in the banner across the top of the page showing today’s forecast only.
+
+If you are generating these 1 day weather forecast items programmatically, the article element makes even more sense as an article allows for symantic children like header, section, and footer elements that can be displayed differently depending on parent context. Having “rain” not be tied to the date in a sibling header element means that reusing the element containing “rain” elsewhere relies on exterior logic/knowledge in order to give it any context.
+
+Hope that makes sense and didn’t further confuse anyone - ha!",1530711604.0
+rguy84,A guide about web accessibility that breaks 2 web accessibility rules is no guide i'd promote.,1530642775.0
+RaffaL_,"Try crt+shift+r
+It's a force refresh. ",1530629082.0
+wh33t,Is this a local file? Or is it uploaded to a host somewhere?,1530648445.0
+zorndyuke,You probally opening the wrong file or a cache is in your way. Do you use any sort of framework?,1530690568.0
+antiyoupunk,"This is a great article. These guidelines are almost impossible to decipher for someone who isn't actually a specialist in accessibility. It's something I have to tackle at work constantly, and 2.1 is something I've been putting off for a while now. Thanks a lot for this!",1530219943.0
+TheD3xus,"You're viewing a file that's been minified. It was made that way to reduce how much space it takes up when served to users. Line breaks and spaces add more to the final file size when a browser needs to download it from a server and render in the browser. If you got this CSS file from a third party library, see if they have a regular version of the CSS file (as in, not compressed or minified.)",1530155591.0
+irs320,"This should do the trick, just paste the css in here [https://unminify.com/](https://unminify.com/) 
+
+I've used it in the past and it works well, although keep a copy of the original minified css file in case something gets broken in the process. Hope this helps!",1530159666.0
+kbrosnan,"You won't be able to use modern HTML in email. You need design them like you are building a website in 2000. 
+
+See previous discussions https://www.reddit.com/r/html5/comments/56gtzf/for_an_html5_email_do_i_need_doctype_html_tag/ and https://www.reddit.com/r/html5/comments/8jqrvj/help_with_email_template/ for example. 
+
+https://www.reddit.com/r/html5/search?q=email&restrict_sr=on",1530029179.0
+Kindrik76,Styling and marking up emails is the devil.,1530029192.0
+Rich1223,I typically use <p> tags and generally don’t have issues. Just don’t try to use padding and put everything in tables.,1530039452.0
+valiantas,"I never use <p> tags, I put text into a td which has all the css inline as style="""", for para breaks I use <br><br>, using <strong> <i> <s> works well too. If you need to style any bit of that text differently use <span style="" stuff like font-size or color ""> spans will take specificity and overwrite your td styling.
+
+For adding text under an image, just have  the image as one <tr> and the text under it as another <tr>
+
+so for example:
+
+<tr>
+  <td>
+    <img>
+  </td>
+</tr>
+<tr>
+  <td>
+    Your subtitle text
+  </td>
+</tr>
+
+A thing I remember struggling in the beginning is that padding only usually works on td's and would not work on spans. So sometimes if you have a weirder layout you can lose track of your nested tables.
+
+If you have any questions with email coding, feel free to DM me, I worked with these long enough, might as well share the knowledge :)",1530046901.0
+icantthinkofone,`<br>` does not use or need a closing slash in HTML and never has.,1530057422.0
+,[deleted],1530028201.0
+BREADYSF,"Use <br><br> to line break for paragraphs.
+
+Bonus Answer:
+
+The safest way i think is to make a new table Row for your subtitle of an image. It will just help with keeping everything aligned to the image.",1530109948.0
+EclipseMain,"<p> defines a paragraph
+<br /> defines a line break",1534859382.0
+slargybarflarg,"You're missing a beginning quote mark on the li anchor tags. You're missing closing divs. You also have all slides as active. You need to add a DOCTYPE at the top.  These are all minor mistakes that we all make, especially when you start out. Keep working at it. I would also highly recommend you paste html through code blocks because its easier to read.
+
+",1529826243.0
+ThePikachu19232,Oh my gah... So much code,1530049502.0
+TexNeil,"while you would think it would be easy to do, HTML and CSS have several limitations in email.  Google HTML email templates, several articles on the topic.",1529691803.0
+bauen-best,fact: 11&#37; of Americans think HTML is a sexually transmitted disease. All I can say to that is <m2>Sexually transmitted disease</m2> tell me if I am going overboard. And upvote this post so more people can see it! LOL,1529897189.0
+CandbotYT,"Whichever one you want. However, remember to link the code with <script src=""path/to/file""></script>. ",1529380832.0
+hopeishigh,let ... arg. Cleaner scope declaration and I'm out of touch. My var life.,1529427461.0
+Earhacker,"Are you trying to add styles to the date picker dropdown? That's not possible, because different browsers render it in completely different ways. [See here the differences between Chrome, Firefox and Edge](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date).
+
+If you want your own custom date picker I'm afraid you're going to have to build it from scratch. But your users would probably prefer that you let them just use the one in their chosen browser.",1529364516.0
+twopi,"There are a number of issues with using the sound object through JavaScript.    It's fine for very simple usage, but once things get a bit more complex, look into the webaudio api:
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
+",1529339130.0
+chubrubs,"How difficult? I don’t know how to answer that.  It would be near impossible for my grandmother. 
+
+What I can say is that they have optimized the hell out of that site. Whoever built it should be proud. It’s super zippy. ",1528687809.0
+RemeJuan,About as long as a piece if string,1528688467.0
+MayorMonty,"It depends entirely on your experience, I would say. An experienced web dev could probably mock up a good imitation in like 12 hours of work, but it might take a week or two for someone less experienced. ",1528696139.0
+zelotsan,"Doesnt look too complicated, i would say working a full week 8 hours per day, like 4 days",1528732229.0
+reliefsss,"Front\-end easy, trust me right click view source code and go from there..
+
+Backend.. wait a few years.  
+
+
+Edit: my first few websites was also dragonball this is over 15 years ago :) Just call me king trunks ;)",1528754560.0
+ONEDUCK12,"If you are a professional Web developer like me, then it will be as easy as pie! But since you're asking for how difficult? Well.. I don’t know how to answer that. But the only answer that come to mind is, it depends; It may be easy for my but not for you, and also, HTML wasn't the only language used in this website, it used other ones like, CSS, Javascript, and possibly PHP. Therefore, it might be easy for most experienced web developers. For beginners, it might be difficult.",1528713221.0
+fakeusernamejesus,I never did \</ol\>  I found my mistake ,1528685297.0
+simongooss,Googling « USA svg » should be a good starting point ,1528227007.0
+boodaah,"A bit of self promotion... but I did this one a while ago.. pulled from a creative commons source.
+
+https://boodaah.com/us-map/",1528238821.0
+chillieguy,[https://github.com/mobomo/stately](https://github.com/mobomo/stately) is HTML and CSS and is simple to implement.,1528285680.0
+acconrad,"```
+[aria-describedby=""footnote-label""]:hover::after {
+  color: white;
+}
+```
+
+worked. `:hover` as well as `:focus` is something you want to pay attention for as well",1528123062.0
+Sparcy63,Put you’re ads somewhere else,1528078540.0
+ThePikachu19232,"... Ok, what language are you using? If its here then it is probably HTML and CSS.",1530049956.0
+dwkeith,"GeoLocation services like MaxMind use IP addresses to locate you, and that is only accurate to a service area (about 40 miles in most of the US).
+
+HTML5 Location API gets permission from the user and accesses the host computer’s Location APIs. On devices with GPS that is usually GPS combined with WiFi and Bluetooth triangulation. With Bluetooth beacons that can be accurate to within inches, WiFi varies, but usually within a few feet. Most GPS devices are accurate to 10-20 feet. (Which makes walking directions hard to use without WiFi)
+
+Now, if you have given permission even once to share location data, the website can store your browser fingerprint and assign it to a location. This data can be used to create larger databases and sold as a service to other companies. (Way over simplified, but this is the idea behind Google’s geolocation API, which also uses other hints to assign a location)
+
+As more data is collected, machine learning algorithms can determine that you are in front of the TV in the evening, and in bed early in the morning. Attach that to a browser fingerprint and IP address and you get scary accurate locations without a user prompt.",1528058174.0
+synplex_,"I don't know about accurate, using that site I'm apparently 3 miles away from my desktop xD",1528064825.0
+sedthh,"Your location is based on your IP address (ISP) by default, the accuracy could range from house address to guessing a larger, nearby town in rural areas.
+
+Location accuracy can be further improved by taking nearby WiFi hotspots into account (something your smartphone probably does when walking around in a criwded city). ",1528046831.0
+marmulin,Don’t most newer PCs and Macs have GPS built in?,1528057417.0
+jackandjill22,Interesting.,1528776388.0
+SlumdogSkillionaire,"Brackets gives you a live preview, but I don't know if scroll syncing would even be viable for HTML because there's no correlation between your source code and your product. Even if we ignore the head which won't render, div tags would add lines to the source without representation in the rendered view, and once you add margins, floats, and absolute positioning it would be completely broken. With markdown, there's basically a 1:1 relationship between each line in the source and the output.",1528041817.0
+pinjasaur,"It's a CLI tool but [Browser Sync][bs] does what you're describing. You can use it directly from the CLI or with build tools like Grunt or Gulp.
+
+[bs]: https://browsersync.io/",1528089127.0
+,[deleted],1527972236.0
+skeletorcares,"array2[j]? What does your loop look like? Yea, you've got a for in a for, which seems unneeded. ",1527956885.0
+,[deleted],1527958720.0
+weedman007,"Bootstrap is just a way to reduce your mind pain and increase your finger pain.
+
+It wont have any effect on seo.",1527811372.0
+nico-watine,"Also isn’t <hgroup> deprecated?
+
+[Explanation at Mozilla](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) ",1527818090.0
+drizzt7007,"Whether the logo is in the navbar or the header element will not affect SEO or accessibility. However, you should not use heading elements to wrap your logo. 
+
+The H1 tag is meant to describe the page, ideally using your SEO keywords. You should only have one h1 tag per page, and you should also avoid having duplicate content in your h1 across multiple pages.",1527814565.0
+vinnl,"Why do you say it's not just an Angular thing? As far as I can see (though I haven't worked with Angular extensively), those are Angular's [template reference variables](https://angular.io/guide/template-syntax#ref-vars).
+
+Angular includes its own HTML parser that adds its own HTML extensions. This is one of them.",1527152202.0
+Earhacker,"Websites with so many divs are almost certainly generated, rather than written. Either:
+
+* they are made up of several smaller HTML files, called partials or fragments depending on the web framework, but this is common in the view layer of frameworks like WordPress, Rails, Django, Laravel...
+* They are built dynamically from several JavaScript components, as is the case with technologies like React, Angular, Vue...
+
+So the HTML that the browser sees \(and thus what you see in the source\) is built from several sources, each of which should have a sensible number of divs on its own. When the full site is built, it's div city, but no one cares because no human ever has to maintain it on their own.",1527029480.0
+phantomPl0x,"Son, this is the internet. Some would say there aren't any hard and fast rules. I guess eventually you could have so many divs that the design of the page gets really ugly but if you're writing solid readable code with a preprocessor or something then the end result might not be the most readable code but computers don't care in a sense about readability.",1527027442.0
+jhartikainen,"I think a good baseline is to mock out your design as semantic as you can. Get the basic things showing up with nice semantic markup.
+
+Now add styling. If it doesn't quite look as it's supposed to... time to add divs, spans and whatever else is needed.
+
+If you start with only the basics, you *generally* end up with something reasonably clean even if you have to throw in a few extra bits and bobs to make things line up and compatible with the browsers you want.",1527031257.0
+benabus,I used to feel this way.  Then I realized that the whole point of divs is to have a non-semantic element for styling and stuff.,1527038756.0
+maelfyn,div is just a basic block element. It's perfectly fine to use divs all the time. Websites like Google want you to use semantic markup because it makes your website easier for spiders to interpret. If you're not concerned about SEO then it doesn't matter. I generally prefer to stick to divs and spans because there are fewer surprises.,1527079399.0
+ClarkTheCoder,Div it up \- Ja no Rules,1527029241.0
+FriesWithThat,I haven't found  it yet.,1527035285.0
+serosis,"I'm just glad we don't have to use tables anymore. And no, I'll take a nested pyramid of divs any day over a tabled mess or convoluted CSS.",1527038361.0
+zorndyuke,"I saw websites that have like 100000 divs, because.. I have no fucking clue. Either they use some sort of WYSIWYG editors to code like Dreamweaver features or they using bad framworks like {Choose a name} or because they didn't think about it well.  
+
+I mean I remember when I used more Divs than I actually needed back then too, but only because I didn't knew it better.  
+
+Nowadays you can do so much with way less divs.   
+
+There is not really a max of it, but you should take into account that every character is a byte of code that someone has to download. If a mobile user has to load 100mb of data before entering your page with his 3G phone, you can be sure to loose this users permanently from your website.  
+
+Also bots like the Google crawler will hate you and score you negative for having a way too bad code/text ratio.  
+
+The more you learn about HTML/CSS, the less you need. It's not the quantity that matters, but the quality.  
+
+Imagine a website beeing a set of Boxes. Yes, the boxes Amazon uses to store your stuff.  
+
+The first big box is the Browser's viewport. Everything under the adressbar and everything where the website can be in. The <html>/<body> part if you want so.  
+
+Now for everything you want to place on your website, you probally want to add another box and into this boxes can fit more smaller boxes. And each box can fit his own smaller box.  
+The question is always: Do I need this extra box around my other boxes or can I do it without?  
+
+",1527060961.0
+EclipseMain,"If you think it's too many, it is.",1534859463.0
+brtt3000,"Interesting question. I don't know, but MDN has this interesting but unhelpful glossary entry about [Form-associated_content](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Form-associated_content) The object is 'listed' and 'submittable' whatever that means.
+
+Here is some more info: https://dev.w3.org/html5/pf-summary/forms.html , like
+
+> The object element is also a form-associated element and can, with the use of a suitable plugin, partake in form submission. 
+
+And 'form submission' links to details, and the bit about object is:
+
+> [..] Otherwise, if the field element is an object element: try to obtain a form submission value from the plugin, and if that is successful, append an entry in the form data set with name as the name, the returned form submission value as the value, and the string ""object"" as the type.
+
+So apparently some plugins can produce form data to include. This would've been handy back when Flash was still cool.",1526672721.0
+Rich1223,"You cannot do this in HTML alone.  You need Javascript.  You can embed the script in a <script> tag if necessary.
+
+In this [jsfiddle](https://jsfiddle.net/r6m7m68b/1/) the javascript selects all inputs and adds an event listener to them.  Depending upon how large of a document this will be you may want to give these elements classes like ""attr"" so you can select them by that.
+
+Whenever either of them changes, it looks at the name input (ignoring case) to see if it says ""Scullzy"" and changes race to ""Human"" if true.",1526644385.0
+Sparcy63,You need to include JS within your HTML 5.,1526653633.0
+EquationTAKEN,"https://i.imgur.com/ZF9qz1p.png
+
+There.",1526584815.0
+zorndyuke,"Volume is not working (Latest stable Chrome), but the concept is pretty awesome! It somehow made even fun doing it :D",1526632156.0
+CandbotYT,"GitHub has a few, I think. ",1526467275.0
+WhatYouThinkinAbout,"This is the only one I know about ... WASM based.  There are some simple demos on the web site.
+
+https://syl22-00.github.io/pocketsphinx.js/",1529737226.0
+Boldewyn,"Add a U+FE0E character after each emoji, https://codepoints.net/U+FE0E . This forces the preceding emoji to be printed in b/w, if an appropriate font is installed. (You can provide such a font yourself via CSS @font-face loading, e.g. Symbola.)",1526466657.0
+MayorMonty,"For the record, it is recommended that you don't include Unicode emoji on your site. Advice I've seen is to actually embed images. That way, it remains consistent across devices",1526532396.0
+sehrgeehrtespublikum,"Do you mean that span element left to the h1 ""Circus Tent""? Thats just the emoji and not b&w for me. If you want consistent icons don't use emojis but rather svgs or something.",1526465798.0
+CyrisXD,"Share your HTML another way, no one is going to look at it if you have to log in. ",1526461729.0
+Neekzorz,Building emails is infamous for being a massive pain. Every email client allows different things and renders specific things differently. I recommend MJML. It's an open source tool that provides pre-made components for emails. https://mjml.io/,1526522276.0
+zorndyuke,"The world of E-Mail clients are the worst of worst and I would prefer sleeping with IE before making E-Mail templates.  
+
+Depending on which clients you want to support, you will have to create special templates that have VERY strict rules. You can forget like 95% of HTML5 features.  
+
+You will need Table layouts, inline styling and you will need thousands of hours into researching for insider knowledge.  
+
+Maybe there are some boilerplate templates around for emails that you should read and try to understand how it's formed up.. that way you will need to create what you want in your mail.  
+
+I really wish that we could ditch all old email clients and find a normed way that is more 2018 and not 1967.",1526541273.0
+KyleMarMc,"This code is not HTML. It's a custom language used by iMacros Editor. It's unlikely that you'll find many people in general programming forums who know it - you may find the  [iMacros forum](https://forum.imacros.net/) will give you better support.
+
+If you want to learn HTML, the sidebar has some good links - I can particularly recommend [the MDN site](https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web).",1526448768.0
+Kaos_nyrb,"So this isn't directly related to your question but this is how I've seen browser automation done before.
+
+There's a tool called Selenium which allows you to interact with a chrome window using programming languages:
+
+https://stackoverflow.com/questions/17540971/how-to-use-selenium-with-python
+
+It might give you a place to start.",1526452482.0
+,[deleted],1526428052.0
+,"There isn't a pure ""asides"" or ""menus"" built into HTML5 with semantic tags. You'll need some CSS, and there are plenty of tutorials online about creating menus, etc.",1526426949.0
+maplesyrupismajestic,"It sounds like you're referring to off-canvas navigation; the [`aside`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/aside) element is used for other purposes.
+
+For off-canvas nav you'll need to use either JavaScript and/or CSS in conjunction with HTML.
+
+Check out CodePen examples of various ways to achieve the desired result: https://codepen.io/tag/off-canvas/",1526382960.0
+minimalistblogger,"""Aside"" is a semantic tag used to identify content that is not the main content of the page. Usually, it is used to create a sidebar. As other people have said, to position the sidebar and determine its width, etc., you still need HTML and CSS. 
+
+Although semantic tags are used by browsers to understand the structure of a page divs can still be used inside them to pinpoint and control specific elements for styling with CSS.",1528689300.0
+Alijah69,Html certificate class YIKES ,1526404705.0
+bytemage,"usemap=""#map""
+
+name=""dreamlandsmap""
+
+PS: https://developer.mozilla.org/de/docs/Web/HTML/Element/map",1526150933.0
+Dietzgen17,"Don't use ""bimbo."" There's plenty of sexism out there already without your imposing it on yourself. ",1526847147.0
+jackandjill22,Hm,1528742485.0
+jokullmusic,"Try opening the browser dev tools, choosing the element picker, and putting your cursor over the blank area - it should make clear what element is causing the space.",1526061173.0
+tristanAG,"It’s hard to tell what’s going on with the padding without seeing it. Are you trying to test working with the code by hiding everything?
+
+If you want it to go away I would try wrapping it in a div and putting the display:none there",1526050326.0
+Disgruntled__Goat,"Input with type=""hidden"" never show on the page so that can't be causing it.
+
+Are you sure this is the exact HTML output that is in the page? If you're using some external CMS and/or form builder it's possible they block certain code like hiding stuff, for security purposes. ",1526058042.0
+nothingbuttherainsir,"According to the code you pasted, the 2nd input element has id=“display: none;” which is incorrect syntax. Change id to style, and it should hide that has well.
+
+If that doesn’t fix it, post a link to the page.",1526093321.0
+Daddy-Pig,"Thanks for all your replies, I really appreciate the help. I tracked it down as the WP HTML editor that was being used by default in the Avada theme page builder. Apparently it was adding in <br> on it's own for each line of code, even though I hadn't put it in there - so the display:none was working, but a <br> was being added to the end of each line in 'post production.' - I don't know if that made any sense.. I'm a BA, not a dev. Anyway, I found this in dev tools and deleted them all, saved it and now it all works great!",1526130343.0
+tristanAG,"On the top of the code you pasted put:
+<div style=“display:none”>
+
+And at the bottom put:
+</div>",1526152759.0
+lachlanhunt,"If you're just writing static HTML and running in a server like Apache, then index.html is the one that will be served when you browse to a directory.  I think the Windows Server uses default.html for that instead. Otherwise, call them whatever you want.
+
+Keep in mind that URL paths are case sensitive, though. I like to use all lowercase and hyphenated file names. e.g. ""contact.html"", rather than ""Contact.html"" for a contact page.",1525750244.0
+,"Other than the index thing, it's probably best to use .html instead of .htm, although .htm still works fine (it was designed for OSes that only support file extensions with 3 or less characters). Lastly, according to Google, it's better for SEO to use hyphens in filenames instead of underscores, at least in files that a search engine can see. Google doesn't like to reveal too much about how their algorithm works, but they definitely did reveal that their algorithm prefers sites that use hyphens.",1525753530.0
+crazyonerob,nope not really. Naming just happens to be what is best for the structure of the website I am working on.,1525748380.0
+Disgruntled__Goat,"For a static HTML website (ie made up of just .html files) then use a simple but descriptive filename. For example about.html, contact.html.
+
+If you move to more advanced stuff (server side programming/databases) then it's best to use a ""router"" or something that removes the .html from the URL. Such as `example.com/about` or `example.com/contact`",1525779910.0
+Dietzgen17,"The home page is index.html. Some people use lower case, others camel case (Google it.). Two word names are hyphenated. Whatever you choose, be consistent. ",1526847338.0
+oldmanchewy,"Hi! 
+
+I would rename the div you have called 'img' to something that makes more sense like 'image-container' to differentiate it from the img tag being used inside that div.
+
+You are on the right track with margin: auto (margin-left: auto isn't neccessary here) - if margin: auto on the image container doesn't work try it on the image itself, like this:
+
+<img src=""https://i.imgur.com/gcrzlXJ.jpg?1"" style=""margin:auto"">",1525709198.0
+Sparcy63,Do you still need any help? I can take a look in the morning.,1526626287.0
+Alexanio,I'm sure it's a mess as I'm new to all of this :( Please forgive my horrible code.,1525708574.0
+jackandjill22,Hm,1528742528.0
+Earhacker,"Do you mean tags `<% like this %>`?
+",1525473824.0
+Beggar-So,"It's a separate thing from HTML. For example, JSP pages can use % for templating, e.g.:
+
+    String address = user.getAddress();
+   
+    //Sometime later:
+    <span>Your address is <%=address%></span>",1525530080.0
+zenodub,"Sounds like EJS templating.  I use this on the server side all the time.
+
+
+http://ejs.co",1525530534.0
+Southern_paw,&#37; has no significance in HTML \- it's usually seen in templating languages that produce HTML,1525475519.0
+ComicOzzy,https://stackoverflow.com/a/957321,1525496197.0
+danO1O1O1,"Pretty sure using mail () was never a good idea. You'll need a webserver to send mail. 
+
+Sending email was complicated 10 years ago when I was going PHP. I'm pretty sure it's better to go with a professional email service than open yourself up for spam. Php mail forms were notoriously easy to exploit. ",1525249524.0
+halkeye,"You will probably get better results from /r/php as this is a php question probably, not really html5/frontend stuff.
+
+mail() command in php does different things on windows and linux. On a linux based server, it will by default call sendmail and try to use its settings to send an outgoing mail.
+
+As with the other comments, phpmailer + smtp settings will probably be more reliable.
+
+Also whats not working? Is the page blank? is it saying something went wrong? Is the email not being sent? Email not being received? It makes it a lot easier for people to help when they know what is happening vs what you are expecting.
+
+From the php manual page, someone suggested `$errorMessage = 
+error_get_last()['message'];` will give you the error from the last failed mail call.
+
+Also you can look at your webserver's error logs to see if anything is outputted there.
+
+On a side note, for my own personal website, I ended up deciding to handle sending emails entirely from the client side - https://github.com/halkeye/gavinmogan.com/blob/master/pages/about.js#L19-L25",1525302771.0
+alchatti,"You have extra closing brace at the end of your contact.php. Also for trouble shooting, try to print the email input before the If statement.. ",1525231006.0
+Rich1223,"This may be a silly question, but are you actively developing on a server? Your php file needs to be run through a server to function at all.",1525232513.0
+gowthamiashok,thanks for sharing this information.very useful,1525247494.0
+living150,Seems like the designers of the site need to take some courses on website design. The page loaded with a large gap on the left. Also the course list is pretty bare... I'll stick with Pluralsite and youtube.,1525111749.0
+NominalAeon,Cool idea! I thought the layout was pretty intuitive myself.,1525169273.0
+buddy_cricket,"If I understand it right it sounds like the person may be using inline CSS styles to alter the appearance of text in the chat window. 
+
+An \<a\> \(anchor\) tag is what's used to link to other pages so you don't want to use that. 
+
+Not sure about the chat window and how it handles text input but trying using what's called a span tag like this...
+
+`<span style=""color:blue; font-size:14px"">Player Name or whatever else text</span>`",1524887178.0
+kamomil,"This is older HTML but it might work.
+
+<FONT COLOR=""BLUE"">text goes here </FONT>",1524943449.0
+Spaceless8,"Hard to say for sure without being able to inspect the code on the actual page. But there are other elements and styles you can try.
+
+Have a look at some of these very basic HTML tutorials and try substituting some different elements (like <h1>, <h2>, <h3>, etc.) or styles (like font-size=""300%""). There are multiple other things that could be happening in the code on that page that would cause the styles in the <span> element to not display correctly.
+
+https://www.w3schools.com/html/html_basic.asp
+
+https://www.w3schools.com/html/html_headings.asp
+
+https://www.w3schools.com/html/html_styles.asp",1524942935.0
+Plorntus,"Next effect and nice explanation, just a couple of improvements I think would be nice:
+
+Indentation in the code at the bottom should definitely be sorted out, plus the inconsistencies in the spacing of parameters/operations.
+
+> window.requestAnimationFrame(burn);
+
+Should be moved to the top of the function, in this example it won't matter too much but you want to schedule the animation for the next frame ASAP.
+
+>  Because JS does not have 2-dimensional arrays, this conversion is a bit cumbersome.
+
+Eh? Could just be an array of arrays no? Probably not the most efficient data structure but it's more readable.
+
+Would also be nice to improve the code by adding a get(x, y) which returns the position in the array instead of having to do that math everywhere.
+",1524783786.0
+GoldenRetrieva,?,1524615423.0
+tl_cs,Thanks for this!,1524625339.0
+ForScale,https://codepen.io/anon/pen/LmGmwV,1524509142.0
+tristanAG,JavaScript 😘,1524522855.0
+nomnommish,"This is really straight-forward, but consider the fact that this is not very user friendly. The user will have to know through trial and error which combinations will result in mgmt authorization popup.
+
+Instead you are better off with displaying the ""Mgmt Auth required"" text in the second dropdown's value itself.
+
+For example instead of the second dropdown showing 1, 2, 3
+
+Show instead: 1 - Needs Authorization, 2, 3 - Needs Authorization",1524511955.0
+dontbethefatguy,"Few issues here. 
+
+Firstly, you shouldn't have an <IMG> tag inside an H2. H tags are for headings, keep images outside. 
+
+You also haven't closed the style quotes on the H2, or closed the opening tag. 
+
+You want something like this: 
+<H2 style=""..."">Insert text here</H2>
+<Img src=""..."" />
+
+With the li, if you want a link inside it'll be something like this:
+<li><a href=""link here"">Link text here</a></li>
+
+The formatting will be all off, I'm doing this on mobile. Regarding the actual centering of images, there's a million ways online. 
+
+Sort the basic code formatting first, then concentrate on the actual styling. 
+
+Edit: CSS tricks is your friend, loads of handy little snippets on there. https://css-tricks.com/snippets/css/absolute-center-vertical-horizontal-an-image/
+
+Edit2: <li> elements (list items) should be within an HTML list, if we're being compliant with standards. There are two kinds, <ol> (ordered list, i.e. numbered 1, 2, 3 etc), and <ul>, which is an unordered list, and will present with bullet points before they're styled. ",1524430569.0
+tarnos12,"Use proper formatting or upload the code somewhere, otherwise its unreadable and it's missing parts.  
+
+Google: ""html center img"" to get your first answer, no idea about the second as I mentioned above, you need to format it properly or else no one can read it.",1524428264.0
+zorndyuke,"They are like 100 of mistakes next to the point of uploading a screenshot, uploading an Image and posting the URL instead of just posting the code.. maybe on pastebin or jsfiddle or codepen.  
+
+Which mistake you need help of? Always be very detailed about your problems since we are no fortune teller and also have no clue whats inside your Head.  
+
+I hope I managed to evade sounding like a jerk :D",1524364425.0
+lokomotivan,"you can just set img to width: 100%.
+
+     .boxes figure img {
+         width:100%;
+     }",1524351875.0
+gsej,"It sounds as though you have a problem, and you think restricting a session to a tab will solve the problem, so you are trying to figure out how to do that. You may have better luck describing your original problem in more detail.",1524322598.0
+anthroid,Keep a record of active sessions in a database and don't serve the page request if the session is already active?,1524322750.0
+nomnommish,"Your problem boils down to state management. You store each session state as an encrypted value in client browser - cookie or any other storage. You keep tabs on what the user searched and their current permission levels in that session state string. Every single search request should also submit the session state string to the server side code. And the server side code should validate against that.
+
+It will not matter if the client opens more tabs to your site. The other tab will also automatically submit the same cookie.
+
+Yes yes, a techie patient client can circumvent this. And then you can have additional IP based validation.  And even that can be circumvented. And then, it all boils down to forcing the user to login and for your app to have proper authentication and authorization.",1524368358.0
+alchatti,"Although it is not recommended, if you have control over the page reload/refresh like SPA applications. You could create a JavaScript which generates a token through webApi on initialization then each sequential request you send the webApi key which stored in memory of that tab.
+
+Note that cookies and sessions are domain dependent and browser share those across tabs and windows. ",1524375893.0
+Lucidentropy,"Single spaces in your markup are often honored around inline elements because they're interpreted to be a space between words. You can avoid this by floating the images, giving them negative margins (not recommended), or remove the whitespace in between the img tags (so they flow all on one line with no return, tabs, or spaces between). edit : you can also set the font-size of the container to 0 if you're not using any other inline elements in there like text.
+
+https://jsfiddle.net/rw6zxfe5/5/
+
+In the first one, i've just put the images in a div. In the second div, it's the same thing but the return is removed, on the third, I floated the images. ",1524244534.0
+drewcifer0,"The cleanest way to do this with the best browser support is to put them in a div with font-size:0px applied to it. That removes the whitespace, allows you to have clean markup, and avoids the messes that come from floating elements.",1524271303.0
+antiyoupunk,"Like so: https://i.imgur.com/kk3Inv5.jpg
+
+Edit: Ya'll got no sense of humor. I swear this shit can be fun.",1524241022.0
+xingez,"Remove any margin/padding with css
+
+img {
+ margin:0px;
+ padding:0px;
+}",1524240895.0
+RoryH,    display: inline-block;,1524300773.0
+kenzi613,What does it say when you inspect it?,1524242349.0
+zorndyuke,"Is this a new thing to post screenshots without code and everyone guessing around?  
+
+Every problem has a root. Don't fight the problem, fight the root!  
+
+The first thing that is important: Your code!  
+
+I know different ways to archieve images beeing next to each and also different ways of automatically having such a space even if it's unintended.  
+
+But without knowing which type of CSS you used, I can only shoot blindly in the fog.  
+Also giving advices to problems that have a different root, will lead to missinformation and even more problems. It's better to explain CORRECTLY why something behaves like it does, but exactly to this case and not another. So we need the code!
+",1524466304.0
+HoroTV,"img {
+
+display: block;
+
+margin: 0 auto;
+
+padding: 0;
+
+box\-sizing: border\-box;
+
+}",1524255089.0
+pNaN,"There's probably some whitespace between them in the html sourcecode (newlines, tabs, whatever), and you don't have any css making images behave different than text (letters). So your browser renders them as two words with a space in between.",1524242964.0
+Vicmcnabby,"It's a bit of a hacky way of fixing it, but you could add negative margin. Ex.
+
+.right-image {
+ margin-left: -10px;
+}",1524248932.0
+dudeatwork,"You mean like this?
+
+https://codepen.io/anon/pen/mLyYVj
+
+Why do you have `flex-wrap: wrap;` on your main container? Removing that seems to fix the issue.
+
+Also, I don't know why you have the `h2` set to `display: flex;`. It looks like you don't need that.",1524175463.0
+pNaN,"Use [normalize.css](https://necolas.github.io/normalize.css/).
+
+As you get more experienced, you can cut down normalize by removing css for elements you don't use and rules for browsers you don't support.",1524122845.0
+daneelsen,"If you are rewriting for flexbox, you may want to also add in the new [grid ](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout)standard.",1524139763.0
+VAPRx,"A reset is really just a file that sets styles that make different browsers look more consistent. If you built the site from the ground up without having the reset and it looks good on multiple browsers then you are good without it. 
+
+You should always be testing your site in multiple browsers and on multiple devices so you can spot these issues. ",1524102881.0
+ThinkGoodThoughts-,"Not reset, but normalize.",1524132686.0
+Zampaglione,I'm no expert but... I'd try it first and if you notice anything is broken just remove it. ,1524096268.0
+zorndyuke,"Since a ""Reset CSS"" will plain reset EVERYTHING, even some neat stylings that every browser does, it's a best practice to using a ""Normalize CSS"" to just make everything be ""normal"".  
+
+If you don't care too much, it also should be okey if you don't use any of them, but just adjust what ever you need like the usual adjustment of the body/html parts.  
+
+Since you say that you are not very experienced, it's better if you use a ""Normalize CSS"" and also READ the complete content and maybe try to research why they doing such things. This will greatly increase your experience and in-depth knowledge.  
+
+I mean redesigning your HTML using flexbox is already a very good decision! So just keep going with the good decisions and learning processes :)",1524136975.0
+kaves55,"You don’t NEED the reset.css to build the site. All it does is give you some basic styles to start with.
+Just curious, why do you want to scrap the reset?",1524097218.0
+justbouncinman,"If you can't explain why you are using a CSS reset in the first place, then you don't need one. 
+
+In fact, no one needs one. You are going to set styles on every element you use anyway so why have a ""reset"" set everything one way, only to have you, later, set some elements another way again?",1524134833.0
+VAPRx,"I loved using the [css-tricks flexbox guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) 
+",1524076511.0
+,"Hard to say without looking at what you're working with, but there are plenty of  Flexbox tutorials out there for you to get started. You can even start here:
+
+https://flexboxfroggy.com/",1524075804.0
+TexasWithADollarsign,ELI5?,1523664803.0
+saphira_bjartskular,This account is a spammer. Take a look at his user page.,1523469482.0
+crilen,Post screenshots of code or something.,1523150894.0
+JustinBatzUS,Have you made sure that you are using the same *.(filetype) as the template's origin pictures? For instance the template has all *.jpg images and you replaced them with *.png images...if using the correct file type replaces the images so you can see yours check for lines of code that reference a specific image type. ,1523135796.0
+GameComited,"If the new pictures are in a folder of your pc check the path to the pictures. 
+If the  pictures are from the cloud check the url alone in the browser to see if they show up",1523134975.0
+iraduloveit,"1. Check the path.
+2. Check the images type. .png or jpg
+3. Post your code or screenshot it.
+4. If you are using brackets, you can hover over your img tag to see if the image is there, if the path is correct you should see the image when you hover over it. ",1523152520.0
+FatalDosesOfOsmosis,Are you building the sass files?,1523156340.0
+TheReelMallis,You might want to change the path in the html itself to the images.,1523136085.0
+northernbacon,"I have no idea. I googled it, found a page from PayPal about the coding. After quickly looking over the document, I think I found your issue, it's because of value=""_s-xclick"". 
+Now again, I don't know for certain. 
+
+https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/formbasics/
+
+_s-xclick - The button that the person clicked was protected from tampering by using encryption, or the button was saved in the merchant's PayPal account. PayPal determines which kind of button was clicked by decoding the encrypted code or by looking up the saved button in the merchant's account
+
+_cart  - For shopping cart purchases. 
+The following variables specify the kind of shopping cart button that the person clicked:
+
+* add — Add to Cart buttons for the PayPal Shopping Cart
+
+* display — View Cart buttons for the PayPal Shopping Cart
+
+* upload — The Cart Upload command for third-party carts
+
+
+Hope this helps!",1522985828.0
+aknproject,It looks good\~ Thank you for the sharing! :\),1527605278.0
+JSFunction,"This looks really great, thank you !  
+
+\*bookmarked",1523762829.0
+dankitakovski,you may want to try this free html5 tutorial too [](https://trendingcoursesin2018.blogspot.com/2018/03/build-responsive-real-world-websites.html),1523906030.0
+RTQMARK,"Hey this looks really nice, the website itself has a lot more resources like Flexbox.  
+
+Can't wait to have a look at it.  
+
+EDIT: had a run through the HTML course just now. I's a bit fast paced at times and they have a CSS file already styled to play around with, but it still gives you a good idea under 1hr.  
+
+Something I really liked is that the video is interactive and you can stop it to play with the code in it! That's really nice!
+
+EDIT2: Also did the Flexbox lessons and those were MUCH better. Highly recommended!",1524075750.0
+malikhaider,learn basic about html forms,1522816547.0
+MayorMonty,"Hrm. It depends on a few factors. For starters, you wouldn't be able to make this as purely a video file, at least, not an easily consumable one. 
+
+If it's a personal thing, I would do it using annotations on a YouTube video. These can be a little tricky, but it's free and relatively straightforward.
+
+Otherwise, I don't know if any software that is capable of making something like. Seems like a niche someone could fill ;-) There's a lot of educational wrappers around YouTube that sort of do something like what you ask, but it's more of a quiz format.
+
+Hope you find what you are looking for",1522648094.0
+floughry,"You might be able accomplish your purpose with ZapTheater (http://zaptheater.com).  It uses a slideshow format where you can insert video along with a menu with links that can change in coordination with the embedded video.
+It is easy to set up presentations and you can have up to 20 shows for free.",1524673140.0
+Seedman18,This might be right up your alley: https://www.wirewax.com/ you could used the free account option with hotspots and branching to skip to the parts in the edit you need to for the video.,1522674521.0
+AboodyPlayer,popular,1522487480.0
+cbleslie,Regex says hi. ,1522504721.0
+7serlopez5,"Warning: There is a chime at the 30 second mark. if you are doing this at full volume, beware.",1522375139.0
+jokullmusic,"The code was written by a person over many hours. Taking it and just changing the content and colors is plagiarism and, unless written under a copyleft license, copyright infringement. You'd be better off using Squarespace or Wordpress and finding a free template/theme that you like.",1522249790.0
+zorndyuke,"You can't do it perfectly.  
+
+You can ""rightclick and save"" the website, saving everything which also creates a folder with images etc.  
+
+In the end it's just a more or less bad version saved. There are probally also some tools that copy everything recursive.  
+
+In the long run I wouldn't recommend you doing that. Not because copyright infringements, but because that what you copy can never be as good if you do it your self.  
+
+If you really like a template, then plain code it your self. It's not really hard. You have to see a website as a collection of boxes.  
+
+You have one big Amazon box from which contained your 100"" tube screen (let's say that this exists..). It's a huge empty box and you now have an long box which container a 99"" Plasma screen. You see.. while tube screens are like rectangulars, Plasma screens have a long width, but short height.  
+
+The good thing is that you can put the box of the Plasma Screen into the box from the Tube Screen. Now you have an empty box from your Sneekers. It's way smaller, but hey, it fits into the Plasma Scren Box ;)  
+
+Repeat that with other boxes until you have the arrangement you want (the HTML structure of your website) and then you can start decorating it.. you can color one box, you can stick a picture on one of the boxes.. and more things (thats the CSS part).  
+
+Last step would be adjusting the boxes to react to specfic actions.. (javascript)  
+
+It looks way harder than it is. The only thing that is hard is taking your time and doing some researches. If you once understand the core behind it, HTML+CSS is easy as fuck. The only thing left is the experience.. the experience to know ""Aahh okey,.. these two elements have some special behaviour.. okey if I do this, then I can get this or at least I tricked it to act like it"" etc.  
+
+You don't have to be a professional for that. Just do it step by step. Like I said.. imagine everything as boxes.  
+
+Let's look at the Reddit page.  
+
+Start first the first Box. It's the very top small box with all the subreddits you did abo.  
+
+""My subreddits  - Main - Popular - All - Random - Friends - Users | .....""  
+
+What is that? Well, we start with the first box.. ok. We already did the top bar. We don't even need another box, we now can start to style. We say that the height of the bar is 18px long and that the background is this type of grey.  
+
+Now we add the anchor elements (let's ignore ""my subreddits"" for the first, because it's using Javascript to open the navigation) `<a href=""https://www.reddit.com/"">Main page</a>` Now we have a clickable wording that saying ""Main Page"". Clicking on it will lead to the main page. Repeat that with every other anchor elements like ""Popular, All, Random, etc"".  
+
+That's it. You successfully finished step 1. The very first box. Continue! Box #2 is the blue area. First we add the box. Ok, what's inside this box? There is the Reddit HTML5 Logo, the anchor ""HTML5"" and ""Comments"", also on the right side there is another box where some user data is found.  
+
+Your best weapon to analyse and see how a website is build, is ""Right click -> Inspect element"". It will open the Developer Tools and automatically hover the HTML part which you inspected. If you inspected the HTML5 logo, you will see that an <image>-Tag was used (within an Anchor element, so clicking on it will redirect you to the other page). Image tags are like boxes, but they automatically add the image you inserted within the ""src"" part within the box. In this example, the HTML5 logo was inserted.  
+That's it.. you have inserted the Logo. Don't struggle for the position or the styling.. do that after you added the structure. Always think like you will build up a structure and build your styling around it. The plan is that you never ever have to touch the HTML again, but only the styling. That's the way how semantic websites are build. Of course there are many ways to Rome, but let's take the beginner friendly way. You can do you researches like semantic websites when you are advanced or if you want do it immediatly, so you learn the right way.  
+
+Next two things are the anchor elements ""HTML5"" and ""Comments"". Bam, the left side is already finished! What's left? The right side with user information. Like I said, ignore styling for the first. Just add another box `<div></div>` and start.. anchor element ""your username (karma)"" then a Pipe "" | "", then another image element with the ""src"" property using an url that is an envelop. Another image that looks like a chat symbol (there is a chance that you don't have this feature.. I am not sure if this globaly active). Next Anchor ""Settings"", another Pipe and last anchor element ""Logout"".  
+
+NOW you can start styling. First box hast blue background and a height of 69px. ""HTML5"" is bold. ""Comments"" have a white background, red font color, bold font, small padding of 6px (left/right) and 2px to the top/bottom. Just do the inspect element thing and look at the very right in the developer tools. You see every CSS that is applied to it. Instead just an anchor element, they using unsorted list elements, so they need some other css properties too, you will learn that or should ""step by step"" learn it.  
+
+I mean.. you have a list of items. This list of items are just ""HTML5"" and ""Comments"". You don't need them, but it's easier to style, because you now need a basic CSS rule for list items and then you can add more and more list items which automatically have the correct stylings ;)  
+
+Last styling is the last box, th right side box. Another blue-ish background, bottom-left corder is like 50%.. that's it. Ah yea and the fact that it's at the right side.  
+
+Bam, finished!  I know the second step looked bigger and longer, but just to read/write, because it was more than one element. Coding is much easier and also just steps you have to go [One By One](https://hearthstone.gamepedia.com/The_Darkness).  
+
+The good thing is.. after you finished a box, you theoretically can't destroy it.",1523362985.0
+JM0nk3y77,"You might try checking out sites like https://www.htmlgoodies.com/ or https://javascriptsource.com/ for some coding basics. The latter site provides scripts that you can take and use on your own page provided you don't alter the original coder's credit information within the script itself. 
+
+Good luck, hope this help as well. ",1522292205.0
+Intercheap,I had this exact same problem so i used this chrome extension app that allowed me to copy all the code in inspect element. it is called snappysnippet. Look up on youtube on how to use it as it is a very trusted extension and there are many tutorials on how to use it.,1523581823.0
+fromnewradius,You can try something like https://www.httrack.com/,1522266721.0
+,Maybe learn to code instead? You will have a good enough boilerplate within a few weeks of practice.,1522310724.0
+textingwhilewalking,"Are there any moderators here? People, don't teach this guy how to steal code. Not trying to infringe but would steal code?",1523652496.0
+0ptima1,"I believe isn't wrong because there isn't copyright in a coding structure, despite the compiling (reverse engineering) process. If you would copy the whole design maybe can ilegal disrupt the branding.
+
+For the process you need to use inspector/code source viewer.
+
+Hope I help you!",1522247575.0
+,"Search ""webpage template analyzer""",1522177066.0
+VAPRx,"If its WP try wpthemedetector.com i have used it once or twice. Not sure if it will do more than WP. 
+
+It doesnt tell you about templates but I thought I would add builtwith.com will tell you what technology a site uses.",1522214432.0
+Drunken__Master,"Context clues seem to indicate that it's written as a script to be an an easy to understand example of how to use Javascript to produce text inside of an html element . You could just use a p tag to produce a seemingly exact result, but I have a feeling that wherever you found this code has later examples where this knowledge becomes more relevant and useful .",1522109904.0
+iitzTyson,"Because <p> is a HTML element and what's inside the <script> is HTML DOM/JavaScript.
+
+https://www.w3schools.com/js/js_htmldom.asp",1522109260.0
+DanFromShipping,What kind of answer were you expecting? What are _your_ guesses as to why?,1522160640.0
+Sonnenbrot,"Open the Chrome Developer Console  (F12) and Check the ""disable cache"" checkbox in the network tab. Keep the console open while developing. This will ensure that the cache is disabled on each request. ",1522092028.0
+Techttz,"Use internet explorer, haha.",1522094214.0
+xingez,Set version on your scripts and stylesheets. Example: style.css?v1.2,1522135162.0
+karliky,Just press cmd + sift + r,1522089904.0
+hambalamba,"Post the code dud. Cant understand nor help you like this. Also explain a bit better what you are trying to achieve and what seems to be the problem.
+
+You can post the code here: 
+
+https://gist.github.com/",1521831185.0
+MavicFlyer,Because the second <h1> isn't closed. ,1521832337.0
+,"<!DOCTYPE html>
+<html>
+<body>
+<H1> Title <h1>
+<time>10:00</time> 
+
+</body>
+</html>",1521984396.0
+kkthobi,?,1521805630.0
+hopeishigh,"You shouldn't use the marquee tag. Marquee is a dead tag that is still supported by some but not all browsers. 
+
+My suggestion would be to accomplish your desired effect either with css or with js. It would be hard with css but you could do 'something' with position and animation easing, but most likely your effect will be best accomplished through javascript or jQuery.",1521743046.0
+VAPRx,You have a few options. If the site you are getting the info from has an API you can just query that. If the site doesn’t have an API you will need to find a bot or build one that will scrape the site. Just a quick google and I found one for your example of the [Billboard charts](https://github.com/guoguo12/billboard-charts) using a Python scraper.,1521703663.0
+Kaos_nyrb,"Yes it's possible, but not with html alone.
+
+Basically you need a web server that can write out the correct html to display the top ten, etc.
+
+Google for stuff like:
+MVC, Angular, React and Node.
+
+These will start giving you an idea of what you need.",1521703595.0
+justbouncinman,"You need to be aware that the `<marquee>` element is not a valid element and has never been part of any HTML specification ever. Though it works in browsers, it could just as easily disappear one day without notice. You should be using CSS or JavaScript.",1521703904.0
+designpixy,These collection are really helpful. thanks for sharing.,1521624484.0
+webstrous,"I don't have a ton of experience with canvas but I'll offer my thoughts.
+
+First, can you provide any more details about exactly the platform you're working with, and the hardware available?
+
+My first thought was, do you need 1700 canvases? Why not just use 1 canvas, and draw on it what you need to draw on it.
+
+If that's not possible, here's another idea. You said:
+
+> The animation function checks the offsetWidth of the target canvas first to make sure it's visible before spending any time animating it, but even that check done 1700 times per animation tick adds up.
+
+If your canvases are divided into 16 groups, it sounds like you only need to make 16 checks, not 1700. If the group isn't visible on-screen, neither are the canvases in that group (put them in a container of some kind).",1521583750.0
+madwill,"Yeah it really feels like 1700 canvas is not the way to go. You only need as many canvas as there are currently displayed on screen. 
+
+Make some logic to present desired image on some condition, just empty and refill the canvas with new image/animation. 
+
+Otherwise learn a framework like React or VueJs so that you can mount list or unmount your canvas. If truly you need that many canvas... ",1521584742.0
+flipperdeflip,"> 1700 canvases divided into 16 groups, each of which lives in its own div, with only one group visible at a time. 
+
+So you only need about 110 canvases in a pool and some code to swap the active element? Canvases aren't free, each has a chunk of memory for its pixels. Looks like you pay a huge 'programmer convenience tax' on performance.
+
+Also you mix memory and CPU optimization questions with network optimization.
+
+
+",1521799424.0
+Inateno,"Having 1700 canvases at the same time in the page wont be more bad than having 1700 images tags.
+
+
+But as others said you should keep the number of tags to what is visible (the maximum).
+
+
+Also, here are few tips if I may.
+
+When you create a canvas in general it's to do some drawing operations. If you are not doing ""animated stuff"" then you just need one offscren canvas, do your opérations in, then save the blob and load the blob in images.
+
+
+So you should have 16 images in the DOM (if I understand well), 1 offscreen canvas (not in the DOM, you just care about context), and you can cache blobs or redrawing each blobs each times (if it's just 16 draws, it's still better than caching 1700 blobs in memory).
+
+
+Then you update your img tags src with blobs :)",1523872587.0
+PM_ME_YOUR_HIGHFIVE,"    class=""class1 class2""
+
+is the same as
+
+    class=""class2 class1""
+
+BUT:
+
+    .class1 {color:red}
+    .class2 {color:green;}
+
+is different than
+
+    .class2 {color:red}
+    .class1 {color:green;}",1521459376.0
+fabeyg,Can you give us an example of what you mean?,1521450279.0
+flipperdeflip,"Order of names in HTML class attribute: No
+
+Order of classes in search/selector: Yes",1521456830.0
+broken_e,No. ,1521447751.0
+StefanOrvarSigmundss,"Yes, but, like, semantic.",1521089891.0
+forsful,"Semantic tags carry extra meaning that are particularly useful for SEO and people who use assistive technology like screen readers. Divs and spans are purely for creating layouts and carry no semantic meaning. Therefore they should be used sparingly. Perhaps you can replace some divs in your code with a main, article or section tag.
+
+Below is a really good series of articles about most of the things you will need to know about html (including semantic tags). This guide helped me a ton while I was learning.
+
+https://developer.mozilla.org/en-US/docs/Learn/Getting_started_with_the_web/HTML_basics
+
+EDIT: some advice for you: people usually get snarky when people ask open ended (and vague questions) like yours without indicating their level of understanding. It's important to show that you have tried to do some research on your own about topics and present that in the detail of your question, to give people a reference for how much you know. You will definitely get more useful answers from people if you show that you have tried to figure it out yourself.",1521114608.0
+booOfBorg,"Where did you learn to question like that?
+
+It's dangerous to go alone! Take this.  
+http://html5doctor.com/downloads/h5d-sectioning-flowchart.pdf",1521129247.0
+Mymar,"Sorry, maybe I needed to add a bit of background. I wanted to refactor a game I am working on so the different elements were more obvious. Like surrounding the h1 with a header, and the navigation with the nav, etc. I just needed to know if they acted like divs for this purpose. ",1521143174.0
+justbouncinman,"A <div> is generic, not semantic. It has no meaning. A <p> is semantic because it has meaning by itself.",1521114845.0
+ninetailsbr,"there's 2 types: block and inline...
+
+if it's not like div, is like span '-'~",1521106585.0
+bfszymanski,"Btw, here you can find detailed documentation: https://mdbootstrap.com/",1520520566.0
+jones1618,"[HTML 5 Semantic Elements](https://www.hongkiat.com/blog/html-5-semantics/). These aren't the first or only semantic HTML elements (<table> and <form> are also semantic) but were document-level semantic elements introduced by HTML 5.
+
+These include:
+
+* <section>
+* <article>
+* <nav>
+* <aside>
+* <header>
+* <footer>",1520465150.0
+evenstevens280,They're called semantic tags,1520465083.0
+thinkspill,[section](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section) ;),1520463182.0
+monkeymad2,"The sliders need to communicate and for that you need JS.
+
+Why are you implementing this? I can’t think of a situation where this would be a nice user experience",1520444077.0
+sg7791,I would do it as a canvas that captures x and y coordinates when clicked (or dragged and released) and just dress it up to look like a stack of range inputs. That's probably considerably more advanced than you're wanting though.,1520463950.0
+ijustamabill,"Put them in a container with max width x, display block, width 100%, margin 0 auto, On a phone sorry about formatting.",1520431349.0
+coecks,"Frames? :)
+
+Kidding aside, with pure HTML it is not possible to use subtemplates of some sort. You could use preprocessors like [Handlebars](http://handlebarsjs.com/) or [Pug](https://pugjs.org/api/getting-started.html) which generate static HTML pages.",1520093651.0
+weblord07,"Nice collection, i really appreciate you guyz",1520009899.0
+WPFlipback,Convert a photoshop designed webpage to html using your html and CSS skills. Psd to html,1519943118.0
+pavithraramesh,"Hi,
+
+That is a really good decision. I appreciate it. Here is a small assignment for you.
+
+Go to apple.com and see the home page. Try to recreate a similar web page.
+
+You can use different images in your design.
+
+Don't use the ""inspect"" or the ""view page source"" option on the browser for checking the code of apple.com
+
+Just open the webpage and get an idea. Recreate it the way you think best.
+
+Please let us the code after you complete it, 
+
+
+
+Regards,
+Pavithra Ramesh
+[Spidergems](https://spidergems.com)",1519994511.0
+quatzicotl,Create a to-do list mockup or try to recreate some UI dribbbles.,1519943512.0
+PostSeptimus,"As /u/pavithraramesh said, find a website and recreate it as best you can. 
+
+My final project for my high school web design course was to emulate CNN's website. I was pretty surprised to find that it was actually fairly easy to recreate!",1520439102.0
+boodaah,"How do you need to move it?
+
+
+Centered with flexbox:
+
+    .buymecoffee {
+      display: flex;
+      justify-content: center;
+    }
+
+
+Moved with position:
+
+    .buymecoffee {
+      position: relative;
+      top: 40px;
+      left: 80px;
+    }
+",1519947521.0
+IiroP,Have you properly linked your CSS file? Can you show how you've done it? ,1519970851.0
+Brizzzled,"[RESOLVED]
+
+Cache was so full the CSS wasn't refreshing properly.",1519985607.0
+satchmoto,I am also wondering this,1519943912.0
+VAPRx,"Acceptable to who? Us? You? Potential users? Employers?
+
+It really isn’t anything someone can answer for you. Is it ok to do this for your first app? Sure! Is it going to be good enough to handle what you want to do? What do you expect out of it? If your goal is to make a game then by all means do it and enjoy yourself. If your goal is to learn how to make iOS/Android apps then maybe not. Then again it may be a small stepping stone to get an introduction. ",1519965464.0
+BadassRipley,Please post this in r/librarians! (I'm a mod there).,1519769468.0
+minimalistblogger,"It was a bit tedious, and I didn't agree with all the choices, for example, ""settlers"" and ""settlement"" should have been acceptable. ""Google Assistant"" seems like a more precise term than ""Google.""
+
+And it should have been:
+
+""The FEWER keywords you use....""",1522108395.0
+zorndyuke,"Isn't Spring for Java? Then I would suggest you to ask this question on the Java Reddits. Since there are a few of them I would suggest you to search for ""Java Reddit"" and take one of the first results (there is like LearnJava oder Java_Help etc.)",1519718052.0
+miotke,"For formatting and styling you will need some CSS. 
+
+Post your code to [Codepen](https://codepen.io)  and we can help out. ",1519694216.0
+FatalDosesOfOsmosis,"> I’m having trouble with small things like page formatting.
+
+Can you be more specific? A Codepen/JSFiddle would help us, help you.",1519699156.0
+cececodes,https://stackoverflow.com/ is a great place to get your code questions answered,1519703708.0
+HoroTV,"https://www.w3schools.com/css/default.asp
+
+https://www.w3schools.com/html/default.asp
+
+These two pages should help you",1519696574.0
+justbouncinman,I don't know. Html help?,1519727272.0
+weblord07,Thanks for sharing these kind of information its help me alot,1519239576.0
+Matosawitko,"`css_verticalspacer` is a CSS class name. These are defined in and by the code of the website itself. Basically, it's a way to link style and behavior to elements. The name is meaningless outside of the website; they could have called it ""class12345"" for all that the browser or anything else cares.
+
+`lang` is an attribute that can be defined at any level, from the entire page down to individual characters if necessary. As long as something further down defines the language for components that are in French, it should be fine? I'm not an SEO expert.
+
+Where did you get this website that you ""uploaded""? Who wrote the source? They should be able to answer your questions.
+",1519152512.0
+chrisgaraffa,"You have two unrelated questions here.
+
+First, css_verticalspacer seems to be a CSS class that Adobe Muse uses for some sort of spacing. Did you create your site in Muse?
+
+Second, yes, that will be a slight issue for you. You'll need to change it for the French pages to `fr`.",1519153900.0
+Redditor3500,could you link me a tutorial on how to make such a thing?,1519068957.0
+zorndyuke,"That sounds somehow like a Ocarina of Time melody..   
+
+[Erik Satie - Gymnopédie No.1](https://www.youtube.com/watch?v=S-Xm7s9eGxU) if you want to know :-)",1519128533.0
+Falmarri,"That parameter seems to change the form _height_, not _length_",1519001656.0
+3kids2pets1wife,"https://codepen.io/ 
+
+Make an account and copy the HTML you have written in the HTML area and any css as well.. ",1518989735.0
+3kids2pets1wife,"Can you share your code, via code pen...? ",1518988625.0
+,"Share you code, publish it on ghostbin.com
+
+Alt tags appear instead of the picture when the location of the picture is wrong! Check the location you've typed.",1519024889.0
+M2Ys4U,"*Technically*, yes, although there are rules around when they're optional.
+
+According to [the WHATWG specification](https://html.spec.whatwg.org/multipage/syntax.html#syntax-tag-omission):
+
+>A `head` element's start tag may be omitted if the element is empty, or if the first thing inside the `head `element is an element.
+>
+>A `head` element's end tag may be omitted if the `head` element is not immediately followed by ASCII whitespace or a comment.
+>
+>A `body` element's start tag may be omitted if the element is empty, or if the first thing inside the `body` element is not ASCII whitespace or a comment, except if the first thing inside the body element is a `meta`, `link`, `script`, `style`, or `template` element.
+>
+>A `body` element's end tag may be omitted if the `body` element is not immediately followed by a comment.
+
+I would advise always using the tags unless you really *need* to save those few extra bytes on the wire.",1518965498.0
+Cannon0006,"I've always included it anyway, simply for organization reasons",1518972550.0
+pNaN,"Without the tags the browser will make it's own decisions on how your scripts and styles are loaded. I've experienced some really odd behavior in certain browsers, even when placing scripts and styles at the absolute bottom of the page.
+
+So from a loadtime perspective, those few extra bytes always makes sure you have control over how your additional http-requests are made (keep em out of your header), which will make your page feel more responsive to the end user.
+
+So yes, you don't need to write valid xml, but one should rather omit what is always safe. 
+
+Like, omitting closing `</li>` tags are always safe, because a new `<li>` cannot be the child of another `<li>` element.
+
+Or the values of boolean attributes does not need content: 
+`<a href=""#"" disabled>...</a>` is safe, you don't need  
+`<a href=""#"" disabled=""disabled"">...</a>`).
+
+And then you can use an external tool to minimize your code. I cannot for the life of me learn to write `<br/>` without self-closing it, htmlmin minifies it to `<br>` for me. :P",1519034327.0
+jackandjill22,Hm,1528742913.0
+jhanschoo,/r/nocontext ,1519039839.0
+ratthew,I will try this now. Good night internet.,1518822667.0
+pnine,Awesome. Will try tonight. ,1518843953.0
+pnine,Unfortunately I had to stop listening the night I tried. I really enjoyed it but I laughed so hard one time it woke up and freaked out my girlfriend. Quality content!,1519101184.0
+zorndyuke,"If you all have problems with sleep or wants some special soul massage, you should try out if you are able to get triggered by ASMR triggers.  
+
+ASMR is more or less videos that makes sounds and/or visual effects in many different ways. Many people are actually having a very nice feeling like a brain massage while listening or watching a ASMR video.  
+
+There are tons of material and everyone will have their own preferences, so if you like something like ""tapping"", then you can search for just tappings.  
+
+Here are some Youtubers that I personally love to listen:  
+
+- anoASMR  
+- MassageASMR  
+- asmr zeitgeist  
+- Jojo's ASMR  
+- Dr. T ASMR  
+- (ask if you want some more or just search for your self)   
+
+Here are some triggers that many people like:  
+
+- mouth sounds  
+- fast asmr  
+- water splashing  
+- inaudible whisper/words  
+- hand sounds  
+- ear kissing/licking  
+- sketching  
+- haircuts (sound of scissors)  
+- slime sounds  
+
+
+P.S. Warning! If you are new to this, the content creators may look crazy for you and you will be like ""WHAT... THE.. FUCK!?"". But just have an open ear.. take your headphones, relax, just listen to them and maybe you will triggered too and have many good times. :-)  
+
+P.P.S. Imagine doing 20 minutes - 2 hours videos where you are just doing.. well, that what you can see their xD..  It can be a tuff thing.. so maybe supporting these content creators would be a nice thing like becoming part of their patreons, liking and aboing them will help them. ",1519039419.0
+20EYES,Didn't realize that EFF left W3c over this.,1518633362.0
+mr-peabody,Is it just me or is there no audio in this video?,1518533556.0
+zorndyuke,"I am not sure what you are aiming for.. money or if you really trying to educate people, but neither of these goals are helpful with your approach.  
+
+It's obviously that you write down 1:1 from another source. Noone, not even the elite of coders, are writing code like that. You can't just plain start doin CSS without even planing and writing down a structure, but you are already doing advanced styling that need at least one refresh of the side so you can see the actual state of the website. With enough experience you can pre-write a few of them on your own, that is possible, but not everything.  
+
+Also you pre-write JS functions that you will create in the future. Even JS pro's have to stop, think, plan and test, but not just plain write everything perfect with seeing in the future.  
+
+Best video was still where you actually spoke and then had a typo in it and you needed like forever to check what you did wrong instead of proper debugging like even amateurs do.  
+
+By far this comment is not to burn you. It's you hold on your eyes that you not helping, but damaging beginners with this. You should be an example for beginner, not a magician. Beginner will feel discouraged, unmotivaded and general have a bad feeling, because they think they this is normal, what by far is not. You also not really explaining what is going on. Why you doing that and what's the purpose behind that all. Every question a beginner ""want"" to know and not just plain copy.  
+
+I insist that you either stop it or take way more engagement to make these ""guides"" or you will be nothing else than a negative property. The question is: Do you want other people calling your name with negative content? Like people calling w3schools as a bad source, because they did lazy and wrong work. They seem to not care at all, but they only stand with their website behind. You stay with your name behind and imagine you want to search a work and the PR at the place is googling for you and only finding bad reviews about you and your online ""tuts"".  
+
+I watched a video yesteday, a very inspirational. It was about how a Dad, who left at three grade, who is ""just"" a cook, is doing every possible step to be an example.  
+He would always go 15min earlier to everything that he planned. To the question why he is doing that he said:""If my kids every see me doing that, they would see that as a perfect example and act according to that."" The same will happen with your guides. If they see that you are coding like that, they will try the same and fail which will lead to bad motivation.  
+
+Try watching other tutorials and what they do different. Try acting like a beginner who is watching that. Like if you can't even code and you watching the Guide called ""How to code XXX"". What would you want to know? Which questions would come on your mind?""  
+
+I would do guides my self too, but I know that I wouldn't put enough effort into it and wouldn't deliver a good enough quality. So I am trying to get better soft skills in this kind of topic and when I have enough experience, I will start some guides too. But currently I wouldn't be a help. My English is broken, I tend to do crazy comparisons, I am very emotional, I tend to digress from the topic I was about to talk and few others things. Try the same. Try finding spots on your self that you can ""optimize"". Like Bob Ross said: There are no mistakes, just tiny little accidents that you can use for your self and optimize :-)",1518603135.0
+hambalamba,"Try out visual studio code https://code.visualstudio.com 
+
+It comes with emmet pre installed.
+https://code.visualstudio.com/docs/editor/emmet
+
+For things other than html and css try installing extensions known as snipets you can find them in extension tab.
+
+VS code is free, well maintained and easy to use, also it comes with an UI for git and is made by Microsoft.
+",1518489576.0
+bTrixy,"Not quite sure what to make from this. Your link refers to a blockchain site. Maybe you can build a website with this but not on my first sight. 
+
+
+There are many flavours in code editors to very lightweight text to more functional IDE's. 
+
+
+
+For example sublime 3 is a simple text editor but with some plugins it can be very powerful. A bit more advanced is atom. Studio visual code . Brackets. And if you like a paying option then phpstorm (or webstorm if you have no interest in php)
+",1518473122.0
+daiz-,"Seems weird for a teacher to recommend a paid IDE out of the gate. I second some of the recommendations to avoid an IDE in the beginning and use alternatives like Sublime or Atom. 
+
+Komodo does have a free version, although it's not an IDE and is just [the editor](https://www.activestate.com/komodo-ide/downloads/edit). I don't really recommend it but I felt you should know it exists. 
+
+If you're really set on a free IDE, you have options like NetBeans that are free. 
+
+
+
+",1518481401.0
+,"Why pay for it? Try Atom. It is awesome, install plugins like auto complete, terminal, spell check..etc 
+
+Most of them come pre-installed.",1518494520.0
+booOfBorg,[WebStorm](https://www.jetbrains.com/webstorm/) by JetBrains. It's pretty amazing.,1518515274.0
+zorndyuke,"Since you are learning just HTML, I would recommend you to use a ligthweight editor that just gives you some syntax highlighting, but not too much of a ""let me do this"" approach.  
+
+Trust me. You WILL come to the moment where you need to do some work without any IDE at all and at this place you will need the eye for the code.  
+
+You simply can code HTML with plan editor even if it's a pain the eyes :D  
+
+But to make it a bit easier and better to see, I would recommend lightweight editors like: Notepad++, SublimeText 3, Brackets  
+
+All of these will help you a lot without making it too complecated or making it too easy. You WANT that moments where you are helpless and need to do researches. These are the moments where you learn the most and will shine more than other, because you had to do researches and learn things you wouldn't learn otherwise.   
+
+Instead of concentrating in the ""correct"" IDE, you shouldn't give it too much importance. Try starting the coding.. this will improve your skill.",1518527940.0
+Earhacker,"I'm not sure I agree with your teacher. I'm also a coding teacher, and my approach is to have students type things out by hand, until they're ""thinking in HTML,"" then show them shortcuts once the understand the concept but just want to speed up the workflow.
+
+But, each to their own. Install a text editor like Atom or Sublime Text and look through their plugin system for names like ""autocomplete"" and ""snippets."" They do more or less what you're looking for. Or if you're feeling brave and want to impress your teacher, check out [Emmet](https://emmet.io/).",1518473833.0
+Singlegalguide,You guys have been amazing!! thank you so much!,1518540741.0
+anotherenglishlad,<span></span>,1518106786.0
+jackandjill22,Hm,1528742597.0
+500Rads,"Use Span
+",1518132887.0
+shgysk8zer0,"Could you expand your question a bit? Are you asking for the HTML, the CSS, or both? Are you asking only about color yet also saying color doesn't matter, or is this more about the layout and positioning?
+
+In nearly any case, an answer would be extremely long and pale in terms of teaching anything compared to just telling you to inspect the elements in your dev tools. You're basically asking for an entire ""Intro to HTML and CSS"" in the form of a comment on Reddit.
+
+A rough answer would be to look into `background-color`, `float`, `padding`, and `margin` in CSS. You'll also need to know `<h1>`, `<hr>`, `<img>`, `<p>`, and `<div>` at least for the HTML.",1517878210.0
+zorndyuke,"You do it by learning HTML? That is just plain HTML+CSS combination, nothing wild here.  
+
+You do a simple HTML layout and add CSS properties like backgroundcolor to it.",1517907804.0
+pavithraramesh,"It is a simple layout. If you are beginner recreating this kind of simple sections will be the best way to learn faster. 
+
+You are learning in the right way. Here is how to achieve this effect.
+
+Body background color is white.
+Inside the body, you got the main content section. Give a different background color for this section.
+
+Inside this content section, you got two columns.
+1. Article 
+2. Side bar
+They are positioned horizontally.
+
+Inside the article, you have
+1. heading
+2. horizontal line
+3. image
+4. paragraph
+
+
+You can use <hr> or <div style=""border-bottom: 2 px solid #0c0c0c;""> &nbsp;</div>
+
+
+This is the way you do this. If you have any trouble to achieve the same result, please tell me here. I will create a pen in in codepen.io and share here.
+
+Regards, Pavithra Ramesh, Spidergems Softlabz Chennai",1518076967.0
+zorndyuke,"It looks like just a rotation of a list of words.  
+
+They using following plugin: http://richhollis.github.io/vticker/  
+
+It's basically a list of invisible `<div>` elements which visibility gets changed every few seconds. You don't need that list, you can also just have a plain array `['one', 'word', 'at', 'a', 'time']` and add a animation to the rotation. Of course you will need some fancy tricks for that.. or just use the plugin.  
+
+For the future, sometimes it helps a lot just to look at the code. I pressed right mouse at the text and choose ""Inspect element"" from the context menu. In the Console (you can also open it with F12) you see that the parent element has the class `ultimate-vticker` which I Googled for and found the actual plugin behind it.  
+
+You can also go to the scripts section (either at the top area mostly before the `</head>` tag or at the bottom before the `</body>` tag) and normaly the plugin filename isn't changed, like in the most times you immediatly see if someone is using jQuery just by loading the normal script file).  
+
+Or just by inspecting the image paths if they have a structure like `/wp-content/..`(or something with wp- in it) it's most likely WordPress CMS which they used, except they wanted to trick you into it by naming the folder like it, which makes no sense. (0.0001% security improvement, worthless)",1517907386.0
+dbulger,"In rhetoric, it's called anaphora: https://en.wikipedia.org/wiki/Anaphora_(rhetoric) . I know that's not quite what you're asking, but if you end up needing to invent a name, that might help.",1517874451.0
+__brick,"You might want to look into `<marquee>`, although it's supposed to be obsolete.",1518130864.0
+catenoid75,Some jQuery would make that pretty easy.,1517866409.0
+pdxbenjamin,"That theme, from what I can see doesn't have any functionality to make the form send an email. You'll have to code in some php or something to send anything. This template contact form is just some input boxes with a bit of validation attached.",1517864434.0
+Lukealmeida,Did you just need the filled out details to be sent to a contact email? If so you can replace the contact form in the template with a formspree contact form :) https://formspree.io/. Pretty straight forward just requires you to action the form to formspree with the contact email. ,1519224768.0
+thehobbitsthehobbits,"[Formspree](https://formspree.io/) is pretty good for simple contact form emails. It's free and easy to implement (no back-end stuff needed, basically just html and js/ajax).  Good enough if you just need something quick and simple.",1517536984.0
+newnamesam,"Sure, but the bigger question is around the SMTP server.  You will either need to build one yourself, or be okay with someone else storing all of the emails being sent and received from their server. ",1517510956.0
+earslap,"If you are running a static site, you'll need to use something like emailjs or similar. Search keywords: client side email api
+
+There probably are other services for this. If you are running a server, php etc. you can use an email script and send the form to your server but securing it will be a hassle so I'd use one of the APIs out there.",1517513910.0
+StefanOrvarSigmundss,No need for a database. If you have PHP and Postfix (or some other SMTP server) then you can use [eMI eMailer](https://emi.is/?page=2&solution=6).,1517526076.0
+shgysk8zer0,"As an alternative, you could also try using mailto: URIs. I'm not sure if you can use this as `action` on the form, but you could certainly handle this through JavaScript.
+
+Probably not ideal, but it is one way of doing this. Downside being that it would open in the default email client, but at least it would before the""From"".",1517528035.0
+crashspringfield,"Here's a pretty nifty script for sending yourself an email without a backend/sever:
+https://github.com/dwyl/html-form-send-email-via-google-script-without-server",1517587467.0
+catenoid75,"To send an email with the form data can be achieved with a 
+
+<form action=""mailto:<your_email_here>"" method=""post"" enctype=""text/plain"">
+
+I think this is what you are looking for... No need for JS or plugins.",1517643207.0
+zorndyuke,"Hey there. I trying to help, but I can't understand the problem well enough. Let's take the JSFiddle example. If one video would be 1 second ahead or even just 100ms, it would be easy to see, but as far as I see, they just deviate around ~0.000001-~0.000002 which is not noticeable with the eyes..  
+
+1. Did I correctly understood that you trying to archieve 0.00000 deviation?  
+
+2. I don't think that this is solveable perfectly, because too many dependencies are in the game like the time of the GPU calculating everything, time to travel on the mainboard BUS, time traveling on the network and general processing time and also the fact that every computer step is done one by one and not simultaniously.  
+
+I am curious: In which way is it important to reach this 0.00000 deviation?",1517838215.0
+zorndyuke,"It's basically the same, just that `section` is more semantic based.  
+
+Instead of using a `div` everywhere, using semantic based tags will help bots like search enginges or web readers to understand what you are actually representing.  
+
+You should use `section` if you have basically a new.. well,.. a new section, a new area you want to start of. If you can add a new title, you already know that this is a new section.  
+
+Image you have the top of your page. So this is your first section.. in this place there will go the logo, the title, probally the `nav` element etc.   
+
+So then you have the content section.. so a new `section` again! This content section probally have something that is like an `article` where you can add a new title with some content etc., ..  
+
+In the end: It's just semantic.  
+
+Many elements in HTML are funtional the same, just with different styling from the browser side. Like `<strong>` is just an element with `strong { font-weight: bold; display: inline; }` while an `<p>` is just something like `p { display: block; margin: 5px 0; }`, but for the browser it's an paragraph and semanticly it should hold content in it.  
+
+Always see HTML as a skeleton. The skeleton tells nothing! The skeleton just gives a solid base which you can use. Like it's telling you it has exact 2 arms and 2 legs, a head, a body, a ""footer"" (feet).  
+
+The CSS is telling how it looks like. The browser automatically adds `arms, legs { position: left/right of the body; }` etc. , (except you get some disabled mutagenes). It's the developers part to add more information like hair and eye color, size, form, etc.  
+
+Of course you can just say ""body part"" (div), but it's better to say ""eyes"" or ""ear, mouth, nose"" (the new HTML semantic tags) for that",1517818595.0
+shgysk8zer0,"I think the best answer, if you're roughly familiar with html5 elements, is to ask, ""section of what""? If there isn't an answer to that question, use a div. If the parent doesn't logically break down into sections, don't use a section.
+
+See the documentation on MDN. They also point out that a section should have a `<h1-6>` and, if you were to create an outline of the content, each section should logically appear in that outline.
+
+I'd also say that a section should never be a child of another section, though this is perfectly fine for divs.",1517016926.0
+garcialo,All of the content and controls on the page should be inside of a semantic HTML element. Use divs for visual styling afterwards. Use spans for styling bits of text within a semantic element.,1517036364.0
+MattNotGlossy,"Yeah div is your generic container element. Section, article, main, aside, and the like function exactly the same but they hive your markup meaning which is useful to screen readers, SEO, etc.
+
+Same goes for span and elements like time, abbr, cite, etc where span is an inline element whereas div ks a block",1517015627.0
+henry99milam,Come and check it out.,1516839777.0
+thebluelight1,"If you know JavaScript, then <canvas> would be good to look into. I'm going to assume that if you're going for a backend role though, that they just think some basic knowledge of front end technologies would be useful. Do they ask for CSS and JavaScript too? ",1516747472.0
+shgysk8zer0,"So, you might want to narrow this question down a bit. I mean, HTML5, if you specifically refer to HTML instead of CSS and JavaScript, and cover anything introduced in the last few years, I'd probably guess `data-*` attributes. Those can be found on almost all pages now and, if you're counting number of times used instead of number of sites using, they can often be found dozens or hundreds of times on a page.
+
+If you include CSS, maybe fonts or shadows. Would media queries be included?
+
+JavaScript is a bit more difficult. I know that Promises were a real game changer and arrow notation is really catching on.
+
+There are just too many things people refer to when they say html5 and most isn't even HTML.",1516766956.0
+shgysk8zer0,"If you're interested in a`contenteditable` demo, check out [this wysiwyg editor](An all HTML, CSS, & JavaScript HTML5 WYSIWYG Editor https://shgysk8zer0.github.io/wysiwyg/). If you view it in Firefox, you can also use `<menu type=""context"">`, which is where most of the customization and features lie (difficult to add that much using just buttons).",1516767302.0
+zorndyuke,"I made you a small sample: https://jsfiddle.net/fbtm7vun/  
+
+You need an element with an UNIQUE id-parameter like `<div id=""test"">` and then you can use the Hashtag/Route `#` to select that id `#test`.",1516720215.0
+fairshare,"You just create the anchor on the section of the page you want it to go to and then refer it in the hyperlink. For instance, the link to the section ID of “contact” on an About page would be something like:
+
+ <a href=“about/#contact”>Contact Us</a>",1516670182.0
+cassiopeia123,"So the challenge was, and I wasn't clear because this is all still new, that we aren't using wordpress. Instead, we have a custom CRM and for our sliding banner, we can't get into the HTML. We can only offer a link via a popup box this platform offers us.    
+    
+Co-worker found a workaround to this - when the link of an in-page jumplink is clicked, up in the address bar is a URL that includes the anchor  - so we just copied the URL that populated in the address bar, and entered that in our slider input box.     
+    
+I don't know if that makes sense. But it would be as if our slider banner was linked to: https://www.goldbio.com/february-antibiotics-sale#abx    
+    
+rather than doing a <a href.....     
+    
+Anyway, thanks for the other assistance. It will be useful for other things so don't worry. ",1516737633.0
+shinaku,You'd think they'd put the actual canvas element there and use that rather than record it as a gif and embed it.,1516641378.0
+goda22,"I am trying to find out what kind of poll system this website  is using. I'm not very savvy on website development and have no idea how to find this out. 
+
+Thank you very much in advance. ",1516586712.0
+NeverOC,"If you're planning on user submissions at any point, throw `rel=""noopener"" ` on it too: https://mathiasbynens.github.io/rel-noopener/",1516511121.0
+20EYES,I'm am fairly certain that is the only correct way to open a new tab with html.,1516524889.0
+lalov1,You could always try to use a light box,1516573938.0
+BkoChan,Opening them in a new window could be annoying to the user. Maybe try a modal such as [Magnific](http://dimsemenov.com/plugins/magnific-popup/),1517226547.0
+ggeeno,"PS: I'm not a designer, i only develop websites but for my own portfolio I wanted to try building it without asking for any help from my designer friends",1516474517.0
+bobrov1989,"Blog posts: 
+https://vitaliy-bobrov.github.io/blog/exploring-the-css-paint-api/
+https://vitaliy-bobrov.github.io/blog/css-paint-in-action-bar-chart/
+
+Demos (WIP): https://vitaliy-bobrov.github.io/css-paint-demos/",1526649637.0
+forcefx,"If you give the images themselves a width of em or rem this will make them maintain that width relative to the size they are.
+
+While em is relative to the font-size of its direct or nearest parent, rem is only relative to the html (root) font-size. 
+
+Ex.
+
+Img1{
+
+Width: 15rem;
+
+}
+
+Hope this helps!",1516396522.0
+isomies,"https://support.office.com/en-us/article/Create-a-survey-ea52a787-822e-4f7e-b5ed-77bb14df3aba - you wouldn't really code it yourself, just use the in-built functionality.",1516110126.0
+moondoginyoureyes,"Some methods I have used to store persistent values in SharePoint when I don't have access to a database directly include: storing the value in the ""Property Bag"" using JavaScript; and storing, retrieving, updating the value using a simple List (use the default columns or make your own columns); make the Survey in a List!",1516313951.0
+kes-,Why not use Microsoft Forms?,1516175803.0
+untitledauthor,"Yes, HTML5 drag and drop.",1515983307.0
+forcefx,"jQuery UI is probably the easiest implementation, but there is also html5 drag and drop as pointed out by /u/untitledauthor 
+
+For html5[ Courtesy of W3 schools](https://www.w3schools.com/HTML/html5_draganddrop.asp).
+
+For jQueryUI [Check it out](https://jqueryui.com/droppable/).",1516033880.0
+Pixelcrunch,"No, you can't style HTML without CSS.",1515741791.0
+Rich1223,"This is bare-bones, but you can edit to your heart's desire.  You could theoretically inline all of that styling in HTML, but it would be awfully ugly.
+
+    <div class=""circle"">Text here</div>
+
+    <style>
+        .circle{
+             border:1px solid red;
+             background:blue;
+             border-radius:50%;
+             width:200px;
+             text-align:center;
+             color:#fff;
+             padding:100px 0;
+             font-size:16px;
+        }
+    </style>",1515761190.0
+icantthinkofone,">Google's acting like this is impossible. 
+
+To be clear, Google does no such thing.",1515763560.0
+zorndyuke,HTML is just semantic structure of the website. It shouldn't (and mostly can't) style the website. CSS is responsible for the styling and should be the only thing that you have to touch when you are adjusting your website.,1515770753.0
+Linuxllc,"Why you want to do it without CSS? You can't anyway. You might be able to do it with javascript.
+
+https://stackoverflow.com/questions/6936972/draw-circle-using-css-alone
+
+http://jsfiddle.net/rkEMR/",1516760371.0
+spartiago,Use the z index function in css ,1515760619.0
+zorndyuke,Don't use a name or variable with spaces?,1515747982.0
+flipperdeflip,Doesn't matter technically but it is not really a thing to do as it looks weird and confusing to humans.,1517486035.0
+forcefx,"Can you specify a little more please? After you scroll down you want the nav bar position to become fixed once your window reaches it? You can probably use jQuery for that.
+
+
+    var nav = $("".nav"");
+        $(window).scroll(function() {
+          
+          if($(this).scrollTop() > 500) {
+            $(nav).css( ""position"", ""fixed"" );
+          }
+
+This element will take on a position of fixed once your screen reaches a certain amount of pixels from the top.
+
+just change the 500
+
+    $(this).scrollTop() > 500    
+
+to the amount of pixels from the top this menu is
+
+and give your nav bar a class of ""nav"".
+
+To unsticky it, just give it an else{} of $(nav).css( ""position"", ""relative"" ); or whatever it is normally",1516034514.0
+StaticCharacter,"The images on some of your pages show up super funky on mobile devices, just letting you know",1516049425.0
+bTrixy,"https://www.w3schools.com/cssref/pr_class_position.asp
+
+
+I think this is what you need. Check out position fixed.",1515617600.0
+zorndyuke,"Even typical help posts should have a title that at least tries to explain what it wants instead of ""need help"". Don't think it's your problem only, think spread: Maybe someone else has the same problem and wants to Google it. He won't Google for ""Typical I need help post"", but more for some keywords that describes his problem.  
+
+I am not sure what exactly you want to archieve.  
+
+Do you have an example or do you can try to draw it with paint or something? At first it sounds like css `position: fixed,`, but I am not sure if this is what you want.",1515668395.0
+brogrammer2018,"Hi Reddit! I compiled Stack Overflow Documentation on HTML to create this free HTML notes reference book
+
+
+Compiling this book has allowed me to find tags and attributes I never knew existed and have already found these new tags useful in production code
+
+
+If you have any feedback (even negative) please let me know and I will make changes to improve this HTML notes reference book",1515525103.0
+davidalanlance,"First an ""id"" value can be anything on page 26. Then on page 27, an ""id"" value must begin with a letter. This is confusing. Loving it though. Great review!",1517839862.0
+FatalDosesOfOsmosis,"Look into how to setup your own website.
+
+Then research the JavaScript KeyDown, KeyUp, and KeyPress events, along with the SetTimeout function. ",1515513359.0
+zorndyuke,"To give you an example: https://jsfiddle.net/qtkwox6n/  
+
+It has many points to optimize, but at it's simplest version this should be a nice basic.",1515583119.0
+bTrixy,I have no idea what you are talking about but HTML5 is a markup language used to build websites. ,1515449723.0
+Plump_pingu,So what sets a web worker apart from a regular script?,1515458822.0
+designtocode,"https://codepen.io/ufotofu/pen/GyOLPb
+
+I plugged it into codepen, and cleaned it up a bit. Did you copy-pasta this from somewhere? theres a ton of inconsistencies, like capitalized words and values without quotations around them. 
+
+Rule of thumb: Be consistent when writing code, its a good practice, and helps others more easily read your code, which will greatly speed up the assistance process. 
+
+That being said, it appears to have a border when i run it through codepen, and its default displayed on a white BG. Am I misunderstanding your request?",1515347855.0
+icantthinkofone,`<center>` is obsolete. `bgcolor` and `align` are obsolete attributes.,1515363703.0
+CaptainJamie,"https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API  
+Is what you're looking for, which I assume you've already found. There isn't a tutorial to do what you want, but I take it you want to map gamepad button presses to trigger selecting left or right, etc. I'm not 100% sure if this is possible but I can think of a way to do it. 
+ 
+  
+There is a property on the gamepad buttons object which has a property ""pressed"", listen for the desired button pressed property to check if it's true, and if so, trigger the key you'd like to use. For example, shift will move forward and shift + backspace will go backward, so map those to the left and right directional buttons on the keypad. Follow the guide above to register the gamepad, assign it to the gamepad variable and do something like below.  
+  
+    if (gamepad.button.pressed === true) {
+        // trigger keypress on shift button here to move selection forward
+    }    ",1514835711.0
+flipperdeflip,"There are two parts to this: 
+
+First is to make your site navigable from JavaScript, by creating an API or some functions to do whatever your users need to do on your site. So moving a selection thing around, moving it through the various lists, activating and canceling etc. You can test this with a simple UI with some form buttons.
+
+Then you hook that up to the Gamepad API (and or whatever else), this is the easy part really.",1514886936.0
+bronkula,Straight up copied from here. http://js1k.com/2012-love/details/1209,1514320677.0
+GO-ON-A-STEAM-TRAIN,"Thank you for sharing this! I've been using Nexus UI for a current project, but some of the limitations are starting to pile up :)",1514312824.0
+anlumo,"For styling, take a look at [CSS grids](https://css-tricks.com/snippets/css/complete-guide-grid/).",1514237061.0
+wh33t,"  <iframe> 
+
+Would be basically a drop in replacement. ",1514261405.0
+pixleight,"You could include the separate files via PHP:
+
+    <div class=""sidebar"">
+        <?php require_once('sidebar.php'); ?>
+    </div>
+    <div class=""messages"">
+        <?php require_once('messages.php'); ?>
+    </div>
+    <div class=""newmessage"">
+        <?php require_once('newmessage.php'); ?>
+    </div>
+
+Then style the page as needed.",1514228678.0
+ClickHereForBacardi,"HTML doesn't support nested comments. Sorry to be the bearer of bad news.
+
+Edit: Most languages (markup, styling, and programming) don't support it, but the one exception I can think of is OCaml, which does in fact support nested comments.",1514171646.0
+TotallyUnspecial,The closest you can get is to put a space between -- and > on the inner comments. <!---yeyeyeyeye-- >,1517001250.0
+Ojrsh,"// for one line 
+
+/* for multiple lines */
+
+<-- same here but html -->
+
+but no nested comments. I don't even see the point.",1514180127.0
+redf150flames,Why not just leave off the -->? ,1514174461.0
+keele,"Have you tried in line css? I believe this should take precedence over what's on the style sheet.
+
+https://www.codecademy.com/articles/html-inline-styles
+
+",1513842396.0
+shart290,"You can in the header of the html using a media query. 
+
+https://css-tricks.com/snippets/css/media-queries-for-standard-devices/",1513786963.0
+ThirdThreshold,".img-class{
+display: block;
+}
+
+@media screen and (max-width:1200px){
+ 
+.img-class{
+display: none;
+}
+
+}",1513802826.0
+amightybeard,It's a shame you can't access a css file.,1513805084.0
+amightybeard,That would make sense,1513812143.0
+rainbowWar,"Just use internal css, like this. 
+
+<style>
+body {background-color: powderblue;}
+h1   {color: blue;}
+p    {color: red;}
+</style>
+
+Also ask questions on Stack Overfow",1513798464.0
+Matosawitko,"You need a **web hosting provider**. GoDaddy is one; there are many others as well.
+
+A web hosting provider offers you a certain amount of storage for you to place your HTML and related files, and a certain bandwidth allotment per month.
+
+You could self-host, if you had *all* of the following:
+
+* A static IP address (or a service such as DynDNS that updates the DNS whenever your IP address changes)
+* Your domain name registered in DNS to that IP address
+* An always-on computer in the DMZ section of your router/firewall, hosting content for that IP address
+
+/u/shoter0 mentioned Github Pages. That might work for you too, ~~though you wouldn't be able to use your domain name with it~~. There's a guide on the Github page for setting this up with a custom domain.",1513721197.0
+shoter0,"I think that for simple website without backend [Github Pages](https://pages.github.com/) should be ok.
+
+I did not use it though so i cannot say how to use it. You just have repository which can be displayed as HTML site.
+
+Btw. It is free :P.",1513721222.0
+Pratheeraja,Just google how to host a static website in Github. This one is simple and free. The next option is by AWS. Lots of youtube videos is there for hosting site in AWS. You need a domain mapping for this method. ,1513844910.0
+Earhacker,"I think the easiest (and free-est!) way to get started is [Github Pages](https://pages.github.com/), using the Github Desktop client for Windows or Mac. You'll need to sign up for a Github account, but if you're planning to turn web design/dev into a job, then Github is a tool you'll use every day. Full instructions are on their site, and there's /r/github if you have questions.",1513721565.0
+tobsn,"amazon AWS lightsale free tier.
+
+don’t use garbage services like godaddy.",1513767321.0
+kamomil,"1) webpage hosting
+
+2) an FTP program to upload it",1513748757.0
+incarnatethegreat,And now I know how it's done. Thank you. ,1513656033.0
+Pratheeraja,Thats cool. Now I know how does that work.,1513845288.0
+Daroxx,It's just beautiful to watch someone code. For me as an absolute beginner (just started with basic html) it's like watching someone drawing smth amazing if you are not even able to hold a pencil correct. Thanks for this.,1513249301.0
+szaman76,"what is this devil language
+",1512997894.0
+TestamentaryGenus,good,1512867700.0
+syclix,I remember doing something similar with the diamond square algorithm.  https://github.com/edwardadd/js-projects/tree/master/proceduralheightmap,1512429189.0

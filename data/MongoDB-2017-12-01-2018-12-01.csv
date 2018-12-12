@@ -1,0 +1,2065 @@
+author,comment,timestamp
+PressiDef,Mongodb is database not software ,1543626794.0
+jkamp,"You're almost there, but you want to use the $elemMatch in the projection, not the query. By using it in the query, it's finding the documents that contain the 'owner' : 'me', but still returning the complete document. What you're asking is for it to only return those subdocuments that have 'owner' : 'me' ",1543550198.0
+EffectiveTrouble,This helped me a lot: https://docs.mongodb.com/manual/applications/data-models/,1543515671.0
+phaxsi,"There is nothing wrong with using id references in Mongo, however there are a couple things I would improve upon:
+
+- I would insert basic profile data into the User collection. (gender, location, rank, etc). While in SQL is usually a good practice to keep these data separated, part of the appeal of NoSQL is having all this information easily accessible in a single document. Put the settings inside a settings sub-document, the profile inside a profile sub-document, etc.
+
+- That said, things like follower ids, club ids, upload ids, liked posts should be elsewhere. When you design a collection, one thing to keep in mind is how often do you need all the data in a single document. A user's basic account and profile info might be needed then displaying info about the user anywhere in the app (for instance you would like to display their rank alongside their picture everywhere), but things that can grow unbounded like followers, will increase a lot of memory to fetch them when you just need basic info. Also, there is a 16mb document size limit.
+
+- In line with the previous observation, you don't need to store post ids in the Profile collection, you already have that information in Posts collection as the creator user id. Duplicate data should be avoided when possible, even in NoSQL dbs, due to their potential for causing data consistency issues and bugs. The same can be said about uploads ids (you can put that info in the Uploads collection), likes (you already have that in the Posts collection).
+
+- I would avoid storing file uploads in GridFS, it's almost always better to store the files in the file system (or an object store as other user suggested) and just store the filename/path in MongoDB. Uploads could have user id, filename, date,etc.
+
+- All this means that you will have to do many database calls if you want to retrieve the complete information of a single user profile. That's not as bad as it sounds, though. If you create the correct indexes, etc, it will be as performant as doing a single join in a relational db. 
+
+Correctly designing a database (relational or not) greatly depends on your access patterns, so take what I said as just a possible approach. ",1543519655.0
+cryonine,"I probably wouldn’t differentiate users from profiles. As you mentioned, it seems like you’re using it a bit too much like a relational database in that situation.
+
+I’d also personally avoid GridFS. It seems like a decent idea at first, but you should really use some sort of object store instead.",1543519460.0
+shrinivas28,"Before starting MongoDB you should learn how to design schema in mongoDB.  Naming convention for collection. precautions for naming a collection,  points to keep in mind while creating a database name [read more](https://www.tutespace.com/2016/03/schema-design-and-naming-conventions-in.html)  
+ ",1543570724.0
+goodwid,"Mongoose is a great tool for that.  It's an ORM that operates on MongoDB.  There is also MongoDB, the basic app layer for Node, if you're not looking to have structured data.  Either one has a wealth of documentation both in official docs and elsewhere.  ",1543460056.0
+gujjar_ravaiyya,Check Brad Traversys videos on YouTube. Both MERN stack and react-express-starter pack videos cover this topic. ,1543464415.0
+honigbadger,Check out MongoDB stitch!,1543469968.0
+jbohde,“Deploying a MERN (Mongo Express React Node) stack web app on to Heroku” by Chandra Lindy https://link.medium.com/Lry28hbaeS,1543456193.0
+ENx5vP,"The MongDB client ist made for server-side Node.js, not client-side React. You've to put in to your Node.js application. If it would stay client-side, everyone would be able to manipulate your database.",1543312904.0
+FriedSoftShellCrab,"Like other people have said, the nodejs driver is intended for connecting your backend application to mongo rather than the react front end. However, Atlas has a feature called Stitch that allows you to query mongo directly from your front-end application (as well as a bunch of other features)
+
+[https://docs.mongodb.com/stitch/](https://docs.mongodb.com/stitch/)",1543315289.0
+UnappreciatedMeasure,"AFAIK there is no way to connect from React (browser) to the MongoDB Atlas (cloud). This example shows the usage of a nodejs app. This nodejs will probably expose your public files (react files) and, when a request is made from your react to your nodejs than the nodejs will go to the database. This is the most common approach.",1543314667.0
+gngeorgiev,You are looking for a replica set,1543214116.0
+welkie,"This pattern sounds like CQRS to me. If you Google that term, you'll find plenty of examples on implementing it. I'll get you started with a few I already know of:
+
+https://martinfowler.com/bliki/CQRS.html
+https://www.thereformedprogrammer.net/ef-core-combining-sql-and-nosql-databases-for-better-performance/
+
+That's a pattern that causes your software to be very extensible, since you can use different databases all together for read and write. But if you're okay with just Mongo, and a few constraints replica sets impose, then check out replica sets. Might be simpler for your use case.",1543239288.0
+Siltala,Do you have an index on the field you're querying?,1543055838.0
+chrisdefourire,"This query is always going to be a full collection scan, and will always return 500k documents, no matter what. The query part of your query is `{}` which means ""every document"". I don't know what's your use case: who wants a long list of publication date with no other data? Are you trying to get statistics ? In this case you should use the aggregation framework.
+
+I mean, 2:30 to scan 500k documents (no idea how big each document is) and output 500k results isn't bad, if not useful...",1543058672.0
+aamfk,"shred that xml into a relational database that is properly normalized.  if you had a docunent header table and then documentdetails rows.. im guessing that scanning the document header table wont take 2.5 minutes. maybe im misunderstanding. 
+
+for the record i do similiar stuff all the time. parsing a document inside of a database can be very exciting to combine data from multiple documents in a single resultset.. dont get me wrong. just thini that 2.5 minutes to scan 500 document header records. youre right its really not very fast ",1543075225.0
+Jonno_FTW,Are you sure you want to match documents with _id==0?,1543070346.0
+pruse2402,"Thanks Guys for your reply.
+ I found it finally.. I am pasting the Query for someone's future reference
+
+db.getCollection('receiptTemplate').updateMany({""printerTemplates.receiptType"":""K""},{""$set"":{""printerTemplates.$.settings.consolidateMenuInKitchen"":true}})",1543131719.0
+mikeisgo,Use dot notation..,1543000602.0
+PntBtrHtr,Depending on your mongodb version it can be difficult to update a single value of an object in an embedded array.,1543001033.0
+Siltala,"If all else fails, you can just go with javascript",1543001260.0
+pruse2402,Thanks for your reply guys. Am new to mongoDB can I get any example?!,1543029510.0
+andrew_ie,"It sounds like you're best off looking at using [change streams](https://docs.mongodb.com/manual/changeStreams/) - monitor your price collection, then have your application run a find() on the alerts collection to see who is monitoring that particular price, and perform the update. 
+
+This prevents unnecessary querying, and if prices don't change, you don't send any alerts.
+
+If your database is being deployed in Atlas, then you can use [Stitch Triggers](https://docs.mongodb.com/stitch/triggers/database-triggers/) to do all the plumbing for you.
+",1542961088.0
+tobsn,you might want to consider a different tech for this. look into amazon lambda/dynodb/kinesis etc.,1542966349.0
+apfejes,"Sounds like you've gotten help from someone else, and then are asking us to help you figure out what that person has told you.
+
+I think you'd be better off talking to the first person, because they know what's going on, and you haven't given us enough information for us to retrace what they've already figured out.",1542826745.0
+cryonine,"The whole point of MongoDB is that it allows for a flexible schema, so a single collection can have documents with varying data structures. You do need to be careful with this though since you can run into a lot of code complexity if you are looking for fields that randomly do and don't exist. ",1542732566.0
+PntBtrHtr,How are you converting your xml to json? What language or driver are you using to interact with MongoDB?,1542691925.0
+sdq-sts,I can't help you with technical questions but what you are looking for is multitenancy. ,1542671985.0
+burninggun,"You could create a unique schema of users for each company.
+
+For example, if you were handling Costco’s users you would have a schema named Costco containing the various users within Costco",1542672460.0
+thajunk,"Look into using the aggregation pipeline, i believe it has a join operator",1542634532.0
+sukaibontaru,"Wronng sub.
+
+Use RDBMS 😅",1542661813.0
+Transformat0r,"If using mongoose then in your scema you should have pets field defined like this :
+
+pets: [{Schema.Types.objectId,
+ref:'pets' }]
+
+Then yo can use populate on that collection like this:
+
+User.find ({name:'Mike'}).populate('pets').exec ((err, user)=>{
+//Your code here
+});
+
+Hope that helps",1542623280.0
+Transformat0r,"Then maybee something like this:
+db.users.findOne ({name:'Mike'}, (err, usr)=>{
+ let parsedUser = {};
+ parsedUser.name = usr.name;
+ parsedUser.pets = [];
+ usr.pets.forEach ((pet)=>{
+ db.pets.findOne ({_id: pet.id}, (err, pet)=>{
+   parsedUser.pets.push (pet);
+  });
+ });
+console.log (parsedUser);
+});",1542626645.0
+agokjr,"I have just done a bucket based on a unit of time like 1 hr and which sensor. Pushing each reading on to an array of values witch each having a date stamp and values. Wiretiger is copy on write anyways. Before wiretiger mongo had this blog post. https://www.mongodb.com/blog/post/schema-design-for-time-series-data-in-mongodb
+
+Also not a bad idea to create the running stats the same time. To allow accessing stats without fetching all data points from server,
+
+Count, sum, sum of (values)^2, min, max",1542602947.0
+cryonine,"Are you taking about change streams? If so, have you considered just initializing a single member replica set?
+
+Either way, if you want to create a capped collection, the Mongo documents have a lot of information on this and other topics. I would encourage you to read them. ",1542416348.0
+Siltala,But why?,1542397961.0
+Lighting,"Why would you create three collections in this migration instead of just one collection with fields movies, actors, categories?",1542301491.0
+ruspow,"i wish i was this enthusiastic when i was at university, keep it up :)
+
+&#x200B;
+
+seems a bit weird to just migrate the same relations to mongo as part of a database course, im with u/lighting i would have expected your lecturer to have wanted a more document based result rather than relational",1542327951.0
+sveti,"Have you looked into [Studio 3T](https://studio3t.com/)? It's a MongoDB IDE with a SQL Import feature that supports the main SQL databases (Oracle, Microsoft SQL Server, MySQL, PostgreSQL): https://studio3t.com/knowledge-base/articles/mongodb-import-export/#import-sql-to-mongodb",1542281653.0
+Saud381,Have you looked into mongoose? ,1542247315.0
+shrinivas28,"Check for the naming convention and best usage of field before you start with mongoDB : 
+
+[https://www.tutespace.com/2016/03/schema-design-and-naming-conventions-in.html](https://www.tutespace.com/2016/03/schema-design-and-naming-conventions-in.html)",1542248922.0
+redsterXVI,"Judging from what you said, the shell is just working fine.
+
+\`db\` references the database you're currently working with, i.e. it basically shows the database you're currently using. If not specified otherwise, the mongo shell will use the \`test\` database by default. What you want is \`show databases\` and \`use <database>\` (or specify the database on the command line, I think with \`--database\`).
+
+\`db.users.find()\` probably doesn't find anything, because there's no \`users\` collection in the \`test\` database.",1542195447.0
+krav_mark,"Hi there,
+
+You are getting the whole collection and then loop over it when selecting
+
+     db.mycol.find()
+
+If you want only one result you can use sorting and limiting like
+
+     db.mycol.find.sort('number').limit(1)
+
+where 'number' is the key name you want to sort by.You can sort ascending or descending by adding 1 or -1
+
+     db.mycol.find.sort('number', -1).limit(1)
+
+Hope this helps :)
+
+EDIT :
+
+Correction
+
+    db.mycol.find().sort('number', -1).limit(1)
+
+&#x200B;",1542194078.0
+Jonno_FTW,You need to use a capped collection. They allow you to get a cursor that blocks until new documents are received. ,1542972783.0
+imnotzuckerberg,Maybe indexing is costly?,1542217625.0
+chrisdefourire,"would a lighter embedded db like leveldb make more sense in such a constrained environment ? it would be way lighter for sure, but I don't know how badly you need mongodb for your processing/searching",1542205967.0
+redsterXVI,"Step 1: use newer MongoDB version
+Step 2: use Wired Tiger",1542189781.0
+PntBtrHtr,Did you start mongodb first?,1542167549.0
+,"Howdy! I'm doing a course in full stack development, but can't get the mongodb  server to start. I got it going before. Here's the error. Thanks in advanced!",1542153502.0
+Georgeogormann,"This is what happens when I try to start mongo for the first time. It is not running when I get this error. It worked before. I started this thread -- I had to change my user name.
+
+&#x200B;",1542238825.0
+graboskyc,Do you have any indexes? Do an explain plan on the query and make sure it is set correctly. And do you need the whole document returned or just part of it?,1541773654.0
+agokjr,"I agree with the explain make sure you have the fields indexed. 
+
+Also it looks like you should be able to do a normal query (not sure on any different time wise but I would try it.)
+
+Since you are especially wanting the latest items inserted. You could use a capped collection as a copy limited to 18. (As a copy when inserted or if you don’t need more online)
+
+Watch query using https://docs.mongodb.com/manual/reference/method/db.collection.watch/ to have the service have it ready for when requested.
+
+It also an idea is how much paging is the database doing? ",1541774864.0
+PntBtrHtr,If this date time field is the time the record was created you could take advantage of _id and reverse sort it instead.,1541775952.0
+ruspow,"you install and configure your mongodb server first then you  run mongorestore to upload your dump to it.
+
+&#x200B;
+
+mongodb cloud has a free tier you could upload to if thats easier for you?",1541654103.0
+maimedforbrowngod,"I wanted to update.  This is actually quite easy, but required me to create a new ec2 and install mongo fresh with latest version.
+
+&#x200B;
+
+1. Then used filezilla to upload the mlab file, after downloading from s3 to my laptop.
+2. Then extracted tar from within ssh on this ec2 instance.
+3. Then ran mongorestore filename
+4. Voila :)  ez.  Not sure if there is some way to make mongorestore on a recent version mongodump work on a server with an old version of mongo.",1541738867.0
+ferris_is_sick,"I hope this is a school project or just for fun. Because if it’s not, why would you use a noSQL database to solve this kind of problem?  This is exactly the sort of relational problem SQL dbs are built to solve.   Note, I say this as someone who has spent the last 6 years helping to build a company on the back of Mongo.  ",1541681624.0
+stennie,"There is a [global `/etc/mongorc.js`](https://docs.mongodb.com/manual/reference/program/mongo/#mongo-global-mongorc-file) file which will be evaluated for all users when the `mongo` shell starts.
+
+The user-specific RC file (`~/mongorc.js`) will also be evaluated (if present) after loading the global file.",1542303594.0
+making_code,"title: ""How to set up a GraphQL Server using Node.js, Express & MongoDB"".
+
+5% into the article: ""Now we’re gonna set up **Babel** for our project. Create a file called .babelrc in your project folder. Then, put the @babel/env there, like this: ...""
+
+I don't want to install no babel-shmabel. or mongoose. do that in plain node.js+express+mongo as it's stated in the title.",1541580632.0
+ZippyV,"Keep in mind the maximum size of a document is 16 MB. I think you could easily exceed that limit.
+https://docs.mongodb.com/manual/reference/limits/#bson-documents",1541505183.0
+pkstn,"MongoDB’s GridFS is just for that!
+
+https://docs.mongodb.com/manual/core/gridfs",1541512043.0
+cryonine,"Mongo could likely do this, but this isn't its strong suit. Elasticsearch is probably a better fit here, especially if you're implementing search. There are a number of questions around using ES for books, and the official documentation even [references this use case](https://www.elastic.co/guide/en/elasticsearch/reference/current/general-recommendations.html). ",1541503729.0
+jkh911208,"I think you can use GridFS with MongoDB to store big size data, ",1541516343.0
+jkamp,I would probably look to Hadoop for something like that. ,1541536127.0
+DerpsMcGeeOnDowns,Go to Taco Bell and order the left side of the menu. You’ll start sharding in no time. ,1541388724.0
+redsterXVI,"The mongos servers are stateless and they use the config servers to store important metadata. There's usually three because config servers have to be a replica set and three nodes is the standard for a replica set. Same goes for shards, they are usually replica sets consisting of three nodes. But of course other configurations are possible too.",1541367032.0
+regex1884,Docker is one solution.,1541122103.0
+totoneo1981,"you could bundle a version of embedded mongo with your jar but I've always used it only for testing so I'm not sure there a way to persist on disk, but it's likely to be possible",1541115245.0
+stusmall,"For what you described it might be a lot easier to use SQLite.  It's simple to use, has great Java bindings, and is purpose built for embedding into applications.  ",1541132806.0
+Saud381,"Cant fully answer your question but you can use mlab or mongodb atlas (both have free tier - 500mb) to avoid this issue. 
+
+Edit: it’s as simple as by generating a db url from mlab and then replacing it with the mongodb connect url.",1541114457.0
+acreakingstaircase,"I guess it depends on how you package your app. 
+
+
+If you used docker for example to containerise your app, then people would only need docker because the “internal environment” is 100% under your control, ie having mongo. 
+
+
+Also if you use a package/build manager (maven) then you would only say you need mongodb and it would download automatically without having to manually download and install external jars. ",1541115324.0
+mambeu,Don’t put quotes around your query. (The object in `find()` ),1541115117.0
+cryonine,Have you used `explain()` to see what's going on?,1541012673.0
+gngeorgiev,Wtf did I just read,1540898770.0
+legotri,Have you thought of trying a college education? Learning to communicate would be a great first start.,1540832372.0
+throwawaystuff000,Anyone else with error?,1540722506.0
+yereby,"You should look at `insertMany()` [https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/](https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/)
+
+You can pass an array to this method.",1540587704.0
+sdawson26,"How big is the entire document? Might be possible to query the whole document, do operations on it, then re-save it. I might be wrong, but with that approach, you'd only make 2 calls to the database rather than 500.",1540615203.0
+ChristopherBate,"If you have a function or method that you are using to insert docs/sub docs then I would suggest using that in a loop. That way you should have your schema validation being used, rather than passing straight to the DB.",1540589341.0
+,[deleted],1540449211.0
+jphuc96,Try Robo 3T,1540449647.0
+aishks14,From my point of view Robo 3T should be the best option. You can always go with it for all your experimental as well as development tasks.,1540452240.0
+mainstreetmark,dbKoda,1540469316.0
+ScaleGrid_DBaaS,"Here's a good article that compares the [best MongoDB GUI's](https://scalegrid.io/blog/which-is-the-best-mongodb-gui/), all with free developer/community editions:
+
+1. MongoDB Compass
+2. Robomongo
+3. Studio 3T
+4. MongoBooster",1540992635.0
+alansql,Try QueryAssist for MongoDB,1541016782.0
+jkh911208,is there any free tool?,1540447345.0
+ENx5vP,">Whereas, MongoDB does not support transactions.
+
+Not up-to-date.",1540294974.0
+Kazid,I cannot see doing it in a stocastic way only with MongoDB without using JS to help you with.,1540270948.0
+thmyth,"Add a parent property and look at $graphLookup. You'll have to work on the data to sort it. If you don't mind recursively querying, you could start at a node, find all children, then for each child, find it's children.",1540254936.0
+minimalniemand,As a DevOps currently learning about mongodb this is also very helpful to understand the basics ,1540135720.0
+yereby,"I believe many users can have the same book in their list.
+In that case you can have a books collection and the ids in the users one. 
+
+For the notes think about the job. Are they more tied to the users or to the books ? This answer tell you where to put them.",1540127683.0
+ruspow,what is the specific problem you are trying to solve? distributed email storage for redundancy? webmail solution? indexing/search?,1539875666.0
+Siltala,How many CPUs do your nodes have?,1539713464.0
+Vagner1981,"Please , (past) , send log of mongodb ",1539732758.0
+marcato15,"I think an important note can be found on their FAQ page. 
+
+“What are the implications of the SSPL on applications built using MongoDB and made available as a service (SaaS)?
+
+The copyleft condition of Section 13 of the SSPL applies only when you are offering the functionality of MongoDB, or modified versions of MongoDB, to third parties as a service. There is no copyleft condition for other SaaS applications that use MongoDB as a database.”
+
+https://www.mongodb.com/licensing/server-side-public-license/faq
+
+
+I have a feeling that the license change and Mongo buying mLab were strongly connected as it sounds like mLab would go out of business under this new license, which I’m sure Mongo informed them of.
+
+https://blog.mlab.com/2018/10/mlab-is-becoming-a-part-of-mongodb-inc/
+
+Looks like they want Atlas to be the only paid provider of Mongo, which tbh, makes a lot of sense. Use Mongo for whatever app you want except the most ubiquitous value proposition for MongoDB - selling cloud hosting for the service. It’s not unlike virtually any other open source software that makes the software available for free but sells a cloud hosted solution. It’s the only way they are able to continue investing in the software. ",1539869263.0
+thekozmo,"I've written a blog about this:
+
+[https://www.scylladb.com/2018/10/22/the-dark-side-of-mongodbs-new-license/](https://www.scylladb.com/2018/10/22/the-dark-side-of-mongodbs-new-license/)
+
+Spoiler: It's a big nono
+
+Disclosure: I'm ScyllaDB co-founder",1540230230.0
+mort96,"Note that this change means that MongoDB is, at least for the moment, not Open Source according to the Open Source Initiative, since it doesn't use one of the OSI's approved licenses. Whether the OSI will eventually approve the new license remains to be seen, but it seems bold to move to a new license before the new license is considered an open source license.
+
+EDIT: I should probably elaborate a bit on why what the OSI thinks might matter.
+
+One definition of the term ""open source software"" is any software where the source code can be viewed. This isn't an entirely unreasonable definition, but it's not that useful; most people would not consider a project ""open source"" if its source is available but its license prohibits anyone from actually using the source code for anything at all (including running the software). Therefore, we need some criteria for what we consider ""open source"", which is more complicated than whether or not the source can be viewed.
+
+A pretty good, and not that uncommon, definition of ""open source"" is projects whose source is available under one of the licenses which the OSI considers ""open source licenses"", and which otherwise fits the OSI's [definition of open source](https://opensource.org/osd). (The new MongoDB license also arguably conflicts with the ""License Must Not Restrict Other Software"" section of the definition, but IANAL.)",1539720099.0
+zylo4747,How does this affect projects such as Percona?,1539713843.0
+chafey,"This is an unsettling change - was there any indication of this coming?  Has anyone had legal review this yet and can share?  I am uncertain what kind of solutions would trigger the viral clause of this license.
+
+This kind of thing damages the open source movement.  I get that its their right to change their license, but I am going to prioritize changing to another database because of this - who knows how the license will change tomorrow.",1539701897.0
+Quadraxas,"This forces everyone who uses mongodb for commercial purposes to switch to the enterprise license or open-source their project.
+
+&#x200B;
+
+i think a mongodb agpl fork is imminent.",1539729317.0
+klumba,Great app by the way. Nice syntax highlighting.,1539625322.0
+HauntingJacket,"Mongo Viewer is a FREE tool for viewing MongoDB. Its simple intuitive UI allows you to look into your MongoDB collections and documents from anywhere in the world.  
+
+
+Currently, it supports hierarchical loading of databases/collections/documents. Documents are conveniently presented as structured JSON with syntax highlighting. You can sort documents in a collection by any field.  
+
+
+We would like to know your impressions from using Mongo Viewer. Please feel free to contact us with your thoughts, found bugs, and features you would like to see in future releases.",1539624665.0
+sdawson26,"$addToSet might help you here. Not sure which module you're using for interfacing the DB but if you could somehow implement that parameter, it should do the trick.
+
+[https://docs.mongodb.com/manual/reference/operator/update/addToSet/](https://docs.mongodb.com/manual/reference/operator/update/addToSet/)",1539625246.0
+simongooss,[$in](https://docs.mongodb.com/manual/reference/operator/query/in/)  ?,1539607830.0
+cryonine,"The Mongo documents have detailed instructions on installing previous versions. [Here's the page for 3.6](https://docs.mongodb.com/v3.6/administration/install-community/). You can get 3.6 from the downloads page by selecting [""Previous Release""](https://www.mongodb.com/download-center#previous). The binary package for Windows should include the server and shells.",1539556153.0
+raphaelarias,Why not using Atlas? Mlab was acquired by them and you may have to migrate anyway.,1539590748.0
+SaraMG,"That's not so much an error as a warning that things MAY not work as expected.  The reality is that newer shells should absolutely work fine with older servers within a few releases.  If you had actual problems using a 4.0 shell with a 3.6 server, I'd be surprised.",1539886887.0
+isakdev,"I wouldn't do arrays. If you have an array, consider using a new collection with items having object id of parent collection. Not the other way around. Don't just make a new collection and still have an array but with ids, that's an antipattern.",1539524538.0
+skisauveur,Just pay for an ad next time.,1539362657.0
+,[deleted],1539364812.0
+cryonine,"1. If you're running 3.4, you can't go directly to 4.0. [You have to upgrade all members to 3.6](https://docs.mongodb.com/manual/release-notes/4.0-upgrade-replica-set/), then upgrade them to 3.4 Having 3.4 and 3.6, then 3.6 and 4.0 in the cluster will not be an issue.
+
+2. Yes, you can. The option you're looking for is either `net.ssl.mode: allowSSL` or `net.ssl.mode: preferSSL`. Once you move everything to SSL you can change that setting to `net.ssl.mode: requireSSL`. The [configuration section](https://docs.mongodb.com/manual/reference/configuration-options/#net-options) has everything well documented.
+
+I'd read over the 3.6 and 4.0 documentation. Mongo documentation is top notch and covers both of your scenarios in great detail, including upgrade guides and requirements.",1539314430.0
+itsenov,"Can you try to put the query inside ""  "" as described here https://stackoverflow.com/a/13292572",1539288997.0
+irobotnothuman,Maybe your problem is due to a [change in MongoDB](https://github.com/sgnn7/deploying_with_docker/issues/2).,1542644622.0
+lumpy_potato,"One free DB per project. You can have multiple projects in one org, and multiple orgs per Atlas user. 
+
+ObjectRocket and compose both have hosted MongoDB solutions. ",1539220650.0
+HappinessFactory,Up vote because I would like to know as well and Google fu returns no results :|,1539209627.0
+ScaleGrid_DBaaS,"Would love for you to check us out at ScaleGrid. Here's a good comparison of how we stack up against mLab, Atlas, Compose and ObjectRocket. We also have a startup program where you can get free database management for a year - [https://scalegrid.io/mongodb/hosting-comparison.html](https://scalegrid.io/mongodb/hosting-comparison.html) ",1539289438.0
+alejandrojsx,https://www.mongodb.com/cloud/atlas,1539267338.0
+smallbee2,"Atlas provides ONE free 512MB db, right? How does it affect mlab users who have multiple free dbs?",1539193664.0
+raphaelarias,O really like MongoDB Atlas.,1539181593.0
+tacoman58,"With MongoDB, you aren’t structuring with “a collection inside another collection” but rather relating 2 collections via foreign keys. So, for example, you can have a users collection, where each document has a unique ID, then you can have another collection, say transactions. Each transaction can include a userId field directly relating to a document in the user’s collection. So, you could then find transactions for a particular user using find: Transaction.find({userId: [userId]}). 
+
+There are lots of examples of this online that are easy to find. ",1539106561.0
+Siltala,You want relations. Relational databases have them. Why are you using mongo?,1539104037.0
+lumpy_potato,"> Atlas
+
+Have you already reached out to their support? They likely have better tooling to assist in diagnostics. 
+
+What instance size are you on? IIRC the M0/2/5 instances are shared, while M10/20 are not necessarily meant for prod workloads. It might be a pure and simple sizing issue. 
+
+What do your cluster metrics look like? Do the I/O spikes correlate with your workload at that time? ",1539096352.0
+zmuci,"Ok, I found it. Its not `$in`, its `$all`",1538946783.0
+yetigolfer,"What do you mean by ranged?  ... full documents between values like dates, strings or range of values inside of an array in a document",1538877188.0
+gngeorgiev,You need a mongo driver,1538840548.0
+cahva,"Only with aggregates (checkout $lookup from the docs) you can do that within one query. If you cant use lookup (you have older version), you have to do it the old fashioned way: first find the owners by name and get their id’s. Then fetch the dogs using those owner id’s.",1538778119.0
+PressiDef,Anyone posting here deserves an upvote good job bro we must share more!,1538792408.0
+stennie,"Morphia development hasn't kept up with the newest MongoDB server and driver features, but there has definitely been progress since Morphia 0.9.
+
+In Sept 2018 Morphia moved to a new GitHub org and maintainer, so there should be some renewed activity on the way: [Big Morphia announcement (mongodb-user group)](https://groups.google.com/forum/#!topic/mongodb-user/Q5-uBOUqkDs).
+
+Depending on what features are required for your use case, you could also consider using the POJO support in the official MongoDB Java driver: [MongoDB Driver Quick Start - POJOs](http://mongodb.github.io/mongo-java-driver/3.8/driver/getting-started/quick-start-pojo/). The official driver is actively maintained and includes full support for all the newest server features.",1539307015.0
+thancock14,"I evaluated graphql, and it seems very flexible and powerful, but decided OData was much more mature and works very well with MongoDB. The only thing you have to disable is odata's joins (which are called expands)",1538442170.0
+marcofalcioni,“Make sure your indices fit in memory” ,1538315750.0
+Jackson147,https://university.mongodb.com/courses/M201/about,1538333925.0
+nepobot,I know nothing about c# but i see that is an https uri. Have you verified your application is getting back the json you are expecting? Often you need a certificate to successfully retrieve the resource. ,1538177360.0
+Kazid,"Use a right library for requests. StackOverflow is your fried:
+https://stackoverflow.com/questions/8270464/best-way-to-call-a-json-webservice-from-a-net-console",1538187020.0
+coquins,Please execute rs.conf () in the mongo shell. If I'm not wrong you should find the priority in the output of that command ,1538088030.0
+tobsn,?,1538088742.0
+cryonine,This is basically a blog spam advertisement for a Udemy course. Why not just link directly to the course?,1538117941.0
+1111lll11l,"Look into the update command  https://docs.mongodb.com/manual/reference/method/db.collection.update 
+Specifically you'll want to read up on the ""upsert"" option and the ""$setOnInsert"" operator. ",1538015362.0
+UNWSDWF2121,"Seriously? Tries to sign up....return error -Please use an email account from a reputable provider? i.e.- google, yahoo? So ProtonMail isn’t reputable? Bummer. 
+Edit: bummer",1537568196.0
+redsterXVI,"Your problem is that you're still running MongoDB 2.6 and MMAPv1. Seriously, it's high time to move on.",1537393200.0
+bezerker03,"Resyncing the node if it's in a replica set will have a similar effect to compaction on disk.
+
+That said,  move on and switch to wiredtiger. ",1537408382.0
+thejayhaykid,The default for Linux and I believe macOS also is `/data/db` for Windows I believe it is `C:\data\db`,1537276489.0
+dipika_patil27,"if your using linux machine 
+
+then run command ps aux|grep mongo 
+
+with this command you find mongod process running and in --dbpath mongodb database path is written and if  mongod running  using config file so in config file you will get your dbpath",1537348838.0
+samgwiz,"For bulk inserts, I find mongoimport is very fast.",1537235668.0
+JoMa4,"Unrelated, but man that sample data is verbose. Do you have any control over it?",1537226561.0
+JoMa4,"I could be misunderstanding the code, but you aren't really looping through the JSON object.  You are just looping through a series of numbers (while x < count) and doing a lookup on the JSON each time.  It's been a while since I've worked this, but can't you actually loop through the JSON object itself rather than doing a lookup each time?  That might significantly speed things up.",1537228041.0
+gngeorgiev,Mongo has specific API for bulk inserts,1537267689.0
+thancock14,"I would point you directly to their java or c# github. Also their main docs are actually really great, you just need to put in the time and effort to read them",1537039471.0
+Kazid,You are looking for [Python Eve](http://python-eve.org). It's the easiest framework i have ever found to work with MongoDB. Really helps to work with baby steps on it.,1537244947.0
+tiwyeagle,"If you are using TypeScript and trying to avoid mongoose checkout this package [mongodb-typescript](https://www.npmjs.com/package/mongodb-typescript). It is a lightweight wrapper around vanilla mongodb. It allows accessing pure mongodb collections.
+
+There is a few examples at GitHub repo in folder `test`. I have wrote it because I was so frustrated with inconsistency of mongoose and my inability to properly define types its uses. ",1538037530.0
+tyler_church,Why this instead of mongodump and mongorestore?,1536957231.0
+cahva,"If you have indexed your collection so there can’t be duplicates, you can run unordered bulk write which will continue inserting data to the collection even after duplicate errors.You will get writeErrors for the duplicates in the result.
+
+https://docs.mongodb.com/manual/reference/method/db.collection.bulkWrite/#db.collection.bulkWrite",1536833332.0
+cryonine,"It’s a good guide for the LetsEncrypt portion, but you should definitely remove the part about making Mongo public. You shouldn’t do that, nor should you need to... especially without auth configured. Changing the port is also just security through obscurity, which isn’t really security and is trivial for someone to exploit.",1536769395.0
+Hate_Feight,He wrong!,1537966957.0
+ar3s3ru,This sums up the only really good thing of MongoDB: marketing department,1536666429.0
+Cherlokoms,"Great job, now executives will think document databases are a drop in replacement for relational databases and force everyone to use MongoDB for every use case.",1536699427.0
+niccottrell,Need more information. What is the index exactly and what command are you using to insert?,1536610873.0
+MrPhatBob,"A lot of this depends on how you've structured your documents in Mongo. But this sounds like a standard CQRS pattern. 
+https://www.mongodb.com/blog/post/event-sourcing-with-mongodb",1536481210.0
+aamfk,CodePlex had some tools that would sync Sql server with mongodb I do not know how you are going to do the CDC part!,1536496541.0
+niccottrell,The big questions is why you would won’t to do this in the first place? Performance? Some feature you’re missing?,1536506621.0
+rohitmshetty,Mongo db,1536165981.0
+looneywebdev,MongoDB :),1536179148.0
+seinfeldpt,Mongodb ,1536179994.0
+the_cocytus,"Depends on if you need to scale your data plane or not, C* scales far better, but you need to spent more time running it, like treating it as an actual database which requires some learning and administration.",1536231553.0
+bartman279,"Opinions will vary greatly, and mine is only one.
+
+I would put LineItems into a separate collection and link them to Orders. This allows for much easier iterations over the LineItems. You have a very simple Product and Quantity schema at this time and I understand it is for learning purposes.
+
+In the Real World™, you have to account for inventory stock, has this line been picked ( from the warehouse for shipping ), do we back order if insufficient quantity, and a myriad number of other considerations. You also need per piece price and line total. You should link to the Product collection by Product ID, not embed the Product details for the same reasons. What if the supplier changes? or the supplier's internal item ID?  etc.
+
+Embedding them within an Order document can make managing each much more erroneous than necessary compared with the relative ease of ""populating"" them into the Order when needed, which itself is rather rare. The vast majority of the time, the complete Order Document is rarely needed, but the various individual parts are needed for a variety of different needs and functions.
+
+To get to the guts of your question, first create and save an Order. Whether you are getting customer info and shipping info, etc. before or after line items is entirely business driven. (Think shopping cart vs purchase order.) The key is you have an Order ID and the order is already persisted.
+
+Then, as you create line items, you are creating each one one at a time and inserting the associated Order ID. Whether you are checking stock, offering options, etc., is entirely business driven as well. If a line item is deleted or a quantity is changed before ""checkout"" or whatever is your order completion ""last step"", managing the line items in MUCH simpler dealing directly with a top level collection than an embedded array of sub-documents.
+
+In a Document system like Mongo, often one thinks everything should be included in ""the document."" But Real World™ experience often says multiple collections are easier to manage at many levels and needs and combining the data into a single Document only as needed is often a much more practical solution.
+
+I hope this helps.",1536150667.0
+cryonine,"I would ask yourself if you’re sure you need sharding now or in the near future instead of just a replicaset. I’d also ask yourself if running Mongo in Kubernetes is something you’re ready / equipped to do, vs. simply running it on its own dedicated servers. To be very forward, if no one on your team can answer the questions you’ve asked in your post, you’re probably making things more complicated for yourself both now and down the road. ",1536071797.0
+Kazid,"Get a dedicated server for your DB. in my company we use Atlas as the host for our database. The code is on gitlab too and there are at total a bit more than 20 services from a microservice api consuming the DB. Get the free node there (up to 512mb with 3 replicas). Then all your stack can be serveless with happy containers connecting with your db. No worries about volumes. When your data get big enough, you just have to upgrade the server for some storage.",1537246131.0
+tyler_church,Sounds like you have a bug in your code somewhere (maybe just a typo on the collection name). Do you have any code from the two boards you can post here?,1535939334.0
+ar3s3ru,I believe the best way is to just try and use `explain` to be sure it's using the expected indexes.,1535697059.0
+rafzzveloso,When I want to test my application I usually use one of the datasets available [here](https://github.com/ozlerhakan/mongodb-json-files). ,1535676525.0
+coffeeisgoodnow,What are the reasons your company has chosen MongoDB for the POS software?,1535745484.0
+griffinhand,"aye where are you learning / have learnt from?
+
+&#x200B;",1535311787.0
+Rayleigh3105,"On which Projects are you on ?
+
+&#x200B;",1535311378.0
+Jonno_FTW,Right click on the installer file and run as admin ,1535203031.0
+obnesence,I see your problem. You are installing Mongo on Windows. Try upgrading to Linux first. I find that generally solves all my Windows related problems.,1535228473.0
+gintoddic,post an actual log file if you want help. F'n windows.,1535160636.0
+code_barbarian,"That's pretty cool, looks like it reads the db and creates mongoose models based on reading every document in the db and seeing what properties they have? Nice work!",1535467108.0
+Siltala,Looks like your data has a lot of relations. It seems almost... relational...,1535046389.0
+bikashsharmabks,"As you said righty avoid updates and if they are very frequent. creating seperate collection  is a good option and may be periodically call map reduce function to aggreagate them to one collection.
+
+Thanks",1535044713.0
+ccb621,"> I know that in a document store you want to avoid making a lot of updates, but that [outweighs] the consequence of redesigning a relational schema if they change their data model.
+
+If who changes what data model? Migrations make it pretty easy to change relational schemas. It's not perfect in all cases, but it works. Also, you'll still need some form of migration if your document schema (e.g. fields) change; otherwise, your codebase will need to know about every historical field.
+
+If the crux of your data is relational, but some portion (say the edge nodes) is a bit more dynamic, consider using a relational database, and storing the dynamic components in a JSON field.",1535092557.0
+bikashsharmabks,"Yes you can do that. And have done quiet often.
+
+My experience with MongoDB, is to start with requirement on what possible queries you need and then model the collection accordingly keeping in mind you don’t have highconcurrent updates on same collection based on non index keys.
+
+Unlike RDBMS which is start normalising the tables in a way where you can query any form of information/requirement.
+
+The reason for this RDBMS has on rows level locks for a transaction unlike MongoDB but latest version of mongodb are supporting it.
+
+Thanks",1535130374.0
+thancock14,"I read the article a while back and he says:
+
+>""The changes to MongoDB that enable multi-document transactions will not impact performance for workloads that do not require them. ""
+
+[Link](https://www.mongodb.com/blog/post/multi-document-transactions-in-mongodb)
+
+And since the dB storage engine is still wire tiger I assume no performance difference. We recently upgraded our very immature cluster to 4.0 and haven't noticed any difference in performance ",1534993206.0
+mongopoweruser,Some things are definitly faster: https://www.mongodb.com/blog/post/secondary-reads-mongodb-40,1535001905.0
+redsterXVI,"> or any v3 series for that matter
+
+You're saying that like all v3 are roughly the same - they're not.",1534956766.0
+bikashsharmabks,"I have been using MongoDB for past 6 years as primary data source and no RDBMS. 
+
+MongoDB is best suited if needs don’t have highly concurrent updates of record / document, which most cases can be avoided by designing the schema correctly in a de normalised manner.
+
+Overall I don’t find any particular reason y cant a highly scalable ecommerce can only be built in MongoDB ",1534956433.0
+rugbydotio,[Reaction Commerce](https://www.reactioncommerce.com/) uses MongoDB for everything -- this decision is probably largely a result of their use of Meteor -- but I've read bits and pieces about them moving away from Meteor yet I believe they will continue to use MongoDB.,1535037120.0
+metheus,"CTO’s keynote at MognoDB conference this year used eCommerce applications the whole way through as examples. Watch:
+
+https://explore.mongodb.com/mongodb-world-2018-keynotes/mongodb-world18-eliot-horowitz-keynote",1535172544.0
+code_barbarian,"MongoDB powers all our operations, but we also have a Postgres setup that mirrors our MongoDB data because data scientists tend to know SQL much better than MongoDB aggregations. That's more a problem with data science education and the state of BI tooling than MongoDB though in my mind. MongoDB is just so easy for developers.
+
+&#x200B;
+
+Data is ""static"" much more often than you think: [http://thecodebarbarian.com/managing-embedded-documents-with-monogram#updating-an-existing-document](http://thecodebarbarian.com/managing-embedded-documents-with-monogram#updating-an-existing-document)",1535467463.0
+cryonine,"An e-commerce site is not going to be a good idea in Mongo. There’s too much data that wants to be normalized and joined together. You could probably build one, but it would be a nightmare to work with at any medium level of complexity. You can do a lot of things with Mongo but I think an e-commerce site is one of those hard “no” scenarios. ",1534997296.0
+rafzzveloso,"If you are using **mongoose**, let me give you a small example with 2 collections: 
+1. User 
+2. Comments
+
+The models of each are very simple:
+
+`let User = new mongoose.Schema ({
+    name: {type: String},
+...})`
+
+`let Comment = new mongoose.Schema ({
+    ...
+    user: {type: ObjectId, ref: 'User'}
+})`
+
+The ***ref*** part is quite important.
+When using `.populate ('user')` when querying in the **Comments** collection, the entire user data model is accessible in the query result. That is, in the documents that result from the query, to have the name of the user you just need to do 
+`doc.user.name`  (assuming doc is the document that results from the query .findOne() for example).
+
+[Mongoose .populate() docs](http://mongoosejs.com/docs/populate.html)",1534982681.0
+andrew_ie,"You can create a view of your collection that modifies the data structure how you want it, and then use compass with that view:
+
+    db.createView(""View"", ""Collection"", [{$project:{firstname:""$name.first"", <any other fields you are interested in here>}}]);
+
+Then you should see a read-only collection appear in Compass that looks as you need it to.
+",1534935084.0
+PntBtrHtr,"You can do so in an aggregate query but not in a find it seems
+
+    db.Collection.aggregate([{$project:{firstname:""$name.first""}}])",1534913748.0
+CaptainNemo007,"Numbers you are mentioning shouldn't be problem in any database or technology. Mongo is NoSQL database capable of processing very large volumes of data. 
+
+No matter which db you choose, option 3 is way to go. You always store one type of entity to one collection. That makes solution maintainable and scalable in future. Making multiple collections for same thing (for example, game) is option but in very specific situations. As I sad before, performance shouldn't be a problem and on much larger dataset (billions of rows/documents) performance issues are handled differently. ",1534851454.0
+Jonno_FTW,"You don't want more collections, it will only make your application more complex. It will also require you to recreate your indexes. Just have a collection for games and their outcomes. You can even store the name of the season in the document. Remember that you can always add more indexes which should be tailored to the queries you will perform. 
+
+But your application will not be this simple. Defining a decent ER diagram and using SQL will be your best bet. Your data is relational and there's already a wealth of tools to automatically fetch related records based off your model. Look at sqlalchemy, cakephp or laravel for popular frameworks. ",1534868580.0
+cryonine,"> For the past 5 years, we've used a MySQL database 
+
+> I'm confident I could use MySQL effectively again
+
+> utilizing MongoDB for this project instead as a NoSQL experiment.
+
+I would just stick with what works. Your data seems highly relational. You can fit just about anything in Mongo or another NoSQL database, but that doesn't mean you should. Also, looking at your data model I'm not sure why you would use more than 1-2 collections for this. A 1000 games is nothing at all for Mongo or MySQL to handle. If you're experiencing slowness on the user end it's likely an issue with your queries, indexes, or interface that is causing the problem. We routinely load thousands of rows with way more complex documents and no interface lag.
+
+That said, this data still fits a relational database much better.",1534876218.0
+712Jefferson,"Okay, I'm further intrigued by this.  Thank you very much for your replies!  I GREATLY value and appreciate your experienced insight and I'm relieved that I won't have to rely on a large number of collections!  Would like to pose one further ""question"" for the sake of clarification and/or consideration:
+
+I should have perhaps mentioned that all of the data which populates the database (at least for the schedules) comes first from an Excel file that is provided to me as an export from the referee consignment software the league uses. When going through that process, each game is given a unique ID, which I have represented as ""game_id"" in the examples.  I was thinking this might make sense to use as an index of sorts, though I'm not sure I'm accurately wrapping my head around the concept of indexes.
+
+Each game has a unique ID per season.  However, there is unfortunately some overlap of IDs between seasons.  To illustrate this, below is a list of all of game IDs from the last school year:
+
+Boys Flag Football (fall) - 2-481
+Girls Volleyball (fall) - 2226-2746
+Boys and Girls Basketball (winter) - 2-999
+Boys Volleyball (spring) - 2748-3061
+Girls Softball (spring) - 235-292
+
+I'm not exactly sure why they assign their IDs that way, but I don't have any ability to change it.  The IDs will sometimes overlap from season to season and will definitely overlap further from year to year. So, with that in mind, I'm thinking that it might only make sense to have a collection per season (Option #3 from my original post), as in the example below:
+
+Collection: ""2019 Winter Season""
+
+{
+    date: <isodate including date and time>,
+    home: ""Blessed Sacrament""
+    h_score: 0,
+    visitor: ""St. Columban"",
+    v_score: 0,
+    location: ""Blessed Sacrament"",
+    game_id: 260,
+    division: ""Coastal 2A"",
+    gender: ""boys"",
+    sport: ""basketball""
+}
+
+
+{
+    date: <isodate including date and time>,
+    home: ""St. Barbara""
+    h_score: 0,
+    visitor: ""St. Irenaeus"",
+    v_score: 0,
+    location: ""St. Barbara"",
+    game_id: 261,
+    division: ""Coastal 2A"",
+    gender: ""boys"",
+    sport: ""basketball""
+}
+
+etc.
+
+Therefore, each collection may contain up to about 1000 games and I would need 3 collections for every school year, but this is still far preferable to having to create up to 80-ish collections/tables per school year as I have been doing in the past.
+
+The last part of my ""question"" pertains to the ability to effectively sort this data on the frontend.  By and large, the game IDs are listed in ascending order of date/time, so it's easy enough to display in an accurate chronological order on a schedule/calendar.  However, there are occassional exceptions.  Games are sometimes added after the initial export and new IDs are awarded that do not work with the chronology.  Even more commonly, games are rescheduled, making the initial chronology of the ID irrelevant.  This means sorting can be problematic.  This became so frustrating, actually, that I decided to resort to a workaround of assigning each game a further unique ID in the form of a four digit integer that I manually added to ensure proper sorting - I absolutely loathed doing this every season.
+
+If I combine the date and time into an isodate in one field, will it be easy enough to sort the schedules in order of priority by the date value of the isodate, the time value of the isodate and, lastly, the game_id?  Or would I be better off leaving the date and time as separate fields?
+
+Again, thank you so much for time, patience, and shared wisdom!  You don't know how much it means and I will be sure to pay it forward in the future.  Please do offer your thoughts about any of the above.",1534879148.0
+phaxsi,"I would create a `evaluations` collections and store each match separately, with an schema like this:
+
+`{`
+
+`_id: ObjectId,`
+
+`userEvaluating: ObjectId, //user viewing`
+
+`userEvaluated: ObjectId, //user id of the one being evaluated`
+
+`evaluation: String, // 'undecided', 'accepted', 'rejected'`
+
+`createdAt: Date`
+
+`}`
+
+This is basically treating this as if it were a relational database, but I think in this case it's the best solution because it is better to avoid creating collections with array elements that can grow unbounded for performance reasons (and because the document size has a limit). Besides, querying collections directly is much nicer than querying sub-documents within arrays. This is important in this case because as this is core to your project, you will be doing all kinds of queries to this collection.
+
+If both users accept, then you could create another collection called `matches`, similar to this:
+
+`{`
+
+`_id: ObjectId,`
+
+`users: [userId1, userId2],`
+
+`createdAt: Date`
+
+`}`
+
+Using the array here avoids having to pick a user1 and user2, which will complicate many queries where the order is not important.",1534797546.0
+mischiefunmanagable,"from an abstracted standpoint whats the difference between accepted and declined? nothing, it's just a flag
+
+store them all in the same array, likely with any other flag values for a member-member pairing that you might have, and just query out the ones you need where that flag matches whatever you use for accept/decline/whatever",1534786074.0
+ar3s3ru,"G R A P H D A T A B A S E
+
+R  
+
+A 
+ 
+P  
+
+H 
+ 
+D  
+
+A
+  
+T  
+
+A  
+
+B  
+
+A  
+
+S 
+ 
+E  ",1534789221.0
+thenewdev1,"I like this, I plan on doing the same thing 
+",1534794638.0
+gilxa1226,"You can use mongoose to do aggregations, however you won't be able to use an aggregation command that doesn't exist in the version of your database.",1534940852.0
+tyler_church,"Two thoughts...
+
+1. MongoDB natively supports storing Date objects so if you can go through and convert all these strings to proper Dates things will become easier for you.
+
+2. If you can’t convert them to dates... ISO format strings were made specifically so that sorting them using a normal string comparison sort would result in a chronological ordering. So instead of trying to compare these strings to Date objects, just compare them to your ISO string equivalent versions.
+
+I hope that helps!",1534730172.0
+CannedCorn,Use $addToSet instead of $push,1534642045.0
+tobsn,hmm you guys understand that this is promotion for a paid service right? like this is going on for a few weeks now. ,1534594597.0
+driftydrift42,"[https://docs.mongodb.com/v3.4/administration/install-on-linux/](https://docs.mongodb.com/v3.4/administration/install-on-linux/)  
+This is doc I followed. Not sure what I'm doing wrong here",1534426069.0
+ewurch,"Thank you for the article, I'm planning to create a side mongoDB based database in my company. I recently figured out how well suited is mongoDB to the insurance industry data.",1543534692.0
+CraftingMouse,"> 175 million twits on Twitter
+
+Sounds about right.",1534441434.0
+phaxsi,I've found the MongoDB University courses pretty good overall [https://university.mongodb.com/](https://university.mongodb.com/) and definitely up-to-date.,1534364957.0
+goldenbanana31,There's also some good knowledge base stuff here: [https://studio3t.com/knowledge-base/categories/mongodb-tutorials/](https://studio3t.com/knowledge-base/categories/mongodb-tutorials/),1534775510.0
+HUU4ABO,"Sure. Use async/await. 
+
+(async()=>{
+
+const db = await MongoClient.connect(url);
+
+// and so on
+
+})();",1534348150.0
+cryonine,"Maybe I'm misunderstanding what you're trying to accomplish, but doesn't the official [Mongo driver do this](http://mongodb.github.io/node-mongodb-native/2.2/reference/connecting/connection-settings/)  through the `poolSize` setting? Looks like the [default value is 5](https://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html#connection-pool-configuration).",1534282931.0
+louisjacksonrees,Oh that makes total sense thanks for explaining,1534707709.0
+andrew_ie,"I haven't used Morphia, but in [its documentation](http://mongodb.github.io/morphia/1.3/guides/lifeCycleMethods/), there is:
+
+> @PostLoad - Called after populating the entity with the values from the document
+
+So I'd imagine you would add a new method @PostLoad annotated method to your bean.
+",1534169728.0
+PntBtrHtr,Read the docs? https://docs.mongodb.com/compass/current/connect/,1534040852.0
+rafzzveloso,"Let me give you a small example with 2 collections: 
+1. User 
+2. Comments
+
+The models of each are very simple:
+
+`let User = new mongoose.Schema ({
+    name: {type: String},
+...})`
+
+`let Comment = new mongoose.Schema ({
+    ...
+    user: {type: ObjectId, ref: 'User'}
+})`
+
+When using .populate ('user') when querying in the **Comments** collection, the entire user data model is accessible in the query result. That is, in the documents that result from the query, to have the name of the user you just need to do 
+`doc.user.name`  (assuming doc is the document that results from the query .findOne() for example).
+
+[Mongoose .populate() docs](http://mongoosejs.com/docs/populate.html)
+
+PS: I wrote this on the phone, but I think I made myself clear, if you have any further questions, send me a private message.",1533769814.0
+cryonine,"> Problems with Reliability
+
+Back in like, maybe 2.6, this was a small problem. Since 3.0 (or 2.8?) it's been a non-issue. If you're having this issue it's almost certainly because you're using Mongo incorrectly. All of that aside, it's worth noting that Mongo was *not* ACID compliant until recently. [Mongo 4.0 introduced transactions](https://www.mongodb.com/press/mongodb-announces-multi-document-acid-transactions-in-release-40), so this problem is now eliminated. What's more, Mongo 3.6 added a lot of improvements to how data consistency between replicas and shards works to make reading from secondaries also more reliable.
+
+> Problems with Schema-less Design
+
+Yes, there are issues with schema-less designs, but having a schema doesn't mean you won't have issues with it. Like all databases, you really need to plan out your structures. Mongo shifts that burden from a DB admin directly to the developers. In the case of `user.email` not being set, a simple null check is all you need. I can think of few modern languages that can't easily account for this case. That said, [Mongo 3.6 introduced schema validation](https://docs.mongodb.com/manual/core/schema-validation/) which solves this by enforcing schemas on all documents added to a collection.
+
+What's not talked about in this article is the large number of upsides Mongo has over traditional databases, but I won't get into that too much. That is also not to say that Mongo is what everyone should pick... it's definitely not. I'd even go so far to say that unless Mongo actually fits your use case, you're probably better off with a traditional relational database.",1533698913.0
+chrisdefourire,"1- writes are not asynchronous anymore by default: writes ARE acknowledged by default (and have been for quite a while)
+
+2- schema-less is a feature, not a bug... and mongodb now supports schemas too: https://docs.mongodb.com/manual/core/schema-validation/
+
+3- using mongoose for validation is wrong... Mongoose gives you the false sensation of working with a relational DB, which may lead to poor noSQL DB design... I recommend against Mongoose, mongodb doesn't have impedance mismatch which is the main reason for having ORMs with SQL DBs.
+
+Quite a misleading article if you're asking...",1533715411.0
+jimthree,You could use $lookup to do a join across the collections (https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/index.html) assuming you want to display comments for a specific restaurant.,1533537100.0
+lumpy_potato,"If you want to do something a little interesting, you can keep something like the 3 most recent commends for the restaurant attached to the restaurant doc. Pull those in as soon as you load the page, then do a lazy-load of the remaining comments. Users still get the advantage of all-in-one-query speed for rendering all the restaurant info, and you still display the comment section when the user gets there. 
+
+The only danger is breeching the 16MB limit, but that would require you to tore a lot of restaurant metadata _and_ have massive comments. ",1533682613.0
+PntBtrHtr,I've used findAndModify to pull tasks from a MongoDB atomically and changed their state to remove them from being found by the query.,1534041200.0
+stennie,"> Is there a minimum version required to migrate to MongoAtlas?
+
+If you want to use [Atlas Live Migration](https://docs.atlas.mongodb.com/import/live-import/#prerequisites), you can migrate from your current MongoDB 3.2.17 replica set to a MongoDB Atlas 3.2, 3.4, or 3.6 destination cluster. The [prerequisites and supported destinations](https://docs.atlas.mongodb.com/import/live-import/#prerequisites) for each source MongoDB server version are listed in the Atlas documentation.
+
+>  If sharding is not set up before migrating to MongoAtlas, can it be enabled later or does it require being enabled at the start of the migration?
+
+You can [scale an Atlas replica set to a sharded cluster](https://docs.atlas.mongodb.com/scale-cluster/#scale-cluster-sharding). Since you currently have a replica set, it would be more straightforward to migrate that to Atlas before enabling sharding.
+
+> Can a non-sharded MongoDB replicate to a MongoAtlas instance with sharding?
+
+If you are referring to the Atlas Live Migration process, the source and destination must be the same cluster type (both replica sets or both sharded clusters).
+
+If you can cope with downtime, it is possible to do a manual dump and load of your replica set data into a sharded cluster destination (see: [
+Back Up and Restore with MongoDB Tools](https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools)). For simplicity I'd recommend using the live migration tool instead.",1534229460.0
+cryonine,You can refer to [the manual](https://docs.mongodb.com/manual/core/wiredtiger/#wiredtiger-ram). Mongo will store as much as possible in memory. I’m not aware of any option to use disk as a cache instead of memory. Is there any reason why you would want to change the way it’s caching? We have an active cluster using NVMe storage and the memory cache hasn’t been a bottleneck so far. ,1534029848.0
+theDigitalNinja,"I'm not sure what you are asking. What is IDLE? Did you mean IDE? I'm also not sure what ""iniciant"" is. ",1531945685.0
+Jonno_FTW,"Get a decent mongo GUI tool like robo3t or studio3t. These tools have built in script editors to make it easier to write and save js that you want to run.
+
+https://robomongo.org/
+
+Also your question needs better clarification. If you just want to run a .js file, you can run `mongo localhost somefile.js`
+",1531980465.0
+SaraMG,"I'll take a crack at this question.  Iniciant sounded like it had latin roots and sure enough seems to be a Catalan word essentially meaning, in this context, that they are a ""beginner"".  This would also be a hi t that perhaps English is not their first language, so let's be patient.  😁
+
+I agree with the other commenter's take that ""IDLE"" is probably meant to read ""IDE"".
+
+Given the above assumptions, my response would be:
+
+File extensions are irrelevant, use whatever makes sense.
+
+If you're writing a script to access MongoDB, then what language are you writing that script in?  If you're writing it in Javascript, then .js would make sense as an extension.  Python? Use .py etc... etc...
+
+",1532146679.0
+detour_,"$set or possibly $push depending on your use case. Make sure you're setting the field, not the whole document. ",1531915811.0
+vincebowdren,"Hi 1435h; can I ask you to clarify: are you asking about what *HTTP* method to use, or which *MongoDB* operator?",1532339949.0
+kyngston,"Why are you asking about MySQL in the mongodb subreddit?
+
+I would build a rest api to handle database queries, and my web app would just talk to the rest api. That way I can avoid placing database credentials in the web app.  Also I can implement all manner of security on the rest api. 
+
+My concern is that if you’re not sure how to do it, you probably don’t know how to do it securely. Then someone will come along give you and everyone who uses your web app STDs",1531613935.0
+jimthree,"MongoDB Atlas has a free tier.  Don't just open up your database to the internet, create users with passwords for the people you want to share it with.",1531598595.0
+faladu,"If you have 7 fields in your condition you want an index that uses all 7 fields.  
+Otherwise the index won't help the query much as it only helps on the fields it includes.",1531489140.0
+Ay--_--ye,"Well, there's a slack channel. 
+
+https://mongo-db.slack.com/",1531431516.0
+chrisdefourire,"Fails at `rs.initiate()`, which is precisely why I'm using mongodb instead of postgres ;-)",1531369208.0
+Siltala,I don't understand the motive. Jump through hoops to make A seem like B.,1531386435.0
+PressiDef,I am working on a searching web app and we are using mongodb right now with cosmosb (i did not chose to use mongo my boss did) and i am finding it horribly slow for filtered requests especially when we need to return a count,1530532197.0
+joanniso,"Having written a client for both MongoDB and MySQL I know the horrors of MySQL they don’t want you to know. But first. SQL is structured, MongoDB is not. SQL’s predictability is a blessing for performant database engines. However, it’s not suited for many common data structures such as dynamic forms as the best example that comes to mind. Yes, you can solve this with joins. It’s wrecks the performance advantage you had with SQL ten times over.
+
+However, my biggest reason pro mongoDB is more anti- MySQL. If you’re loading a row from a table in MySQL your packet has 4 bytes of overhead. Every row itself has multiple states, too. One row might have the binary format, another might have text format. MySQL has multiple representation for every data type. Most of these custom data types are home-brew. This is bot good for performance.
+
+MongoDB is extremely predictable and has an overhead of ~30 bytes. However, MySQL uses a lot of packets. Where mongoDB returns you 101 documents in a single packet, MySQL needs one packet per row. So 30 bytes overhead per 101 documents and 404 bytes for 101 rows in MySQL. If you have smaller documents, MongoDB allows even greater reduction in overhead where MySQL does not.
+
+Other SQL databases likely have different, I hope better, results. But the reality is that most people use MySQL and compare MongoDB with that. If MySQL has acceptable performance, so does any other database system.",1530509372.0
+thenewdev1,Just takes you to udemy courses,1530382265.0
+itsenov,"It behaves the same in Go.
+If you use update with an entire document (not using operators), it replaces the document without checking weather any of the fields are empty.
+
+I think this is by design.
+
+You should either use operators, or first get the entire document, change the fields you want and then use the document to update it.
+
+Check [this](https://www.mkyong.com/mongodb/spring-data-mongodb-update-document/). 
+See part 'saveOrUpdate – part 2 example' ",1530296449.0
+detour_,"This is how MongoDb works, by design. It has the same behavior from the mongo shell. Being schemaless, Mongo has no idea what fields you want updated, in this case you were telling Mongo: replace the document at this id with this new document. If you want to update specific fields, use the $set operator ",1530322023.0
+welkie,"I think you need to spend some time reading MongoDB's documentation. You seem to misunderstand how to perform updates with it. For example, updates in MongoDB are nothing like updates in an SQL database.",1530368347.0
+audigex,"- Uses free software
+- Complains when a not-very-intrusive advert, that doesn't interfere with your work, tries to make a little revenue for the creator in exchange for all their hard work, without actually requiring you to pay anything
+
+I mean, feel free to go buy a SQL Server license or something",1530353789.0
+martiandreamer,I wish there was a way to effectively downvote for opinion but upvote for visibility. ,1530286984.0
+flaming_bird,Related: https://www.reddit.com/r/freesoftware/comments/8ut27b/mongodb_40_is_putting_ads_on_the_terminal/,1530284289.0
+PiousLoophole,"Via /u/flaming_bird's link, there's another, then another.
+
+[Jira discussion](https://jira.mongodb.org/browse/SERVER-35862)
+
+[Config file option to disable](https://docs.mongodb.com/manual/reference/configuration-options/#cloud.monitoring.free.state)
+
+Funny the uproar this is causing when other projects like FreeSwitch do similar in trying to sell tickets to their annual event, and this is for a free monitoring service.",1530291031.0
+gngeorgiev,What's the problem? Just connect to the server,1530187428.0
+ThatBriandude,So can we use them with single servers as well?,1530191736.0
+JKHeadley,"Hi guys, I'm launching v1 for a project I've been working on for two years now. Please check out the article and let me know what you think :)",1530044500.0
+lionls,Or should I store the data and group them by month into a collection?,1529957036.0
+making_bugs,don't call nosql a 'database' you may trick other people into using it.,1529102984.0
+welkie,"I'm playing with the unofficial MongoDB provider for Entity Framework Core lately, so I'll definitely be reading your blog series on this to better understand what the driver does under the hood.
+
+Nitpick so far: your JSON examples after the first few paragraphs aren't valid JSON. Hence the red highlighting. :P",1528838859.0
+mongopoweruser,"I don't have a mongoose environment handy, but here's some advice for the shell.
+
+If you embed friendships in user, you can use a query like this.
+```
+db.foo.find({status:""offline"",""$expr"": {""$gt"": [{""$size"":""$friendships""},5]}})
+```
+
+If there are two different collections, you'll need to do a join with `$lookup` and aggregation or depend on [populate()](http://mongoosejs.com/docs/populate.html).",1528172510.0
+Siltala,"Surely there are some similarities between documents you are interested in, otherwise you would not be able to query the collection at all. I'd look into sparse indexes.",1528012854.0
+intellix, (x >= 0 && x <= 10) is so much easier to read ,1527721459.0
+shrivaa,Sorry.. Fully Normalized,1527699133.0
+cryonine,I think a better question is what are your plans for the data? A relational database may make more sense depending on that answer. ,1527546368.0
+mambeu,"I don't think that the amount of data that you're describing (hourly weather data for 200 cities for 10 years) qualifies as ""huge"". Whether you're using mongoDB or something else, I doubt that the size of the data will have a very large effect on the performance of your implementation.",1527535155.0
+ZebraPenguin69,the amount of data you’re describing does not qualify as “big data” and you’re choice of DB should depend on the data consumers usage patterns.,1527587719.0
+Jonno_FTW,This isn't big data. 200 * 365 * 27 per year of individual documents of that's how you do it. You probably don't even need to store min/max data points since you can just query them. The better question is what sort of operations and queries you want to do in the data. ,1527550922.0
+invalid_dictorian,"You can do it, its not a lot of data. Depends on how you want to query it, you will need to create the right index on the right combination of fields. You don't need to do it up front though, just pay attention to the speed of your various queries and add the appropriate index.
+
+Also depends on what information you would want to extract out of this data set, I imagine you will be running a lot of aggregations. Learn how to use the aggregation pipeline.",1527569535.0
+welkie,"Look into Google Cloud's BigQuery too. It allows you to batch save it stream data in, and use SQL to query it. They charge you a bit to stream the data in and they charge you $5 per TB of data scanned during queries, but the long term storage costs are pretty low and it's all managed so pretty simple to maintain. If you do don't do queries against it very often, it might make sense.
+
+When you do run queries against it, they spin up lots of compute power to run them so no matter how much of your data you're scanning, it will finish in seconds.",1527645680.0
+mongopoweruser,"I store tens of millions of IOT data points \(a few hundred endpoints every 60 seconds\), it's not that big a deal.  
+You can potentially gain a big size reduction/performance enhancement by pre\-aggregating your data. For example, store a single document for a day, with 24 nested documents for each hourly reading.",1528172805.0
+,[deleted],1527291245.0
+Jonno_FTW,"Have you tried installing it?
+
+Do `sudo apt install mongodb`",1527294888.0
+r3lative,"the real question is why? why do you want to host mongodb in a raspberry ???  
+performance are very, very bad.   
+",1527292569.0
+ArnaudKOPP,Hope to see this release going out,1527335235.0
+unusualbob,"In general no, mongo is not good for indexing text like this. If your data set has known starts like this you could break the compoent pieces into a 'startsWith': 'fe14', and leave the rest in  'key1': '11'. Otherwise regex is the best you'll really get, and it's not super performant. 
+
+There is one caveat to this depending on your actual data. There is one kind of text index which has a lot of restrictions which you may be able to use here. Only way to know if it will work for you is reading more about it. 
+
+https://docs.mongodb.com/manual/core/index-text/",1527051718.0
+vincebowdren,"Yes, you've been breached.
+
+You might get your data back if you pay the ransom - but you might not; the ransomers are known to be untrustworthy.
+
+The best thing to do is to [restore from a backup](https://docs.mongodb.com/manual/core/backups/) (you do have backups, don't you?) and then have a thorough audit of your security defences. The [MongoDB Security Checklist](https://docs.mongodb.com/manual/administration/security-checklist/) is a good place to start.",1526939351.0
+jimthree,Did you have Authentication enabled?,1526975707.0
+martiandreamer,"I left a MongoDb instance wide open on a web server earlier this year (no data or functionality of consequence). Someone got in, nuked the data, and left a very similar “ransom”.
+
+I didn’t respond, wiped the VM instance (in case their intrusion came from elsewhere) and recreated everything. Not a peep since then. ",1526949336.0
+alejandrojs,Do you have missing information? Or is it just the new DB?,1526939175.0
+jimthree,Have you compared your projected costs with Atlas? it might be favourable.,1526683901.0
+tastycidr,"I know instances at least as small as m1.smalls work fine as arbiters, used them for years.
+
+I'd advise against the radical downsizing of your prod secondaries. The bigger your dataset, the longer it'll take you to replace a primary in the event of a failure. It'll degrade performance very badly during that time, if not simply fall over \(this can happen from lack of CPU resources, I've done it\).",1526651975.0
+,[deleted],1526595840.0
+svenvarkel,"Have you checked this already?
+
+https://docs.mongodb.com/manual/reference/method/db.collection.distinct/
+
+",1526499859.0
+goshdarnyou,"[https://docs.mongodb.com/manual/reference/operator/query/or/](https://docs.mongodb.com/manual/reference/operator/query/or/)
+
+To build a query that returns messages where either sender = user or recipient = user.
+
+Also, I'm not sure if you just wrote it this way for the post, but you will probably want to use unique user ids instead of string names to refer to a user in message documents.",1526500251.0
+vincebowdren,See https://docs.mongodb.com/manual/reference/command/listCollections/,1526040651.0
+stennie,"What specific driver or application version are you using? JavaScript could refer to the `mongo` shell, the Node.js driver, or an ODM like Mongoose. Also, do you only want the collection names or are you after additional collection details?
+
+Two programmatic approaches:
+
+ * In a MongoDB 3.0+ shell, use `db.getCollectionNames()`: https://docs.mongodb.com/manual/reference/method/db.getCollectionNames/
+
+ * In the MongoDB Node.js 3.0 driver, use `db.listCollections()`: http://mongodb.github.io/node-mongodb-native/3.0/api/Db.html#listCollections
+",1526450974.0
+mntCleverest,"""Show collections"" from within the context of any db will show you all collections in that db. ",1526040610.0
+welkie,Sounds interesting. Bookmarking.,1526088246.0
+jimthree,"Just want to call out this link from OP's post, it's best practice.
+  http://k8smongodb.net/",1526108205.0
+abernacl,"Indexes are rebuilt with new data, so you want to be careful of which fields you index. Try not to have too many indexes or very large indexes (compound indexes or multi key indexes). You can use .explain(“executionStats”) on a query and get information on how many documents are being scanned, returned, what indexes they use, how long the query is taking, etc. 
+
+[explain](https://docs.mongodb.com/manual/reference/explain-results/) ",1525919424.0
+coertzenjfs,What other indexes do you have? You can check what index your query uses and investigate from there.,1525885326.0
+tacoman58,You can’t store numbers as ints in mongodb with leading zeros. They’ll be removed or give an error. Youll need to either store it as a string (then just cast to int as needed) or remove leading zeros when saving and add them back when formatting. Saving as a string probably makes more sense tho if the leading zeros are not uniform. ,1525835990.0
+SaraMG,"I'm not certain, but if a leading zero is the common thread, then either Atlas or your driver or your language are probably trying to interpret it as Octal (base 8).
+
+Does the error only occur on numbers which have a leading zero AND contain an 8 or a 9 somewhere in the number?  Octal numbers are limited to the range 0-7, so that 8 or 9 would be an error.
+
+I'm not aware of mongod doing base conversions itself, so I'm curious if you could produce a simple repro case and describe your environment. (Language, platform, driver version, etc...)
+
+",1526627443.0
+acreakingstaircase,Confused in what regard? How to structure the documents? ,1525819753.0
+tr0picana,I would like to know this too,1527630511.0
+extraymond,"What do you need to know specifically? 
+
+You can just create two collection and embed the username objectid into the login collection. And if user login with user\_id, you can use [$lookup](https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/) in the aggregate pipeline to retrieve its salted password and do verification. 
+
+With $lookup, you can either retrieve it first and project down to the password field, or you can use pipeline within $lookup.",1525793115.0
+invalid_dictorian,"You can't do it in a single find query, but you can use the aggregate pipeline to do it. Using [$lookup](https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/).
+
+Query:
+
+    db.vehicle.aggregate([{""$match"": {""users"": ObjectId(""5ae1a957d67500018efa2c9d"")}}, {""$lookup"": {""from"": ""document"", ""localField"": ""_id"", ""foreignField"": ""vehicle"", ""as"": ""documents""}}]);
+
+Output:
+
+    { ""_id"" : ObjectId(""5aea338b82d8170096b52ce9""), ""users"" : [ ObjectId(""5ae1a957d67500018efa2c9d"") ], ""documents"" : [ { ""_id"" : ObjectId(""5aeaad1277e8a6009842564d""), ""vehicle"" : ObjectId(""5aea338b82d8170096b52ce9""), ""company"" : ""Allianz"", ""price"" : 500, ""date_start"" : ISODate(""2018-05-02T22:00:00Z""), ""date_end"" : ISODate(""2019-05-02T22:00:00Z""), ""createdAt"" : ISODate(""2018-05-03T06:32:50.590Z""), ""updatedAt"" : ISODate(""2018-05-03T06:32:50.590Z""), ""__v"" : 0 } ] }
+
+The output is still a `vehicle` document, but with a `documents` array attached.
+
+Edit: I just want to add, if your collections have many rows, you should add an index to help speed up this lookup. e.g.
+
+    db.document.createIndex({'vehicle': 1})",1525402204.0
+User31441,Can you put that code into a jsfiddle or something similar? I would like to actually read that code in order to help.,1525358773.0
+code_barbarian,"Can you post the actual error? Also, check out the mongoose lambda docs: http://mongoosejs.com/docs/lambda.html",1526748255.0
+PiousLoophole,"I've seen MongoDB scale pretty (insanely) large and with heavy loads.  Before you get there, document schema/layout is a big piece of your performance, and then your queries.  After that, look at replica sets before you shard.  You only really need to shard if your writes outpace what a single server (replica set master) can do, after factoring in the replication to the others in the set and some breathing room.
+
+So yes, MongoDB can scale well, but proper DB layout and usage is wise.",1525321190.0
+kristianreese,"Scale mongo by implementing sharding.
+
+From the docs:
+
+There are two methods for addressing system growth: vertical and horizontal scaling.
+
+Vertical Scaling involves increasing the capacity of a single server, such as using a more powerful CPU, adding more RAM, or increasing the amount of storage space. Limitations in available technology may restrict a single machine from being sufficiently powerful for a given workload. Additionally, Cloud-based providers have hard ceilings based on available hardware configurations. As a result, there is a practical maximum for vertical scaling.
+
+Horizontal Scaling involves dividing the system dataset and load over multiple servers, adding additional servers to increase capacity as required. While the overall speed or capacity of a single machine may not be high, each machine handles a subset of the overall workload, potentially providing better efficiency than a single high-speed high-capacity server. Expanding the capacity of the deployment only requires adding additional servers as needed, which can be a lower overall cost than high-end hardware for a single machine. The trade off is increased complexity in infrastructure and maintenance for the deployment.
+
+MongoDB supports horizontal scaling through sharding.",1525317728.0
+Rezistik,Also look into promises. You should be using them to handle the async nature of uploading then creating or updating a campground model. ,1525299419.0
+Rezistik,"The image array is probably undefined in the document. You have to check that the property exists and that it’s an array. 
+
+If also use the literal form of array instead of `new Array`. Using an array constructor is like 5,000 times slower than `[]`. ",1525299272.0
+Rezistik,Yeah link it. ,1525305376.0
+stennie,"As at MongoDB 3.6, aggregation pipelines do not modify any collection data with one exception: you can have a final **$out** stage which writes the results of the aggregation to an output collection. If the target collection does not exist, it will be created. If the target collection does exist, it will be replaced by the output of the aggregation.  See: https://docs.mongodb.com/manual/reference/operator/aggregation/out/#behaviors.",1525329973.0
+door_of_doom,"No, it doesnt.",1525279092.0
+jimthree,"MongoDB Stitch is a backend-as-a-service.  It's very cool, but it's probably not what you are thinking of. I suspect you are asking about the difference between hosting your own MongoDB instance, and MongoDB Atlas, where all the hosting is looked after for you.
+
+In either case, the database functionality is the same, but with Atlas you get full resiliency, backups, monitoring and alerting. If there are any problems with the infra, it self heals.
+
+Go give it a spin, there is a free tier at cloud.mongodb.com",1525216929.0
+mischiefunmanagable,"Latency, which depending on your usage pattern is a non-trivial problem.
+
+Local hardware is fast to access, remote hardware is often not (in comparison), light only travels so fast and a server half a continent away will take orders of magnitude more time to talk to than one feet away.
+
+Now is this a problem for large slow queries? Huge documents? Not in the least. But if you're doing small cached record lookups very frequently (like session data), then the impact is very noticeable.",1525190494.0
+alejandrojs,Just use the free tier of https://mlab.com/ ,1525133090.0
+mongopoweruser,Are you looking for ReplaceOne? http://mongodb.github.io/mongo-csharp-driver/2.5/apidocs/html/M_MongoDB_Driver_IMongoCollection_1_FindOneAndReplace__1.htm,1525138631.0
+fuckswithboats,"Your findOne query will return an object if true, at which point you can modify this document and then save it with changes. 
+
+If the query is returned with an empty object, you’ll create a new document. ",1525064529.0
+lumpy_potato,"You should never need to interact with wt files directly.
+
+What are you trying to accomplish? Dropping databases and collections?",1524948312.0
+inflammatoryusername,"First of all a document type database is inappropriate for relationships, which is what would typically be done in this case. A foreign key constraint. If you MUST shoehorn it in then try something like Mongoid. Really though that should be done in an RDBMS. ",1524855889.0
+stennie,"Certainly should be possible .. what driver and version are you using?
+
+Example using the *mongo* shell:
+
+    > emoji = decodeURI(escape(""\xF0\x9F\x91\x8C""))
+    👌
+
+    > db.foo.insert({reaction:emoji})
+    WriteResult({ ""nInserted"" : 1 })
+
+    > db.foo.findOne()
+    { ""_id"" : ObjectId(""5ae1532181ee2331dd0996f9""), ""reaction"" : ""👌"" }
+",1524716401.0
+coertzenjfs,Have you tried manually adding the raw object to the collection in the mongodb terminal? It could be the language you are using to communicate with mongodb or the driver.,1524714119.0
+SaraMG,"It looks like you're using UTF-8 byte sequences, but Javascript (which is what the mongo shell uses) takes \u sequence.
+
+Old style \u can take exactly four hexits (covering U+0000 through U+FFFF, but ES6 (which recent mongo shell clients support) introduces variable length unicode escapes by enclosing in curly braces.  So for your codepoint, U+1F44C you'd insert it to your collection from the shell using:
+
+db.foo.insert({reaction:""\u{1f44c}""});",1524883007.0
+gilxa1226,"Adding rules to the firewall isn't inherently dangerous, so long as you know what you are adding and why.
+
+Have you made a connection to the database from the actual server to validate mongo is up and running properly?",1525177920.0
+jimthree,But... Why?,1524589239.0
+mrsir,Seriously... why the fuck would anyone do this?,1524604921.0
+So_average,"Yeah I agree with the others. Don't use Oracle Linux unless you have their database, app server or their products on the machine.",1524655021.0
+iljapelech,"You can use views \(though haven't tried yet\) and join them. But... keep their limitations in mind.
+
+[https://docs.mongodb.com/manual/core/views/](https://docs.mongodb.com/manual/core/views/)",1524122923.0
+zmuci,"Not sure if this is what you wanted, but this is something I searched for couple of days ago: [https://docs.mongodb.com/manual/reference/operator/query\-logical/](https://docs.mongodb.com/manual/reference/operator/query-logical/)",1524141164.0
+propagated,"Do you have any experience with object oriented programming? it's not good design to bind your player objects to their progression through your tournament. Having a separate tournament collection would allow you other features like history tracking.
+
+But writing that out sounds more like a relational db structure, so if possible maybe you should look into postgres or sqllite?  
+
+Are you actually using full mongodb? I was under the impression meteor shipped with a kind of mongo clone that wasn't full featured.",1524092198.0
+stusmall,"For me, the default should be a traditional SQL DB unless you have good reason otherwise.  They are easier to find support for, easier to hire people to maintain Depending on how these documents are structured and how you access them, chances are you are going to have to go through the data structuring process no matter what database you pick.  Better to get it out ahead of time and have your schema enforce it than find bugs at query time.
+
+Mongo excels at certain things, but comes with enough trade offs that it isn't my default goto database.",1524004887.0
+Capaj,MongoDB will be a good fit if the data themselves are rarely mutated after inserting. Seems you're just doing aggregations on top of it so Mongo will serve you well. Just make make sure you handle all the edgecases in the data in your code-you won't have a schema to hold your hand.,1524058403.0
+cryonine,"Why do you think something like MySQL or Postgres will be more labor intensive / involved compared to Mongo? I'd say for a simple setup like this, it's most likely not the case. If you're doing visualization / reporting on the data, I'd probably stick with a relational database personally. There's a reason the Mongo BI Connector uses Postgres as a backend.",1524068818.0
+PiousLoophole,"You've made it sound like on a technical level, this is actually a pretty small or modest job.  What do you consider to be the pros and cons of the RDBMS's and MongoDB?",1524084932.0
+mitchitized,"Pre-3.6 you're going to have to tail the oplog, which is essentially a DIY trigger solution. I've also seen many folks provide that functionality at the microservice level, and only allow access to MongoDB via that microservice (which effectively does the same thing).
+
+IMHO MongoDB's initial win was pulling all the logic out of the database as it was the hardest part of the stack to scale, and pushing that logic into the app tier where it was infinitely easier to fire up more compute power. I follow that pattern to this day, and try my best to resist any urges to add functionality to the database (which is still the most painful part of the stack to scale).
+
+Flipping your MongoDB behind an event sourced system might be another approach, but that would be adding a whole 'nother set of tools, effort and expertise.
+
+Would love to hear other thoughts though!",1523987820.0
+vincebowdren,"Post an extract of your data, and a sample of the output you're hoping to get, and we might be able to help.",1523978808.0
+iljapelech,Use aggregation framework where possible. Map-reduce against mongodb is suitable only for simple tasks on small datasets.,1523992731.0
+alejandrojs,"Both are good options for this, just use whatever you are more comfortable with.",1523888396.0
+welkie,"Since you plan to store just the image URLs, the size of the images won't be relevant.
+
+SQL is good for when the data is related in multiple ways. For example, you've got a user having a gallery which can have many images, each image having one or more or no tags, but users also having tags (perhaps representing their favorite image types) etc. You'll always be able to get meaningful views of that data by doing whichever joins you need.
+
+In MongoDB, you can only store this associated data as nested documents. You'll reach the 16 MB per document limit eventually if the application doesn't restrict this growth, and you'll be screwed if more than one ""thing"" needs to relate to anything in that hierarchical structure. MongoDB can't do joins.
+
+To demonstrate that document growth problem, imagine your outer document is the user, and each user has 5 galleries, each gallery has 100 images, and each image has 10 tags. Imagine each of these hierarchical documents has 512 bytes of it's own data (name strings, timestamps for creation and updated dates, etc), along with its nested documents. We get a total size per outer document of:
+
+512 B + (5 * 512 B) + (500 * 512 B) + (5000 * 512 B)
+= 2816512 B
+= ~3 MB
+
+You've got 5 galleries per user and you're already almost a quarter of the way to exceeding the per document limit, at which point one of your users would run into your app telling them that they can't add any more galleries, or add any more images to one of their existing galleries, or add a new tag on one of their existing images.
+
+Where MongoDB does shine is speed and scale. If you've got tons of users having the galleries, MongoDB will help you scale that out to support as many users as you need. The queries you do, as long as that nested document structure works for you, will be fast because they won't involve any joins.",1523852939.0
+PiousLoophole,You connect and treat it in your code like a stand-alone instance or non-sharded replica set.,1523754292.0
+hungarianhc,"If you shard your database out across multiple nodes, you need one place to query. mongos is a node (you can have many of them) that sends the queries out to multiple data nodes. When they say it behaves like another MongoDB instance, it means that even though mongos stores no data, you can query it and connect to it just like any other mongodb instance. Hopefully that makes sense.",1523908926.0
+PiousLoophole,"An index can be thought of as an alternately ordered field so that when you search with that field as criteria, your db can find the offending documents more quickly (instead of traversing the entire collection).  Indexes should be done on fields by which you're querying your data.
+
+A shard key is the field by which mongos will make a decision about which shard will get your data (and from which to query, when that's in play).  Shards should be something that isn't serially incremented (like _id), and is more or less random-ish, or at least well distributed amongst your data set.  That is, if you made your shard key a company name, and 99% of your data belonged to that particular company, you would be stuffing 99% of your data into a single shard with no way to split it further when adding more shards.",1523749185.0
+vincebowdren,"Your syntax is correct, but one of the matches is wrong. Best way to find out is to go through and doubl-check your use of each of the operators you're using in the pipeline:
+
+* $nin: https://docs.mongodb.com/manual/reference/operator/query/nin/
+* $gte: https://docs.mongodb.com/manual/reference/operator/aggregation/gte/
+* $in: https://docs.mongodb.com/manual/reference/operator/aggregation/in/
+
+as well as the basics:
+
+* $and : https://docs.mongodb.com/manual/reference/operator/aggregation/and/
+* $match : https://docs.mongodb.com/manual/reference/operator/aggregation/match/
+
+You'll find out your mistake, and educate yourself along the way.",1523637516.0
+martiandreamer,"And me, trying to piece together how Stevie Ray Vaughan figures into this. ",1523479638.0
+martiandreamer,"Hello! Please start here!
+
+https://keon.io/mongodb-schema-design/
+
+There is a lengthier series on Mongo’s site, but this is digestible for any skill level. 
+
+Good luck!",1523479826.0
+UghYetAnotherAccount,"1 db per tenant. It’s going to be a lot easier to migrate those databases to their own replica sets and sharded clusters later if you grow and need that scaling than it would be if you had one tenant grow faster than others. To move just one collection to its own sharded cluster would entail a lot dumping/restoring. 
+
+Not to mention, authorization is best handled at the database level, not the collection level. ",1523456964.0
+ZebraPenguin69,"It depends, if you are willing and able to manage your own mongo instance (from both a time and expertise perspective) it would be the cheapest of all options no matter the cloud provider you will work with.
+All things considered if the aforementioned time or expertise is an issue investing the extra buck per month will save you a lot of hassle in return, moreover you will find that in most of the managed mongo services, they offer a nice dashboard with some great features you wont get otherwise. 
+Regarding managed services mLab has been out there for quite a while but costs more then Atlas ( which i* prefer ) while Atlas is the new kid on the block, was created by the guys at Mongo themselves and as far as my knowledge goes has some amazing features which help me all the time ( and some planned features i saw at some of Mongo events which I am really eager to use ).",1523439228.0
+PiousLoophole,"Depending on your needs, Atlas has a free tier.",1523495508.0
+iljapelech,What does the log on the secondary B say?,1523997096.0
+cryonine,How big are your disks? How much memory do you have on your machine? What operations are happening on your cluster at this time?,1523309315.0
+mongopoweruser,"It’s a bug. https://jira.mongodb.org/browse/SERVER-33982
+Downgrade to 3.6.2, upgrade to 3.6.4 or follow the instructions in the bug report.",1523339751.0
+iljapelech,"An instance of mongodb is a server process that handles one or more mongodb databases.
+
+You probably should do something like this:
+```
+if dev:
+    url = app.config['DEV']['DATABASE_URL']
+elif prod:
+    url = app.config['PROD']['DATABASE_URL']
+
+mongo = MongoClient(url)
+
+```",1524124677.0
+PiousLoophole,Can you post an example of your document structure?  I can think of a couple ways to do this that might affect your query.,1523283811.0
+Kidxombie,If statement inside a for loop? Im still half asleep though so maybe I’m wrong.,1523274383.0
+cryonine,Link isn’t working. :(,1523234281.0
+tobsn,I remember when I first used mongodb in production and had to cluster it over 4 machines for redundancy. was a great experience learning how to avoid bugs and issues. 9 years ago.,1523229130.0
+PiousLoophole,"This seems to be a very light version of the documentation.  The title would suggest there were surprises, but no, just how people do it.
+
+It would be a very good idea for people doing replica sets to just read the docs.",1523283889.0
+daern2,"You have a missing bracket...
+
+Try:
+
+    db.dog.update({""_id"" : ObjectId(""5ac53133c466143e9a8bda5e"")}, {$set: {status:""go""}});
+
+This should work.",1522880373.0
+cigarette33,"Hey dude, could you add an example of the document you are trying to update please? ",1522874934.0
+door_of_doom,"What do you mean by nth document? In order that they are stored on disc?  Collection ordering isn't guaranteed, and can be altered by many things.  What is your use case?",1522726615.0
+sazzer,"I've no idea if this will scale in mongo, but why not store the timestamp of each heart as they happen? That way you can compute if they've reached the limit trivially, but you've also got the data available for anything else - if you want to do analytics on it, for example. It also makes it really easy to change the way of works - a sliding window instead of a fixed one, for example, or one based on the users timezone instead of the servers...",1522581691.0
+chrisdefourire,"`upsert` makes no sense in this context...
+
+As for the scheduling, I'd definitely prefer an real cronjob that runs a script (maybe a mongodb JS script, no need for node.js), because maybe you'll want to run more than one instance of your app (to run on more than one core or more than one server) and you want the update to run only once.",1522601539.0
+tyler_church,Wild guess here but have you tried dropping the “+srv” part?,1522437747.0
+gamafranco,Really nice article. Well done op.,1522312042.0
+t0x0,"Regarding his final point, I'd say basic queries directly in JSON certainly make sense, and are easy to manage...when you get into long pipelines with match, unwind, project, etc using the python library? It certainly gets complicated. Not unreasonably so, I'm just saying it's not as intuitive as the author suggests.",1522256340.0
+UghYetAnotherAccount,[Why didn’t you just link to the actual article?](https://www.linkedin.com/pulse/giving-you-truth-mongodb-rodrigo-nascimento),1522254635.0
+think-technical,"You can use .explain to get performance data
+it will explain you : your query use index with winning plan
+for more detail check https://docs.mongodb.com/manual/tutorial/analyze-query-plan/
+
+",1522328361.0
+lumpy_potato,"You have both of them in the same document. Each operator has to be its own document inside of the array. Try:
+
+
+    const users = await Users.aggregate(
+       [
+          {
+             $geoNear: {
+                near: { type: ""Point"", coordinates: [ -73.99279 , 40.719296 ] },
+                distanceField: ""dist.calculated"",
+                spherical: true
+             }
+          },
+          {
+             $match: { 
+                $and: [
+                   { gender: `${match}` }, 
+                   { _id: { $ne: ObjectId(`${id}`) } }
+                ]
+             }
+          }
+       ]
+    )
+    ",1522120842.0
+martiandreamer,Can you ‘apt-get remove —purge mongodb-*’ and restart the process?,1522075972.0
+AndyOfLinux,"While not helpful for your remove/reinstall of MongoDB 2.4 from the R-Pi Stretch repository, you could choose instead to install MongoDB 3.0.14 on the R-Pi 3 running Raspbian Stretch.  Instructions at [andyfelong.com](https://andyfelong.com/2017/08/mongodb-3-0-14-for-raspbian-stretch/)",1522188768.0
+redsterXVI,"I think on Ubuntu it's /var/lib/mongodb but if you did the smart thing and installed the packages from the official mongodb repository, it's /data/db, which is the default. Looking at /etc/mongod.conf might help locating it, if neither of those paths is correct for your system.",1522046197.0
+niccottrell,This is a security feature of Mongo to stop people accidentally opening their database to the world. If you’re sure you want access to the internet AND you have user level security enabled then you can use the bindIp setting in mongod.conf to enable the internet interface for Mongo (rather than just the loop back interface) ,1522006019.0
+niccottrell,Sounds like you’re on the right track. What OS are you running? Maybe there’s a firewall blocking incoming connections on unregistered/high ports?,1522010797.0
+gohilumesh,Get all names from database and use lodash difference to find the list of names,1521996558.0
+PiousLoophole,"TLS, and firewalling would be good additions.",1521867877.0
+martiandreamer,"Consider the approach of restricting as much as you can, then only allowing through what absolutely needs access. For eg, if your application runs on the same host, only open 127.0.0.1. If on a different host, only provide access to that IP address. And so one. Same goes for permissions to the user account. ",1521884361.0
+mainstreetmark,"use `ufw` (or equivalent) to restrict 27017 to the machines requiring it.
+
+> sudo ufw allow from 1.2.3.4  to any port 27017
+
+(assuming everything else is already denied)
+
+By no means, don't leave the port open to the internet, or you'll get the ""ReadMe"" scriptkiddie visiting you.
+",1521913000.0
+jimthree,"MongoDB have published a really straightforward security checklist.  https://docs.mongodb.com/manual/administration/security-checklist/
+
+We should consider stickying this on the sidebar.",1521919089.0
+ramirezp6856,...uh,1521911054.0
+lumpy_potato,"> So Spot Instances can come and go, but as long as 1 is always around my DB will still be available.
+
+Sure, but w/o a majority of available nodes, you cannot hold elections and writes fail.
+
+Plus, each time you lose and gain a spot instance, you'll need to fully re-sync the new cluster, so you've got `n` data transfer every time that happens. 
+
+Every election you call has a potential for rolling back data not fully committed to a majority of replica set members. 
+
+IMHO this is penny-wise pound-foolish. MongoDB may gracefully handle failover, but I can't think of a database that is built around a concept of having constant failover and still working just fine.
+
+If you are really feeling pain here cost-wise, do a primary-secondary-arbiter deployment and make the arbiter a small instance, since it only needs to vote. That way you still get some level of high-availability and you cut your costs down on the third member in the short term.
+
+Hell you can do a single-member replica set and just sit on that in the short term, risking potential downtime in the short term. Once things stabilize, add a secondary and arbiter to get high availability and potentially serve geographically local read ops.",1521836253.0
+tastycidr,"If you're okay with downtime, go for it. There's simply no way you can guarantee uptime with spots.
+
+In terms of estimating load, the size of the db is irrelevant. It's the volume of transactions that will determine your instance size (and the throughput you need from your EBS).
+
+My last job had about 7tb of MongoDB in our production clusters. We had to use i2/i3 instance types for the ephemeral SSDs and stripe them at that because our write volume was so heavy. A lot of that write load was on a relatively small number of collections which accounted for only a tiny fraction of our overall dataset.",1521827205.0
+redsterXVI,Aren't 3 DigitalOcean instances about the same price but with much less worry?,1521847291.0
+tobsn,compose.com,1521865331.0
+pritambarhate,"In the replica set of 3 you need at least 2 instances to be available to be able to keep the system working. If you want to avoid downtime, you can use 2 on-demand instances and 1 spot instance. If you have a budget of 1 year, then you can go for reserved instances instead of on-demand instances. Reserved instances in the same class (t2) still count towards discounts as long as you scale up in the same instance class. 
+
+>> I worry that a set of t2.medium won't be able to handle the load of a 20GB database.
+
+I think with large EBS SSD disk (which means more IOPS), t2.medium should be able to handle 20GB data. Depends on how quick you need the response to be. In my experience as long as indexes fit the memory, and the disk is fast enough, you can get away with smaller RAM than data size. 
+
+Also, consider Digital Ocean as somebody else suggested. In that case, you will need to have your web server also in DO. So you loose auto-scalability of Elastic BeanStalk. But DO uses instances attached SSDs which perform way better than network attached EBS volumes. ",1521867054.0
+lumpy_potato,"https://docs.mongodb.com/bi-connector/master/
+
+That's the official tool. It's an Enterprise offering, so as the rule goes, free to try, in prod you must buy.
+
+I don't know if it supports your version of tableau though.",1521801817.0
+Domoronic,Looks really useful.,1521716975.0
+t0x0,"> Would an attacker be able to see all my data if they were able to pull Mongo's BSON files from my server filesystem?
+
+Yes. This is a standard [backup/restore](https://docs.mongodb.com/manual/core/backups/) type procedure.
+
+> I know ""bson"" is ""binary"" json so it makes me feel like it's a compiled binary object that wouldn't be able to just be opened. Am I wrong?
+
+It can't ""just be opened"" in a text editor, but it's no big secret or anything. Here's a [CLI utility](https://docs.mongodb.com/manual/reference/program/bsondump/) to convert from BSON.
+
+> is there anything I can do to limit access of the data from a file system level?
+
+Encryption, whether hardware or software.",1521696677.0
+tyler_church,"I don’t expect my data modeling to change much. Once it’s released I’ll want to run some benchmarks and see how the API works, but I’m definitely more excited about the error-handling benefits transactions will provide for those cases where you are updating multiple collections at once.",1521677009.0
+Sysmonster,If you are considering open source relational DB I recommend looking into Postgres. Then spend time researching the differences and application scenarios of when to use NoSQL or RDBMS. It can be very hard to switch afterwards and there are big gains or heavy losses to be had if you choose the right/wrong one for your purpose. ,1521436163.0
+daern2,">I am using Mongo 2.6.9 on ubuntu 16.04 with (2+1) one Primary, secondary and arbiter.
+
+(snip)
+
+>So is there something else I need to do which I am missing. 
+
+Start by upgrading. 
+
+2.6.x is absolutely ancient, running a more or less deprecated storage engine and not even supported by Mongo themselves any more since October 2016!",1521146002.0
+martiandreamer,"Also make sure you capture the version of MongoDb before you export/import, in case you encounter version mismatch issues. ",1521078465.0
+dumbass_random,"Being frankly honest, if you need to search on the basis of appname in this schema, someone screwed up big time while designing the database schema.
+
+
+Since you are using a list of dictionaries, it becomes very difficult to search/filter directly in the database and I wouldn't recommend you to do that as well as it will take a lot of resources, hence affecting your database.
+
+
+The ideal way to do this would be to fetch the data and do a loop on the `users` field and get the required data.
+
+
+
+Also, I would recommend you to change the database schema as following:
+Instead of storing list of dictionaries in the field users, create a new row for each item in the list.
+
+And another good way to do this would be to store the list of apps in another table and link them via foreign key or user-name.
+
+
+Frankly speaking, in this design, you are toast and very soon, the entire code you are writing will be redundant and obsolete.",1520973116.0
+hornburger,"I would recommend you just embed the city and state data in the street document. This is definitely a case where the embedded done shouldn't change much, so there's a very low risk of getting out of sync. And it makes querying much simpler.
+
+I know this doesn't answer your question, but when using mongo, you shouldnt try to use it like a relational db.",1520919345.0
+maxtrix7,"Forget it, I solved it. 
+
+
+
+This solution is only for Python, the code I wrote in the original post didn't work beacuse I was missing a python library.
+
+Nowadays, I found a more elegant way to get the documents from the last 24 hours.
+
+
+
+In python add this library:
+
+    from bson.objectid import ObjectId
+
+next get a dummy ObjectId with the time from 24 hours ago:
+    
+    today = datetime.datetime.utcnow()
+    yesterday = today - datetime.timedelta(days=1)
+    yesterdayObjectID = ObjectId.from_datetime(yesterday)
+
+
+With that, in the aggregation pipeline add this line:
+
+    {u'$match':{u'_id': {
+             u'$gt': yesterdayObjectID }}
+        },
+
+
+With that, you will get all the documents from the past 24 hours.
+",1520972743.0
+User31441,Maybe because of the quotation marks around the coordinates that turn the number into a string.,1520862608.0
+brodega,"Your coordinates are being passed as strings, not numbers.",1520877839.0
+harrydry,before anyone jumps in: lat and lng are the right way around! ,1520860218.0
+MilSF1,"Poor collection design for what he is trying to pull out. You should never have the infinitely growing array of sub documents. Not sure as what he is actually trying to store with the “count” member.
+
+Poor data design will lead to poor performance every time. Happens to lots of devs who have had SQL and third-normal drilled into their heads for years. Going to document databases requires a rethink of what you are actually looking top answer with your data. Don’t just think everything should be a sub-document!",1520823319.0
+SnarkDeTriomphe,This ‘benchmark’ is comparing an indexed PostgreSQL query with an unindexed mongodb query,1520836695.0
+User31441,"The power of NoSQL databases is in fact the nesting.
+
+It sounds like you only ever want all the entries for a single user. That is a perfect use case for nesting. You should generally always use that when you have a sub/super ordered relationship in your data.
+It will boost your performance and save you from the nasty id handling logic that requires you to use multiple calls.
+
+When you get to the point when you cannot nest the data (for example because a task can be assigned to multiple users) you have to use the id system. However, in that case you should think about whether your data might in fact be relational and you're better off with something like PostgreSQL or SQLite. ",1520770457.0
+PntBtrHtr,I'd have a document with a user id and an array of todos.,1520739754.0
+monkey-go-code,Have you tried running stuff from it? I'm curious to hear how fast it would run. If it can run say 4 users it would be worth it for a development environment. ,1520621569.0
+PiousLoophole,"Not sure the actual application for this (a cloud VM would do more bang for the buck), but the odroid line has some eMMC-based SBCs.  Supposed to be much faster than SD.",1521811705.0
+faladu,"well you put documents into an array so you need to tell him which document in the array you want.  
+It doesn't go guessing for you even if there is only one.
+
+If you don't want to use the [0] you would have to change your document and remove the [ and ] in your document.   
+These are there to enable you to have more then one. As you only have one street and city they are not needed.
+",1520517551.0
+Lapter,"When you pay per hour, you can basically experiment easily. You won’t be charged for unused hours. For the pricing mLab is cheaper because they don’t charge for transfers.",1520498644.0
+lumpy_potato,"You are invoiced *per month*. You are charged *per hour* that a cluster is online.
+
+So an M10 cluster will cost some amount per hour depending on how you configure it. If you leave that cluster online 24 hours a day, 30 days in a month, you'll be charged for 24 * 30 cluster hours for that month.
+
+a 3-node replica set is the bog-standard MongoDB deployment. If that's not something you're familiar with, I strongly recommend looking at the MongoDB docs on replication, or Mongo University and take some intro courses.",1520544137.0
+thmyth,"I don't really follow your question but I see you have 3 different queries, two that need to be ran prior to the third. Have you looked at [$facet](https://docs.mongodb.com/manual/reference/operator/aggregation/facet/)?",1520482660.0
+lllllloo,MongoDB 3.6 added a $dateToPart aggregation pipeline operator (https://docs.mongodb.com/manual/reference/operator/aggregation/dateToParts/) which would let you break it into month-days that you could then filter.,1520387741.0
+nonagonx,"Yep sounds like you are on the right track. We organized our app around 2 collections, EntityTypes and EntityData. Each row in the EntityData could be any of the EntityTypes (references by type attribute). We just query by the type of entity we want. We are building an app builder type of app, where we can have any number of entity types, so we needed to be very unstructured about our Models to allow more flexibility. We also moved off SQL to great succuss. I didnt even have backend database experience before this.  ",1520310738.0
+daern2,"OK, I can tell you're new to MongoDB (don't take it personally!) because you're making the same mistake that all new MongoDB users do - you're trying to put everything into one document.
+
+In your specific case, you have a single document:
+
+    {
+       ""_id"":ObjectId(""abc123""),
+       ""favs"":{
+          ""1234"":[
+             0:""hotdog"",
+             1:""pizza""
+          ],
+          ""2243"":[
+             ...
+          ]
+    }
+
+The challenge here is that as you add users, very quickly, you'll bounce off Mongo's 16MB per document limit. Most people will hit this and moan about it in their early days working with the DB, but a good rule of thumb is that if you find yourself having to work around the 16MB limit, you're nearly always using the database incorrectly in the first place.
+
+So, few things to think about here. Generally, your product line will be finite, but your user list will (hopefully!) be ever growing. Also, you'll tend to want to consider the question you're asking (""Tell me what user ""x"" likes to eat""), so structure your data accordingly:
+
+    {
+       ""_id"":""User-1"",
+       ""favouriteFoods"":[
+          ""hotdogs"",
+          ""bacon"",
+          ""more bacon""
+       ],
+      ""lastVisited"":   ISODate(""2018-03-05T22:30:00Z""),
+       ...
+    }
+
+You then have a very easy query to get all of the info for a user:
+
+    db.userPreferences.find( { _id : ""User-1"" } );
+
+(very efficient - returns a single document containing just the information you need)
+
+...and to add a new favourite to their list:
+
+    db.userPreferences.update( { _id : ""User-1"" }, { $push : { favouriteFoods : ""fries"" } } );
+
+(similar syntax to remove one using $pull).
+
+Hope this helps you a little.",1520289084.0
+rschlack,"{userId: ""1234""},{favs:1}
+
+This searches for the user and only includes the favs field in the search results.",1520286480.0
+,[removed],1520077901.0
+,[removed],1520134589.0
+redsterXVI,"You can create users for a database before that database exists (since they're not stored in said database). But there's no wildcards or such. So if your only problem is, that you need to create users before the database is created, no problem. If you need to create users but don't know what the database will be called yet, you're rather out of luck. The best you could do is create the user but only give it access to a database after the database has been created.",1520024294.0
+lumpy_potato,"You could do something like:
+
+* API Endpoint to create database + collection *first*. Use pre-processing to add a unique ID to each database. Collection names don't need to be unique except within the database. This reduces the length of a database name, but this is probably not going to be an issue for most users.
+
+  API endpoint should take username and password, which you can use to create a dbOwner user for that database. 
+
+* Users can now perform operations against the database and collection with other API endpoints.
+
+You could alternatively require that the API endpoint include a username and password - if trying to create a database that does not exist, use pre-processing to add the `dbOwner` role for that database to the user's roles array (db.addRoleToUser(), I think ). 
+
+I would generally recommend you either append or prefix database names with a unique identifier per customer. That prevents namespace collisions. You'll need to resolve server-side, but that's doable.
+
+There's nothing intrinsic to MongoDB that specifically relates to multi-tenant operations. Then again I'm not aware (personally) of any database solution that has built-in 'walls' for dealing with multi-tenant stuff, so YMMV. ",1520033908.0
+petepete,https://docs.mongodb.com/manual/core/authorization/#enable-access-control,1520014871.0
+brodega,"Might be your connection throwing the error. mongoose.connect returns a promise. Since your error message is an unhandled promise rejection, the issue could be with that method call. See [here](http://mongoosejs.com/docs/connections.html#callback)
+
+You could try something like this to test.
+
+    mongoose.connect('localhost:27017/shopping')
+    .then( () => {
+      console.log('success')})
+    .catch( (e) => {
+      console.error(e)
+    });",1519940526.0
+PiousLoophole,Link is dead.,1521811785.0
+yasintrich,There is no reason to authenticate mongodb.  It's just a hassle especially when working in a team.,1520279534.0
+redsterXVI,MongoDB is only supported on Ubuntu LTS releases.,1519736059.0
+jaydestro,"I do not recommend using MongoDB on systems which the operating system will not have long term support. 
+
+https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+
+This is the official tutorial on how to properly install MongoDB 3.6
+
+PLATFORM SUPPORT
+
+MongoDB only provides packages for 64-bit LTS (long-term support) Ubuntu releases. For example, 12.04 LTS (precise), 14.04 LTS (trusty), 16.04 LTS (xenial), and so on. These packages may work with other Ubuntu releases, however, they are not supported.
+
+MongoDB 3.6 deprecates support for Ubuntu 12.04 LTS (precise).
+
+",1519922298.0
+cantod21,"Thanks !
+I have attached the full mongod.conf and the last part of the log file 
+https://pastebin.com/7wts8NmT
+I don't have enough permissions to lock the folder?",1519549309.0
+So_average,Looks like the user you are starting mongo with doesn't have write perms to dbpath.,1519569449.0
+gintoddic,Look what it says in the mongodb log.,1519515203.0
+tastycidr,post the full contents of your mongodb.conf in the form of pastebin or github gist,1519515234.0
+cantod21,"It's still not working for me. The permissions seem fine. It looks like it can see the file it just can't lock the file 
+https://pastebin.com/WTEdvewA
+
+All help is much appreciated thanks!",1519655695.0
+cantod21,"
+I have tried changing the permissions but the db still fails to start 
+https://pastebin.com/ghL5893h
+and I checked 
+ps -ef | grep ""mongo"" 
+I only have the one instance 
+
+Thanks for your help so far everyone
+Its really appreciated 
+ ",1520285016.0
+mongopoweruser,"You can take a filesystem backup, you just have to make sure MongoDB is stopped or otherwise locked to make sure you get a  consistent snapshot. https://docs.mongodb.com/manual/tutorial/backup-with-filesystem-snapshots/ Otherwise, you're going to end up with an inconsistent backup that you won't be able to recover.
+
+Mongodump can be taken from a live database and can compress with `--gzip` so it's generally an easier experience.",1519261501.0
+tastycidr,"Mongodump becomes untenable as your database and collection sizes grow. We tested it on a multi-terabyte cluster awhile back and figured it would take days to recover from a disaster using mongodump. 
+
+Accordingly, we used volume level snapshots (LVM specifically). I wrote up the basics here: https://www.tastycidr.net/backing-up-a-mongodb-cluster-via-ebs-volumes/. I would probably do it differently today (for instance, direct to S3 rather than involving EBS volumes) but the basic method remains sound.
+
+Bear in mind it's a description of backing up a replicated, sharded cluster so it might not be as complex for you.
+
+",1519265025.0
+sven37,"I can only comment on your modeling question.
+
+Most of these decision are heavily application specific so without knowing more I cannot guarantee an absolute, this is the best way to do it, advice but instead I will demonstrate some things you need to think through when designing your data relationships.
+
+Usually when deciding how to reference or to embed, one-to-many relationships, consider subdocument size and whether the data is mutable.  The subdocument size will determine how many embedded documents a given document can contain due to the 16MB single document size limit that MongoDB imposes.  If your array of referenced IDs is immutable then that is usually fine because an ObjectId takes up 15 bytes to store so you can theoretically store over 1mil objects IDs within an array - given that the rest of the document's data is small as well.  That being said, I do not suggest this design because it will lead to traversing the array to retrieve the subdocuments and if any mutation is required, then the operations becomes expensive quickly.  The more flexible and performant solution (plus it happens to work well alongside aggregate pipelines) would be to reference the novel from within the chapter documents.  It's more flexible because it allows performant mutation of references and overall if your novel document does indeed contain 10,000 references, then the references property alone produce a 0.15MB payload which is expensive seems expensive.  Think about the need to display just a list of novels on a view, there is most likely no need to receive any chapter information at that point in the application.
+
+Checkout this documentation about modeling: https://docs.mongodb.com/manual/applications/data-models-relationships/",1519300717.0
+Jonno_FTW,"I got it today, is there a reason the Linux version doesn't come with any icons?",1519136397.0
+welkie,"This may not be entirely useful, but you could run it in Docker instead, so that you don't have to worry about the OS.",1519094278.0
+j0holo,"Most of the time you can install packages for older versions of debian on newer versions. Most of the time it's even possible to install packages from debian repsitories on ubuntu.
+
+So jus try it. It'll probably work just fine.",1520719891.0
+So_average,there a connector : https://github.com/mongodb-labs/mongo-connector/wiki/Usage%20with%20ElasticSearch,1518971389.0
+dalectrics,"You could look to use a [$switch](https://docs.mongodb.com/manual/reference/operator/aggregation/switch/) to define your ""timeScore"" for each record, and then use a $sum to add it to the score? Pretty intensive work for it to have to do this over every record DB side on every query though. Depends on your scale I guess",1518807667.0
+lumpy_potato,"Am I wrong in thinking that some of the objects from the API won't change, or is this a completely fresh list every day?
+
+If its the former, use update w/ upsert = true. If the document already exists, essentially nothing happens. If its a new document, it gets inserted. That way you don't have to drop your collection (and its indexes) every day. 
+
+If its the latter - well, honestly what are you losing by keeping everything in the collection? Are you never going to need to look at more than 24 hours worth of data? In that case, create a TTL index on a date field and set it for 24 hours. MongoDB will automatically junk the old data for you. ",1518797081.0
+welkie,"Horrible choice of title. MongoDB is strengthening their transactions, so that they now support ACID the and way relational databases do. And this makes it sound like they're dropping ACID support altogether.",1518729314.0
+code_barbarian,"Nice idea, but there's a few issues here. First off, `getCollection()` doesn't return a promise, so you can't do `getCollection().then()`. Also, you really don't need to wrap stuff like `MongoClient.connect()` in a promise, `MongoClient.connect()` already returns a promise",1518644701.0
+PntBtrHtr,Do you have any indexes?,1518450875.0
+dbraaa,"When you talk about db, the first thing is execution plan, and so indexea. Hardware and cardinality comes later. 
+
+",1518461814.0
+andrew_ie,"You didn't close one of your {'s 
+
+You should have:
+
+    db.movieDetails.update({""title"": ""The Martian""}, {""$inc"": {""tomato.meter"": -4}})
+
+The ... means it thinks you still have more of the object to enter.",1518430780.0
+PntBtrHtr,Index on the user field should be enough.,1518397049.0
+dbraaa,"You're talking about partitioning your data at the application layer. The issue is frequently raised with every databases, and my advice is usually not to push ahead such optimizations: il you do your homework with your queries and indexes hundreds of millions objects aren't a problem, and many technologies give you some form of partitioning under the hood (sharding, in the case) to scale horizontally when you'll need it.",1518404225.0
+mirallen,"Please share your code? Without code, we don’t have clue what are you talking about. ",1519424039.0
+extraymond,"Can you explain more about the purpose of this versus pure pymongo? Seems like a cool project.
+Is aggregate pipeline supported?",1518051334.0
+dbraaa,"Simply put, a sparse index couldn't be used when searching for docs *not* having given field. Sometimes it's not an issue, something it is.",1517944967.0
+stennie,"A key caveat is noted in the documentation:
+
+>  If a sparse index would result in an incomplete result set for queries and sort operations, MongoDB will not use that index unless a [`hint()`](https://docs.mongodb.com/manual/reference/method/cursor.hint/#cursor.hint) explicitly specifies the index.
+
+If you haven't anticipated this, you may find that some queries aren't using the expected index. This could result in poorly performing collection scans and in-memory sorts.
+
+For example, assuming a newly created collection with a sparse index on a single field:
+
+​    `db.foo.createIndex( { x: 1 }, { sparse: true } )`
+​    
+​    // Insert two documents, with only one matching the sparse index
+​    `db.foo.insert( [{x:123}, {y: 456}])`
+
+The following query could use an index on `x:1` to sort results, but without any query criteria the sparse index would miss the document with `y:456`:
+
+​    `db.foo.find().sort({x:1})`
+​
+
+In order to ensure a complete result set the query planner will have to choose a collection scan and in-memory sort (which in turn [limits the results to 32MB](https://docs.mongodb.com/manual/reference/limits/#Sort-Operations)).
+
+You can hint a sparse index to override the query planner, but would have to remember to do so in every context where you intentionally want to allow a (potentially) incomplete result set. For example:
+
+​    `db.foo.find().sort({x:1}).hint({x:1})`
+
+With [compound sparse indexes](https://docs.mongodb.com/manual/core/index-sparse/#sparse-compound-indexes) the caveat on incomplete results becomes trickier because the sparse property only requires at least one field in the compound index to be present:
+
+>  Sparse compound indexes that only contain ascending/descending index keys will index a document as long as the document contains at least one of the keys.
+
+​    `db.bar.createIndex( { x: 1, y: 1 }, { sparse: true } )`
+​    
+​    // Insert two documents. Both match one field in the compound sparse index:
+​    `db.bar.insert( [{x:123}, {y: 456}])`
+​    
+​    // Force the compound sparse index to be used for a sort query and both documents will be found.
+​    `db.bar.find().sort({x:1}).hint({x:1, y:1})`
+
+In this example, the compound sparse index is effectively the same as a compound index. Only documents missing all of the fields in the compound sparse index will be excluded.
+
+For MongoDB 3.2 and newer, [partial indexes](https://docs.mongodb.com/manual/core/index-partial/) are a more expressive (and preferred) approach to selective indexing. For example, a partial index can include a `partialFilterExpression` to ensure that all fields in a compound partial index are included in the indexed document. The same caveat on index selection applies to partial indexes: these indexes will not be chosen by the query planner if using the index might result in an incomplete result set for the given query criteria and sort options.",1518095711.0
+nepobot,Seems like a good time to make a GitHub repo and take pull requests with new functions,1517921873.0
+cryonine,"Is your data relational and can it be normalized? If so, use a relational database. What is your main reason for considering Mongo? Is it because it makes more sense for your project’s data model or because you think Mongo is easier to manage?
+
+At a quick glance, I think this data would be better suited in a relational database, especially if you’re concerned about reporting.",1517774547.0
+mitchitized,"Ask yourself this: Is a timesheet a document, or a tuple? You should choose the database engine that works the way you do!
+
+I'm an early adopter of Mongo (MongoMaster #1 or #2) and also a huge Postgres supporter - to me they are just databases, and you should know enough about both in order to leverage them properly.
+
+I don't see timesheets as document data, although I *could* use Mongo for such an application and be just fine. Some of us still think that normalization is still a thing and shove everything (even documents) into relational stores.
+
+It's all in how you see your data, if you see it as documents then you should naturally gravitate to a document store; and if you see tuples then RDBMS is your tool for the job.",1517846557.0
+JayLB,Can you share your the relevant front-end and server-side code? Hard to give an answer without seeing the code ,1517580999.0
+dharshanrg,The skip and limit approach does not really scale as your data grows. I wrote a blog post about this - https://scalegrid.io/blog/fast-paging-with-mongodb/,1518462610.0
+prinshatom,MongoDB Run As a Service – Linux,1517462852.0
+ElAlFredo,"just looking for lamb anywhere, {""$regex"":{""lamb"", ""$options"":""i""}, then you could try ""lamb."" depending on how your data is.",1517401115.0
+eatmyshorts,"BI Connector.  We also have a bespoke process that reads the DRDL file from the mongodrdl tool (part of the BI Connector) to dump some heavily used data into a SQL database.  Tried MongoSluice, ran into bugs and an incomplete product.  ",1517404934.0
+PntBtrHtr,Why do you need a certain instance to be primary? You shouldn't need to worry which is the master.,1517372109.0
+lumpy_potato,What version of mongodb are you running? I don't think the primary needs to step down for an initial sync,1517443653.0
+stennie,"Your current configuration (3 member replica set with two priority 0 members) ensures there is only a single candidate to become primary. However, electing (and maintaining) a primary requires consensus from a majority of voting members. Since your priority 0 members are also voting, this configuration requires the primary always has connectivity with at least one of the secondaries in order to achieve a voting majority (2/3 voting members). In the log provided, the intended primary starts up and remains as a secondary until it can successfully connect with other members of the replica set and call an election. This is expected (and desirable) behaviour for most deployments: a replica set should have either a single primary or no primary, as determined by a majority of the voting members.
+
+For your specific use case (ensuring a specific member is primary with no failover), you can configure the secondaries as non-voting. Doing so will have some consequences: if you plan to use majority read or write concerns this reduces the majority for the replica set to 1 (the single voting member and intended primary). You may also wish to make your secondaries hidden if they are only going to be used for backups or reporting, but this is not a strict requirement.
+
+Note: this question was also posted to DBA StackExchange and I've answered there explaining the replica set member state transitions with a timeline based on the log file: https://dba.stackexchange.com/a/196856/9345.",1517533438.0
+daern2,"In short, no. The long and the short of it is that you can't manipulate subobjects in this way using the aggregation framework.
+
+If it's possible, I'd move to an array-based schema instead, which would look something like this:
+
+    {
+      ""_id"": ""5a68a9308117670afc3522cd"",
+      ""username"": ""user1"",
+      ""favoriteItems"": [
+        {
+          ""_id"": ""5a0c6711fb3aac66aafe26c6"",
+          ""name"": ""item1"",
+        },
+        {
+          ""_id"": ""5a0c6b83fd3eb67969316dd7"",
+          ""name"": ""item2"",
+        },
+        {
+          ""_id"": ""5a0c6b83fd3eb67969316de4"",
+          ""name"": ""item3""
+        } ]
+      }
+    }
+
+This would then let you run this sort of query as an aggregation pipeline:
+
+    db.collection.aggregate([
+    {
+      $unwind : ""$favoriteItems"",
+    },
+    {
+      $group : {
+        _id : ""$favoriteItems._id"",
+        count : { $sum : 1 }
+      }
+    },
+    {
+      $sort : {
+        count : -1
+      }
+    }
+    ]);
+
+There are a few reasons why this sort of schema is better, aggregation support being one, but you should also consider if you'd ever need to index a subitem, something that a nested object schema wouldn't allow you to index.
+
+e.g. with your original schema, if you wanted to find all users who liked a certain item, you'd have something like:
+
+    db.collection.find( { ""favoriteItems.5a0c6711fb3aac66aafe26c6"" : { $exists : true } })
+
+...but this isn't an indexable query, so would be potentially very expensive. With an array schema, you could do this:
+
+    db.collection.find( { ""favoriteItems._id"" : ""5a0c6711fb3aac66aafe26c6"" });
+
+...which can be indexed, although take care to read the documentation around ""multikey indexes"" and the associated limitations. Also, this would let you store your _id references as ObjectIDs and not strings - another optimisation.
+
+Hope this helps in some way.",1517079050.0
+postama,"reftopost.catches.id(_id).remove();
+
+side note: I'd recommend checking out promises or async/await. The callback structure is a little outdated",1516851126.0
+,"What version of .NET, Mongo and the driver are you using?",1517626372.0
+PntBtrHtr,There's a [blog post](https://tools.ietf.org/html/rfc5802#page-10) explaining the details. It also [links to the RFC](https://tools.ietf.org/html/rfc5802#page-10).,1516687740.0
+apfejes,"Never considered investing in MDB, to be honest.
+
+However, I've been using it for about 6-7 years now, and I've been one of the main proponents of it everywhere I've been.   That' been both in academic and industry settings.  It has amazing strengths, and there are situations in which it's perfect, but there are a lot of hurdles for Mongo.
+
+The biggest are getting past it's early release issues. Mongo was really not reliable until 2.8, and 3.0+ solved a lot of production reliability issues, but they still have a reputation because of it.
+
+Additionally, they have a lot of competition from other similar databases.  It's really hard to see them displacing their competition, and their strengths don't put them up against SQL databases. 
+
+That's not to say they can't break out - but it's hard to see the strategy that would do it for them.  They have some heavy slogging ahead of them to really get that exponential adoption.
+
+That said, I use it extensively, and will continue to promote it's use.",1516598454.0
+yereby,"Well it is quite simple. It makes you able to merge multiples documents in one
+based on their refs.
+
+First you can read the doc : http://mongoosejs.com/docs/populate.html
+
+And here is an example. Let say we have those three documents in the user collection :
+
+    {
+        ""_id"" : ObjectId(""5a6527c2caf730b2b374ffd1""),
+        ""name"" : ""Jack"",
+        ""friends"" : [
+            ObjectId(""5a6527c6caf730b2b374ffd2""),
+            ObjectId(""5a6527cacaf730b2b374ffd3"")
+        ]
+    },
+    {
+        ""_id"" : ObjectId(""5a6527c6caf730b2b374ffd2""),
+        ""name"" : ""John""
+    },
+    {
+        ""_id"" : ObjectId(""5a6527cacaf730b2b374ffd3""),
+        ""name"" : ""Joe""
+    }
+
+You can see in the first document that `friends` is an array of the other documents objectIds.
+If you populate the `friends` field in your `find()`, it will populate your result with the other documents : `Users.find({name: 'Jack'}).populate('friends')`
+
+    {
+        ""_id"" : ObjectId(""5a6527c2caf730b2b374ffd1""),
+        ""name"" : ""Jack"",
+        ""friends"" : [
+            {
+                ""_id"" : ObjectId(""5a6527c6caf730b2b374ffd2""),
+                ""name"" : ""John""
+            },
+            {
+                ""_id"" : ObjectId(""5a6527cacaf730b2b374ffd3""),
+                ""name"" : ""Joe""
+            }
+        ]
+    }
+
+You can achieve exactly the same with mongodb `$lookup` :
+
+    db.users.aggregate([
+        { $match: { name: ""Jack"" } },
+        { $lookup: {
+            from: ""users"",
+            localField: ""friends"",
+            foreignField: ""_id"",
+            as: ""friends""
+        }}
+    ])",1516579875.0
+kurple,"Are you trying to find a tutorial that involves sub documents or referencing other models within a model?
+
+Other than that, having multiple collections isn’t a big deal. 
+
+You can have a ecommerce store with collections for each product type that never interact with each other.
+
+Or you can have a database with an author collection and a book collection where each author model can have a reference to each book model they’ve written. 
+
+To set this up, on your author model you can have an array field called ‘books’. The field would be set to Schema.Types.ObjectId and you’d include the ‘ref’ to the book model.
+
+The ‘ref’ would be the same name you used when you were creating the book model.
+
+When you want push a book to an author, it will save the objectId.
+
+When you want to use that array of book objectIds, you can call the author just like how you would call any item, using and find method. The important part is to chain a ‘.populate’  with the name of the field you want to populate in quotes. after the query.
+
+This will fill the array with each books full model info.
+
+Here is the official mongoose tutorial on it.
+
+[Mongoose tutorial on ref/populate](http://mongoosejs.com/docs/populate.html) 
+
+I typed this all on my tiny phone but I hope it helps.",1516258322.0
+ppinette,"What type of backup? If it's a mongodump, use mongorestore. If it's mongoexport, use mongoimport. If it's a snapshot, restore to a volume and start a container with the volume mapped to the db directory. ",1515979600.0
+elwhite321,"It depends on how your app will use the data. If the app wants all the data at once most of the time (business, users, cars) the use the embedded document and feed the app the business's document. Embedded here means one query vs multiple. 
+
+Separating the embedded documents into different collections will give you more query flexibility. So if your app needs only one person  or car from a business, you will be able to query the user of car collection for it. Embedded documents have much more limited and expensive queries. 
+
+In most cases I would use separate collections to store the embedded docs. ",1515782072.0
+,"Tricky question and purely depends upon your need and how your app plans to query the data.  When I've got data that is going to be duplicated all over the place, I'll separate.  If not, I embed.  And then there are times that I need only a fraction of the data in collection 2 like 98% of the time, so I'll then embed just the property or 2 that I use 98% of the time in document 1.  Nice thing about single collection is that you can run aggregates and whatnot without having to perform $lookups and merging of documents etc.  Not to say that you can't do it split, it really just depends. 
+
+In your case, I might have 3 collections, but in the user collection, I might have an array of ObjectIds mapping back to the cars they have in their possession as one possible approach.",1517626767.0
+chrisdefourire,"In a certain way, yes
+
+but...
+
+With mongodb, there are always multiple models that could work, and you can't just look at the data model and say ""it's good"" or not. Mongodb shines when you design for the queries you're expecting, so you don't start with ""how should we model data to avoid redundancy and make relations explicit"" but with ""how will this thing be queried""... 
+
+It's more a process-centric than a data-centric approach. How the database could be sharded, how it will be queried, how often each kind of create/update/delete is used... all these make a great difference.
+
+If you don't know what your queries will be, mongodb is probably not the best choice for your db.
+
+BTW, almost every db is a K/V database.",1515780289.0
+UghYetAnotherAccount,Make sure the user running the mongod process can write to the `/var/run/mongodb/` directory. ,1515538360.0
+lumpy_potato,"Nothing wrong with being a noob! We all have to start somewhere :)
+
+Lets start with the basics - can you post the conf file, as you have it configured today? Also, what Operating System and Version are you running with? Finally, rate yourself on your familiarity with databases and linux - how fresh of a noob are you?
+
+As a side note, take a look at [MongoDB University](https://university.mongodb.com/). An M101 class might be a good place for you to start.
+
+The problem you are running into is that the `mongod` cannot write to the file path provided. This is almost certainly a permissions issue. There are a number of ways to deal with this, but looking at your conf file is probably the best place to start.",1515547732.0
+extraymond,Robomongo it is then.,1515443749.0
+,"Studio 3T if you don't mind spending $200.  Worth every penny too.  But for free, like /u/extraymond said",1515461779.0
+zhpech,Robo Mongo is just what you are finding: https://robomongo.org/,1515477935.0
+jaydestro,MongoDB Compass Community is free!,1515600255.0
+daern2,"With due deference to the developers, this might be nearly the worst idea in this history of databases. 
+
+Really, do you want to hook your production data up to a cloud based messaging system designed to execute arbitrary queries...?",1515441410.0
+ZebraPenguin69,"you can use the sort operator, it should be documented in the mongoDB site.",1515351248.0
+jimthree,"Cloud.mongodb.com 
+
+MongoDB has its own hosting, with a free tier.",1515265046.0
+sven37,"Use MongoDB Atlas, it is far superior than mLab. It has more features and always supports the latest version of MongoDB.  Right now they support 3.6, which comes with powerful new features like change streams.
+
+(http://atlas.mongodb.com)",1515333160.0
+monkey-go-code,Hosting cost Money. Databases can be the most expensive part of a stack to host. If you have access to your home router you can self host from home by opening up the correct ports. That’s as free as it gets. I had a year of free AWS hosting that was pretty good but that only last a year.,1515336788.0
+jaydestro,MongoDB Atlas gives you a 512 MB db for free with no expiration. ,1515427725.0
+jimthree,MongoDB has a comparison chart on their site for the different (free) hosting options. https://www.mongodb.com/cloud/atlas/compare,1515674906.0
+k-vilione,"ScaleGrid has a Startup Program where you can get 90-100% off their MongoDB DBaaS plans. They have free backups too, where Atlas makes you pay, and the deepest toolset for MongoDB management and monitoring.
+https://scalegrid.io/pricing/offers/startup-program.html
+https://scalegrid.io/mongodb/hosting-comparison.html",1518098746.0
+tobsn,compose.com,1515315821.0
+dumbass_random,"Use mlab. They provide a good service although you have limited storage for free.
+
+Or go with AWS or Google cloud platform. Both of them will you free credits for an year or so.
+
+Use those and host your own MongoDB node there. Research before you go with this option as there a few things you must take care of like security, routing, maintenance etc",1515318802.0
+mouseplaycen,mLab,1515311735.0
+chrisdefourire,"I don't think Mongoose bring much... Some will mention validation, but you can use a validation module. Magical references / eager loading are a bad idea, just like with any ORM.
+
+And you don't need an ORM when there's no impedance mismatch: you can store objects in mongodb.
+
+Write a clean module of db functions, using the native driver. I also think validation is better handled in REST routes, because what you want to validate is REST parameters (not db objects), but that's subject to debate.
+
+The mongodb native driver is a pleasure to use, even more so with promises.
+
+Typescript also helps to write clean code:
+
+    var users: Collection<IUser> = null
+
+    export function getUser(id): Promise<IUser> {
+    	return users.findOne({ id })
+    }
+    export function updateTokens(id: string, refreshToken: string, accessToken: string): Promise<any> {
+    	return users.findOneAndUpdate({ id }, { $set: { refreshToken, accessToken, lastTokensUpdate: new Date() } })
+    }
+
+That's just my opinion, YMMV.
+
+Last benefit of using the native driver, when you want to use mongodb's CLI: it's the same API. Same if you want to change language. Learn mongodb, learn the native driver.",1515102696.0
+zhpech,"If you want to pratice your skill for MongoDB, maybe it's not a good idea about using mongoose. But if you just want to make an app in MEAN stack, it's just what you want since mongoose is frequently-used in the stack.
+
+In fact mongoose packages many details for MongoDB, for example: update one field. In MongoDB you must use *set* keywords, but in mongoose, a simple statement. ",1515119465.0
+kunokdev,"For last couple of months I've been writing MERN application for my company and most of data would come from either: 3rd party API or cache, using Mongoose wouldn't bring anything and would reduce performances, so I decideed to stick with native mongodb driver and it works well, maintainability is not an issue yet. ",1515681206.0
+code_barbarian,"I might be a bit biased as the long-time maintainer of mongoose. As a beginner I'd recommend you use mongoose if you want to take your app into production, especially if you've worked with ODMs/ORMs before. Mongoose provides a nice M in MVC layer for MongoDB, so your existing ODM skills will transfer nicely. Plus, middleware and plugins make it easier to leverage external libs and best practices. If you're looking to build an app as a learning experience, I'd use the driver though, better to start from the ground up if you're just tinkering to learn.",1515807727.0
+chrisdefourire,"Welcome onboard... 
+
+Regarding categories, you'd probably use an array (`{name: 'Pollo Hermanos', cat: ['relax','mexican']}`)... It's very easy to index and query (yes, it's denormalized, but normalization is a non-goal with mongodb).
+
+You'll always try to store things to make queries efficient, so it all depends on your queries. It's perfectly OK to store `{name: 'Pollo Hermanos', discounts: [{day: 6, from: 11, to: 14, pct: 0.05}, {day: 0, from: 21, to: 22, pct: 0.1}]}`. Discounts will not change often, and when you query a restaurant, you probably want to show the discounts anyway. It's also indexable and query-able.
+
+If your objects become too large, performance will go south of course. If/when you notice a problem, you can still change the schema to use a separate collection for some (array) attributes.
+
+You'll want a separate collection to store check-ins from your customers to each restaurant, but maybe you'll store a simple counter on each hotel to be shown on the website.
+
+Avoid growing your objects too often (because it will cause reallocations), and use indexes and _id queries for every query (except analytical/aggregation queries than may run on a secondary).
+
+Or course, I'm assuming you will not have millions of restaurants and queries that return thousands of restaurants (except analytical... blah... secondary).
+
+You want to find the best tradeoff for your app: store everything in a single document, and it's very cheap to find a document and get all the information (no joins needed)... or split into many smaller documents in different collections and it requires more queries to get the information, and more random reads.
+
+At least you have the choice ;-)",1515090989.0
+roy777,"Ok so desperate google-fu led me here:
+
+https://dev.to/damcosset/sorting-with-indexes-in-mongodb
+
+Which suggests ""To make MongoDB read index backwards, you have to invert the direction on *every single index field*"". When I added this index instead:
+
+db.games.createIndex( { ip: -1, _id: -1 } );
+
+No joy. Sorting _id: 1 in my query is still instant, and _id: -1 is still ~10 seconds.",1515025558.0
+roy777,"Profiling shows that explain() is lying to me. It isn't using the joint key. It IXSCANs the ip, then sorts on _id in different stages.
+
+
+    {
+        ""op"" : ""query"",
+        ""ns"" : ""test.games"",
+        ""query"" : {
+                ""find"" : ""games"",
+                ""filter"" : {
+                        ""ip"" : ""1.2.3.4""
+                },
+                ""limit"" : 1,
+                ""singleBatch"" : false,
+                ""sort"" : {
+                        ""_id"" : -1
+                },
+                ""projection"" : {
+                        ""_id"" : 0,
+                        ""sgfhash"" : 1
+                }
+        },
+        ""keysExamined"" : 534,
+        ""docsExamined"" : 534,
+        ""hasSortStage"" : true,
+        ""cursorExhausted"" : true,
+        ""numYield"" : 215,
+        ""locks"" : {
+                ""Global"" : {
+                        ""acquireCount"" : {
+                                ""r"" : NumberLong(432)
+                        }
+                },
+                ""Database"" : {
+                        ""acquireCount"" : {
+                                ""r"" : NumberLong(216)
+                        }
+                },
+                ""Collection"" : {
+                        ""acquireCount"" : {
+                                ""r"" : NumberLong(216)
+                        }
+                }
+        },
+        ""nreturned"" : 1,
+        ""responseLength"" : 169,
+        ""protocol"" : ""op_command"",
+        ""millis"" : 4772,
+        ""planSummary"" : ""IXSCAN { ip: 1 }"",
+        ""execStats"" : {
+                ""stage"" : ""CACHED_PLAN"",
+                ""nReturned"" : 1,
+                ""executionTimeMillisEstimate"" : 4777,
+                ""works"" : 2,
+                ""advanced"" : 1,
+                ""needTime"" : 0,
+                ""needYield"" : 0,
+                ""saveState"" : 215,
+                ""restoreState"" : 215,
+                ""isEOF"" : 1,
+                ""invalidates"" : 0,
+                ""inputStage"" : {
+                        ""stage"" : ""PROJECTION"",
+                        ""nReturned"" : 1,
+                        ""executionTimeMillisEstimate"" : 4777,
+                        ""works"" : 537,
+                        ""advanced"" : 1,
+                        ""needTime"" : 536,
+                        ""needYield"" : 0,
+                        ""saveState"" : 215,
+                        ""restoreState"" : 215,
+                        ""isEOF"" : 1,
+                        ""invalidates"" : 0,
+                        ""transformBy"" : {
+                                ""_id"" : 0,
+                                ""sgfhash"" : 1
+                        },
+                        ""inputStage"" : {
+                                ""stage"" : ""SORT"",
+                                ""nReturned"" : 1,
+                                ""executionTimeMillisEstimate"" : 4777,
+                                ""works"" : 537,
+                                ""advanced"" : 1,
+                                ""needTime"" : 536,
+                                ""needYield"" : 0,
+                                ""saveState"" : 215,
+                                ""restoreState"" : 215,
+                                ""isEOF"" : 1,
+                                ""invalidates"" : 0,
+                                ""sortPattern"" : {
+                                        ""_id"" : -1
+                                },
+                                ""memUsage"" : 769426,
+                                ""memLimit"" : 33554432,
+                                ""limitAmount"" : 1,
+                                ""inputStage"" : {
+                                        ""stage"" : ""SORT_KEY_GENERATOR"",
+                                        ""nReturned"" : 534,
+                                        ""executionTimeMillisEstimate"" : 4667,
+                                        ""works"" : 536,
+                                        ""advanced"" : 534,
+                                        ""needTime"" : 1,
+                                        ""needYield"" : 0,
+                                        ""saveState"" : 215,
+                                        ""restoreState"" : 215,
+                                        ""isEOF"" : 1,
+                                        ""invalidates"" : 0,
+                                        ""inputStage"" : {
+                                                ""stage"" : ""FETCH"",
+                                                ""nReturned"" : 534,
+                                                ""executionTimeMillisEstimate"" : 4667,
+                                                ""works"" : 535,
+                                                ""advanced"" : 534,
+                                                ""needTime"" : 0,
+                                                ""needYield"" : 0,
+                                                ""saveState"" : 215,
+                                                ""restoreState"" : 215,
+                                                ""isEOF"" : 1,
+                                                ""invalidates"" : 0,
+                                                ""docsExamined"" : 534,
+                                                ""alreadyHasObj"" : 0,
+                                                ""inputStage"" : {
+                                                        ""stage"" : ""IXSCAN"",
+                                                        ""nReturned"" : 534,
+                                                        ""executionTimeMillisEstimate"" : 13,
+                                                        ""works"" : 535,
+                                                        ""advanced"" : 534,
+                                                        ""needTime"" : 0,
+                                                        ""needYield"" : 0,
+                                                        ""saveState"" : 215,
+                                                        ""restoreState"" : 215,
+                                                        ""isEOF"" : 1,
+                                                        ""invalidates"" : 0,
+                                                        ""keyPattern"" : {
+                                                                ""ip"" : 1
+                                                        },
+                                                        ""indexName"" : ""ip_1"",
+                                                        ""isMultiKey"" : false,
+                                                        ""multiKeyPaths"" : {
+                                                                ""ip"" : [ ]
+                                                        },
+                                                        ""isUnique"" : false,
+                                                        ""isSparse"" : false,
+                                                        ""isPartial"" : false,
+                                                        ""indexVersion"" : 2,
+                                                        ""direction"" : ""forward"",
+                                                        ""indexBounds"" : {
+                                                                ""ip"" : [
+                                                                        ""[\""1.2.3.4\"", \""1.2.3.4\""]""
+                                                                ]
+                                                        },
+                                                        ""keysExamined"" : 534,
+                                                        ""seeks"" : 1,
+                                                        ""dupsTested"" : 0,
+                                                        ""dupsDropped"" : 0,
+                                                        ""seenInvalidated"" : 0
+                                                }
+                                        }
+                                }
+                        }
+                }
+        },
+        ""ts"" : ISODate(""2018-01-04T01:09:03.361Z""),
+        ""client"" : ""127.0.0.1"",
+        ""appName"" : ""MongoDB Shell"",
+        ""allUsers"" : [ ],
+        ""user"" : """"
+}
+",1515028352.0
+roy777,"Nightmare solved. explain() was lying, profiler showed me the key was only being used for the one direction and not the other. Fixed by adding .hint( ""ip_-1__id_-1"" ).
+
+    db.games.find({ ip:  ""1.2.3.4"" }, { _id: 0, sgfhash: 1} ).hint( ""ip_-1__id_-1"" ).sort({ _id: -1 }).limit(1)
+
+is now instant.
+",1515028984.0
+Aerics,"I`m really new to mongodb and started to create my first dokument.
+I $push all of the systeminfo values.
+
+If and object of the systeminfo allray exist i would like to update them, but i don`t know how :(
+My try: db.client.update({sid:""S-1-5-21-1895612321-3326653890-569919339""},{$set:{""systeminfo.$.JIVEXVERSION"":""test""}})",1514987685.0
+chrisdefourire,"Use $elemMatch... Here's an example:
+
+    sslping:PRIMARY> db.red.save({""name"" : ""userName"",""events"" : [ 4100, 2398]})
+    WriteResult({ ""nInserted"" : 1 })
+    sslping:PRIMARY> db.red.save({""name"" : ""userName2"",""events"" : [ 4100]})
+    WriteResult({ ""nInserted"" : 1 })
+    sslping:PRIMARY> db.red.save({""name"" : ""userName2"",""events"" : [ 9000]})
+    WriteResult({ ""nInserted"" : 1 })
+    sslping:PRIMARY> db.red.find({events: {$elemMatch: {$in: [4100]}}})
+    { ""_id"" : ObjectId(""5a4ccf45a78d4455729c09e2""), ""name"" : ""userName"", ""events"" : [ 4100, 2398 ] }
+    { ""_id"" : ObjectId(""5a4ccf55a78d4455729c09e3""), ""name"" : ""userName2"", ""events"" : [ 4100 ] }
+    sslping:PRIMARY> db.red.find({events: {$elemMatch: {$in: [2398]}}})
+    { ""_id"" : ObjectId(""5a4ccf45a78d4455729c09e2""), ""name"" : ""userName"", ""events"" : [ 4100, 2398 ] }
+    sslping:PRIMARY> db.red.find({events: {$elemMatch: {$in: [2398, 4100]}}})
+    { ""_id"" : ObjectId(""5a4ccf45a78d4455729c09e2""), ""name"" : ""userName"", ""events"" : [ 4100, 2398 ] }
+    { ""_id"" : ObjectId(""5a4ccf55a78d4455729c09e3""), ""name"" : ""userName2"", ""events"" : [ 4100 ] }
+    sslping:PRIMARY> db.red.find({events: {$elemMatch: {$in: [9000]}}})
+    { ""_id"" : ObjectId(""5a4ccf5ca78d4455729c09e4""), ""name"" : ""userName2"", ""events"" : [ 9000 ] }",1514983424.0
+monkey-go-code,If its the same environment and the same application it should be a different collection rather than a different database. ,1514919980.0
+dbraaa,"From DBA perspective, using multiple databases implies more work on authorization side and could lead to security bug. Il could also become complex to host multiple installations on the same instance. On the other hands, operations like creating indexes (unless in background) locks the whole db, so you could have less concurrency issues. 
+
+From developer perspective, it's almost indifferent, but could depend on the ODM you4 using, if you're using one.
+
+Maybe a wise choice could be starting with a single database while keeping an open door for a multi-db refactory.",1514920635.0
+rockgnome,"Nevermind. In case anyone else is looking though, you just have to remove the , between documents",1514889897.0
+chrisdefourire,"I'm storing ObjectIDs only. They're vendor-independent once they're stringified (they look quite like any ID, an opaque string), so I couldn't care less. Also if the primary key is a natural key (email ?), you can use that instead of an ObjectID for the _id column... it saves an index (but the _id is immutable).
+
+Quick tip: I'm always naming variables `user_id` if it's an ObjectID, and `userid` if it's a string... Removes any confusion in JS code.
+
+I'm also not using an ORM because they're not a good fit with Mongodb: you should not use Relational modeling with Mongodb, so there should be no impedance mismatch, so no need for an ORM.
+
+Finally, I like the mongodb query/update syntax a lot (I'm using Javascript most of the time), so I don't need helper functions...",1514652321.0
+lumpy_potato,"Bit of confusion: MongoDB actually *already* stores documents in a binary format. While documents are displayed as JSON, they are stored as [BSON](https://docs.mongodb.com/manual/core/document/). So you shouldn't *have* to convert to and from binary.
+
+So even if you save down a UUID as a string, under the hood that string is already going to be converted to *b*inary *s*erialized *o*bject *n*otation and stored in that format. 
+
+[MongoDB does have a UUID function](https://docs.mongodb.com/manual/reference/method/UUID/).
+
+    warzone:PRIMARY> db.foo.insertOne({""foo"" : UUID()})
+    {
+    	""acknowledged"" : true,
+    	""insertedId"" : ObjectId(""5a48706d4ea63ff27a8ce83c"")
+    }
+    warzone:PRIMARY> db.foo.find()
+    { ""_id"" : ObjectId(""5a48706d4ea63ff27a8ce83c""), ""foo"" : UUID(""99100d95-35b7-4a8d-b371-dd91d4dec525"") }
+
+So that worked - underneath the JSON, that document's storing that 'UUID' object as binary. Though I don't know how to check as to whether its using the `0x04` type, I can't imagine that it isn't. Maybe that's an option for you - check your driver docs, create the UUID using the proper object on insert, and let the database handle conversion for you.",1514696406.0
+cryonine,"The UUID function can be used with any UUID that you specify and Mongo will handle the conversion portion. It only generates one if you leave it empty. For example:
+
+`db.coll.insertOne({uuid: UUID(“9d50cd06-cf94-4682-bc17-24f40815e108”})`
+
+",1514962708.0
+itsenov,"You can take a look at MongoDB Atlas. They have nice prices and can deploy on Google Cloud. At the moment however they seem to support only 2 US regions, 1 European and 1 Asian, so this could be a limitation.
+And of course the bill will go to MongoDB, which means you will have to pay 2 providers, if you already have other machines in Google cloud.",1514628926.0
+monkey-go-code,It’s expensive. What’s your traffic like? How big is your database? There are a lot of options if you are not set on google cloud. I’ve used ec2 to bundle my Mongodb instance and my web server in one VM to reduce cost. Using a Bitnami image. If your traffic is small you can host it from your house by carefully opening up the needed ports. I use A Bitnami docker container which is free. ,1514646495.0
+hornburger,"You could probably write a little script to create a collection or collections filled with dummy data pretty fast, at least quicker than 15 days. Then you can see any weird issues you hit with the large number of documents, [check these slides out?](https://www.slideshare.net/mobile/boxedice/mongo-sf-1-billion-documents)
+
+I feel that one big collection might be better. Maybe some embedded docs or arrays of transactions would help? Also, sharding might be easier with one big collection as well?
+
+Edit: spelling
+Edit 2: spelling... Stupid autocorrect...",1514363026.0
+chrisdefourire,"That's a lot of data no matter how you address the problem...
+
+I'd probably use a ""low level"" tech, such as leveldb, instead of a full-blown DB server... I believe that's what `bitcoind` is using.
+
+I would use 3 keys :
+
+- `tx::<tx_id> => <transaction json>`
+- `from::<from_address>.<tx_id> => - amount sent`
+- `to::<to_address>.<tx_id> => amount received`
+
+It means more than 1B keys (there are often multiple outputs)... but leveldb can do 100k writes/second easily and you can batch writes (send all writes for a block at once). That should fit a few hours of processing if my estimate is in the right ballpark.
+
+To optimize things further, use 3 leveldb databases in 3 threads.
+
+Now:
+
+- if you know the tx_id, it's a simple lookup of `tx::<the tx_id>`.
+- if you know an address and want the balance, you must process all keys `from::<address>.*` and `to::<address>.*` with the address used as a prefix, which leveldb is quite efficient at doing (keys are sorted).
+- finally, you can also list all the transactions an address was involved in, then look up the transaction details.
+
+If storage is not an issue and max speed is the goal, you can preprocess balances and store them (but they will become harder to update)...
+
+BUT...
+
+if you want to build a ""serious"" server-based system, I would switch to a stream-oriented system (like kafka or Nats streaming) to make it easier to later update your databases with new transactions... It would turn a ""table"" view to an ""event"" view, where transactions are events consumed by multiple processes : one to store the transaction in a database like Cassandra, one to update the balances in a Redis cluster, one to update the lists of transactions per address, one to index per address-creation-date to answer queries about the age of an address, etc... Streaming then allows you to write the processing for a single ""row"", and apply it to historical data as well as real-time new transactions.",1514383472.0
+mongopoweruser,"If you're in the shell...
+
+    doc = db.collection.findOne({});
+    print(doc.catches.length);",1513833566.0
+lumpy_potato,What did you set for the `net.bindIp` setting of the mongod?,1513747624.0
+TheRealKingGordon,Is it possible the server restarted without the correct dbpath startup parameter?,1513600523.0
+mainstreetmark,"Yep.  Show all your databases and you'll notice someone has dropped them and added in a ransom for it.
+
+Restore from backup, close your public port and learn a nice lesson.
+",1513600656.0
+chrisdefourire,"If running in docker and using swarm, you must pin the container to a host and expose its /data/db volume on the host... Otherwise, `show databases` could tell you more about what happened (I hope you didn't expose the db on the net...)
+",1513609720.0
+jaydestro,"mongodb atlas already has a fully featured and working API
+
+https://mongodb.com/atlas",1513608399.0
+monkey-go-code,Never run on default ports. ,1513561869.0
+jaydestro,"since S3T is a commercial product not supported by MongoDB, I recommend you reach out to their support.",1513608440.0
+welkie,This site is just a front end for the free courses available at Udemy.,1513409030.0
+jaydestro,https://university.mongodb.com - easier than OP's link,1513608474.0
+dcasegr,"Look into the $ operator. It allows you to search for a specific element of your array, and to update its values directly. ",1513339881.0
+monkey-go-code,"      {username,balance,Date()}
+
+?",1513191405.0
+jaydestro,"MongoDB Atlas already provides this service for it's deployments.
+
+https://mongodb.com/atlas",1513608509.0
+zetoJS,http://static.dudeiwantthat.com/img/gear/computers/punchable-usb-connected-enter-28675.jpg,1512754604.0
+mobusta,"For anyone that may care, I decided to go route B (Array of documents)
+
+Some of my initial use cases have proven straight forward.
+
+Updating document with additional host, generating test statistics, etc.
+
+I'm using pymongo to do all this. ",1512691172.0
+welkie,"> [Change Notification Stream API](https://jira.mongodb.org/browse/SERVER-13932)
+
+Well, looks like I don't have to learn RethinkDB after all. :D",1512605237.0
+jaydestro,"Yep, so we're going with super low end.  Great for test/CI and CD or prototyping.  If anyone wants a credit get in touch.",1512586356.0
+monkey-go-code,If you are really on a budget and don't have a high traffic site you can bundle your web server and mongodb together in a VM on a EC2 micro instance for free for a year.,1512566390.0
+jimthree,"Check out the new change streams feature in 3.6.  You could subscribe to all changes in the collections of interest in the remote DB and then copy the changes to the master DB. 
+
+Just like /u/Jonno_FTW says, the real answer is to restructure so you have one replica set, using remote secondaries for the local reads (if you really need to) and a central DB where the writes go to.",1512328375.0
+liter0fcola,"Mongo doesn’t support this out of the box.  
+
+That said, you could have a process that reads the smaller db oplog and replays it to the central node.  I’ve used this technique to replicate a single db to a new server.  If you’re interested in learning more about this, pm me and I’ll give you some sample code.
+
+A better solution would be to have client code send the mongo data to the central db directly or a queue and then save that to the central db.",1512315670.0
+Jonno_FTW,"Why can't clients connect to the central database? The central database would then use replica sets. https://docs.mongodb.com/manual/replication/ 
+
+It seems like your only real option is to just restructure. ",1512307686.0
+AlexzxelA,"I am thinking of going for many 2-node replica sets, looks more promising than to develop own sync algorithms (if it will work as I think it should of course)",1512316506.0
+UghYetAnotherAccount,When you say you have “many mongodbs” are you referring to separate mongod processes containing their own databases and collections? Or is this a replica set with many secondaries and your apps are reading from the secondaries instead of the primary? ,1512340156.0
+AlexzxelA,"I eventually did use replica-set for copying data between machines, and on the target machine I continuously ran over each secondary DB oplog and apply changes to common target DB. Works good for my application",1520269976.0
+thmyth,"    db.vehicles.aggregate([
+        { $sort: { date: -1 } }, 
+        { $group: {
+            _id: ""$vehicle"", date: { $min: ""$date"" },
+            longitude: { $first: ""$longitude"" },
+            latitude: { $first: ""$latitude"" }
+        }
+    }])
+
+[MongoDB Documentation for $first](https://docs.mongodb.com/manual/reference/operator/aggregation/first/#grp._S_first)
+
+I would put an index on date (inverse) and change it to an integer",1512173084.0
+regreddit,NOOOOOOOOOOOO!,1512145521.0

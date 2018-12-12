@@ -24,6 +24,12 @@
 	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://d3js.org/d3.v3.min.js"></script>
 
+    <!-- Ninja slider for images -->
+    <link href="ninja-slider/thumbnail-slider.css" rel="stylesheet" type="text/css" />
+    <link href="ninja-slider/ninja-slider.css" rel="stylesheet" type="text/css" />
+    <script src="ninja-slider/thumbnail-slider.js" type="text/javascript"></script>
+    <script src="ninja-slider/ninja-slider.js" type="text/javascript"></script>
+
 	<!-- for cool D3 tooltips! -->
 	<!-- <script src="js/d3.tip.v0.6.3.js"></script> -->
 </head>
@@ -56,10 +62,10 @@
                         <a href="#section1">Data</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#section2">Network Analysis</a>
+                        <a href="#section2">Networks</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#section3">Sentiment Analysis</a>
+                        <a href="#section3">NLP</a>
                     </li>
                     <li class="page-scroll">
                         <a href="#section4">Conclusion</a>
@@ -74,13 +80,13 @@
     <!-- Header -->
     <header>
 </style>
-    <div class="container bgimg" id="maincontent" tabindex="-1">
+    <div class="container" id="maincontent" tabindex="-1" style="background:url('img/back01.jpg'); width:100%">
         <div class="row">
             <div class="col-lg-12">
                 <div class="intro-text">
                     <hr class="line-light">
                     <h1 class="name">Assignment 3B </h1>
-                    <span class="skills">02806 - Social Graphs and Interactions E18</span>
+                    <span class="skills">02805 - Social Graphs and Interactions E18</span>
                     <hr class="line-light">
                     <p> How software technologies relate according to data from reddit and wikipedia</p>
                 </div>
@@ -100,8 +106,23 @@
             <div class="col-lg-8 ">
                 
                 <p>
-                Network analysis woohooohohoohohohoho
+                    In this work, the relation between different technologies will be explored. This is particular interesting for software oriented people who find it hard to choose new technologies to learn. 
+                    Most of the data analysis is based on reddit data from different subreddits related to specific technologies. The network can be constructed by looking at user-activity on different subreddits and comments can be analyzed using NLP techniques learned during the course. To compare the reddit network, a network based on Wikipedia for the same technologies has also been constructed and analyzed.
                 </p>
+                <p>
+                    First, network analysis will explain the relations between different technologies. Specifically, we are interested in deducing how technologies relate through other technologies and whether technologies can be grouped into different communities that can be related to already known knowledge about technologies. Furthermore, NLP analysis will be conducted to give insight towards how the language is used and which terms are important to the different technologies. We will also be analyzing the sentiment of comments from the different subreddits. The sentiment will (hopefully) reflect the generel tone on the different subreddits, which may be usefull when deciding which new technologies you should learn. NLP analysis over time intervals will also be considered to see whether we can spot interesting evolutions.
+                </p>
+                <p>
+                    At last a discussion about the project will be carried out. The discussion includes what went well and the improvements that could have been made.  
+                </p>
+                <p>
+                    All of the relevant code is included and explained in the explainer notebook:
+                </p>
+                <div class="text-center ">
+                    <button class="text-center btn btn-primary">
+                         <a style="color: white" href="https://github.com/rasmusafj/rasmusafj.github.io">EXPLAINER NOTEBOOK LINK</a>
+                    </button>
+                </div>
             </div>  
         </div>
     </div>
@@ -115,13 +136,63 @@
                 <h2>Data</h2>
                 <hr class="line-primary">
             </div>
-        <div class="col-lg-2 "></div>
-            <div class="col-lg-8 ">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-8">
                 <p>
-                    All of data can be downloaded from the repository: <a href="https://github.com/rasmusafj/rasmusafj.github.io"> Link to repository</a> 
+                    In order to generate the data, we had to find different subreddits related to technologies that could be used for the project. During intensive google search and already known knowledge, a list of 49 subreddits was created. The list is obvious very biased and inevitably reflects personal knowledge and interests. However, other more "correct" approaches would require looking at all the reddit users (millions) which seemed infeasible for this particular project.
                 </p>
                 <p>
-                    Basic stats
+                    The final dataset was generated by utilizing two different APIs. First, the <a href="pushshift.io">pushshift.io</a> was used to mine all submission ids for a period of 1 year for each of the chosen subreddits. Then the Python Reddit API Wrapper (PRAW) was used to mine actual comments with text, author and timestamp properties based on the extracted submission ids. The reason for using two different APIs is that PRAW does not support getting submissions for specific periods. 
+                </p>
+                <p>
+                    As previously mentioned, we would like to compare the reddit network reflecting user interests to a network constructed from Wikipedia hopefully reflecting whether technologies are actually related. The Wikipedia network was generated using the Wikipedia API. Edges in the network are generated by searching for links in the actual article texts. Note that the Wikipedia network is saved as a single dictionary, since the actual text is irrelevant for this project.
+                </p>
+                 
+                <p>
+                    All of data can be downloaded from:
+                </p>
+                <div class="text-center ">
+                    <button class="text-center btn btn-primary">
+                         <a style="color: white" href="https://github.com/rasmusafj/rasmusafj.github.io">DATA DOWNLOAD LINK</a>
+                    </button>
+                </div>
+                <div class="col-lg-12">
+                    <h4>Data statistics</h4>
+                    <hr class="line-secondary">
+                </div>
+                <p>
+                    Before we get started with all the cool stuff, we examine the data that has been mined. All comments are from the period: <strong> 1. december 2017 - 1. december 2018</strong>. Each comment for a given subreddit has the following properties: Author, comment and timestamp (posix). A single comment is shown below as an example. 
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Author</th>
+                            <th>Comment</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>mecm5</td>
+                            <td>I've been looking for some recently, but they're few and far between. I've yet to find a good one.\n\nIt's gotten to the point I've considered just buying some books and making some Jupyter Notebooks myself.</td>
+                            <td>1543614371.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    A total of <strong> 541913 </strong> comments were mined with average comment length of <strong>318.0984 </strong> characters. The data uses approximately <strong>180mb</strong> space. Lets look at how the comments are distributed.
+                </p>
+                <img src="img/comments_dist.png" style="width: 100%">
+                <p>
+                    Clearly, they are very uneven distributed. Linux subreddit (very active) has more almost 1/5 of all the comments mined for this project. This is not necessarily bad though. 
+                </p>
+                <p>
+                    We can also look at how many subscribers each subreddit has.
+                </p>
+                <img src="img/subscriber.png" style="width: 100%">
+
+                <p>
+                    Note that a large amount of subscribers does not necessarily mean a large amount of activity for the subreddit. 
                 </p>
             </div>
         </div>
@@ -140,16 +211,153 @@
             <div class="col-lg-2 "></div>
             <div class="col-lg-8 ">
                 <p>
-                SUp
+                As previously mentioned, we have networks based on Reddit and a network based on Wikipedia. The Reddit network is created based on user interests. We assume that a user is interested in a subreddit if the user has commented more than 8 times during a time period of 1 year. We are then able to construct a bipartite graph, where user nodes are connected to different subreddit nodes. By doing so, we can project onto the subreddit nodes or we can choose to project onto the user nodes. The projection onto the subreddit nodes is a weighted projection. The weight between two subreddits is determined by the number of users that are connected to both subreddits. 
+                </p>
+                <div class="col-lg-12">
+                    <h4>Networks visualizations</h4>
+                    <hr class="line-secondary">
+                </div>
+                <p>
+                    Visualizations of the networks are quite interesting. Especially for the Subreddits network and the Wikipedia network, because if you find a particular technology interested, then you might also find the neighbours interesting. 
+                </p>
+                <h5>
+                    Subreddits network
+                </h5>
+                <p>
+                    First, we look at the subreddits network.
+                </p>    
+                
+                <img src="img/network_generel.png" style="width: 100%">
+                <p>
+                    This network has <strong>49</strong> nodes and <strong>373</strong> weighted edges. Note that the node size is proportional to the degree. It seems like the degree is very correlated by the number of comments from each subreddit, as previously shown in the data section. 
+                </p>
+                </br>
+                <h5>
+                    Users network
+                </h5>
+                <p>
+                    The users network has been generated by only considering active users for more than 1 subreddit. If not, the amount of edges is simply too high to perform any interesting analysis.  
+                </p>
+                <img src="img/users_network.png" style="width: 100%">
+                <p>
+                    This network has <strong> 1030 </strong> nodes and <strong> 124326 </strong> edges and again the node size is proportional to the degree. 
+                </p>
+                </br>
+                <h5>
+                    Wikipedia network
+                </h5>
+                <p>
+                    The Wikipedia network was generated by looking at links on each article page. 
+                </p>
+                <img src="img/wiki_network.png" style="width: 100%">
+                <p>
+                    This network has <strong>46</strong> nodes and <strong>295</strong> edges. The Wikipedia network is very similar to the reddit network but the network is directed and contains no weights. Furthermore, three subreddits are missing a corresponding wikipage due to either 1) It was not possible to find the relevant wikipage or 2) the corresponding wikipage was not connected to any other wikipages and hence disregarded. 
+                </p>
+                </br>
+                </br>
+                </br>
+
+                <div class="col-lg-12">
+                    <h4>Degree distributions</h4>
+                    <hr class="line-secondary">
+                </div>
+                <p>
+                    Since a lot of social networks have shown to be scale-free, i.e. the degree distribution follows a power law, we are interested in deducing whether this is the case for the reddit network, which can be considered a "social network". We will also be looking at the degree distributions for the other networks. 
+                </p>
+                <div id='ninja-slider8'>
+                    <div>
+                        <div class="slider-inner">
+                            <ul>
+                                <li><a class="ns-img" href="img/degree_dists/subreddit.png"></a></li>
+                                <li><a class="ns-img" href="img/degree_dists/users.png"></a></li>
+                                <li><a class="ns-img" href="img/degree_dists/wiki1.png"></a></li>
+                                <li><a class="ns-img" href="img/degree_dists/wiki2.png"></a></li>
+                                <li><a class="ns-img" href="img/degree_dists/wiki3.png"></a></li>
+                            </ul>
+                            <div class="fs-icon" title="Expand/Close"></div>
+                        </div>
+                    </div>
+                </div>
+                </br>
+                <p>
+                    The networks which we have constructed in this project are definitely not scale free. We can see that there are some nodes with high degree in all networks. However, the tendency of having a lot of nodes with a low amount of connections is not really present in any networks. For the users network, a lot of nodes have a large amount of degrees. These nodes/users are of interest since the network might be connected through a small subset of users.
+                </p>
+                
+                </br>
+                </br>
+                </br>
+
+                <div class="col-lg-12">
+                    <h4>Centrality measures</h4>
+                    <hr class="line-secondary">
+                </div>
+                <p>
+                    We can look at the centrality measures to see whether some nodes are more important than others according to some predefined centrality measure. We can then plot the networks where we scale node size proportional to the centrality measure.
+                </p>
+
+
+                <div id='ninja-slider9'>
+                    <div>
+                        <div class="slider-inner">
+                            <ul>
+                                <li><a class="ns-img" href="img/centrality/network_subreddit_between.png"></a></li>
+                                <li><a class="ns-img" href="img/centrality/network_subreddit_eigen.png"></a></li>
+                                <li><a class="ns-img" href="img/centrality/user_eigen.png"></a></li>
+                                <li><a class="ns-img" href="img/centrality/wiki_between.png"></a></li>
+                                <li><a class="ns-img" href="img/centrality/wiki_eigen.png"></a></li>
+                            </ul>
+                            <div class="fs-icon" title="Expand/Close"></div>
+                        </div>
+                    </div>
+                </div>
+                </br>
+                <p>
+                    What we see is that scaling the nodes according to some centrality measure does not really give us a lot of new information. The node sizes are very similar to when the network was visualized with node size proportional to degree. The eigenvalue centrality in the users network could indicate that two groups of users are connected to the same subreddits. 
+                </p>
+                </br>
+                </br>
+                </br>
+                
+                <div class="col-lg-12">
+                    <h4>Community detection</h4>
+                    <hr class="line-secondary">
+                </div>
+
+                <p>
+                    Community detection is particular interesting for this project. Because if we can group technologies into communities, then perhaps if a user find one of the technologies interesting, the user will find all of the technologies in the community interesting! We use the lovain algorithm to find the communities.
+                </p>
+                </br>
+                <h5>
+                    Subreddit network    
+                </h5>
+                <img src="img/community/subreddit_community.png" style="width: 100%">
+                <p>
+                    The communities found are very interesting. We successfully grouped statistical/machine learning stuff together. It makes sence that R statistics (R programming) is related, since it is software for statical modelling.
                 </p>
                 <p>
-                new p
+                    Also, we see that some of the datbase related technologies are in the same community. Webhosting is also included, which could be due to the fact that webhosting often includes a database. 
                 </p>
                 <p>
-                new p again
+                   All of the frontend related technologies are furthermore grouped (except html5). So if you find some of the frontend technologies interesting, then perhaps you should look into some of the other technologies from the yellow cluster. 
                 </p>
                 <p>
-                and again
+                    The big red community is very random and contains a lot of different technologies. Some you could argue are related, some you could argue are clearly not related. If you find some of the technologies in the red community interesting, then it would make sense to look into other technologies in the same community. 
+                </p>
+                </br>
+                <h5>
+                    Users network    
+                </h5>
+                <img src="img/community/community_users.png" style="width: 100%">
+                </br>
+                <p>
+                    The big pink community corresponds to users who all mostly find fronend technologies interesting. The other 3 communities have not been examined but are likely related to the subreddit community detection results. 
+                </p>
+                <h5>
+                    Wikipedia network
+                </h5>
+                <img src="img/community/community_wiki.png" style="width: 100%">
+                <p>
+                    The results are somewhat similar to the subreddits graph. Most of the frontend technologies are grouped together nicely. The math related technologies are also grouped (except tensorflow). However, the big communities are hard to say something meaningfull about. 
                 </p>
             </div>  
     </div>
@@ -157,23 +365,479 @@
 
 <section id=section3>
     <div class="container visualizations">
-    <div class="row text-left">
+        <div class="row text-left">
             <div class="col-lg-12 text-center">
-                <h2>Sentiment Analysis</h2>
+                <h2>Natural language Processing</h2>
                 <hr class="line-primary">
             </div>
             <div class="col-lg-2 "></div>
             <div class="col-lg-8 ">
                 <p>
-                Sentiment
+                This section covers all of the results that are related to textual analysis of reddit comments.
+                </p>
+                
+                </br>
+                </br>
+                </br>
+
+                <div class="col-lg-12">
+                    <h4>Word clouds</h4>
+                    <hr class="line-secondary">
+                </div>
+                <p>
+                Word clouds are actually really nice, if you want to find new technologies of interest.  It gives the reader the opportunity to look through important words for different technologies. If some of the words sound interesting or familiar, then perhaps the reader should consider looking into that specific technology. 
                 </p>
                 <p>
-                sentiment 2
+                The word clouds are generated by using Term Frequency–Inverse Document Frequency (TF-IDF). All comments from each subreddit are considered as a single document. Hence we have 48 different documents. The idea is that by generating word-clouds based on TD-IDF we get word clouds representing frequently used words for each subreddit, that are not also frequently used in all of the other subreddits.
+
+                The down below image gallery contains a word-cloud for each subreddit. 
+                </p>
+                <div id='ninja-slider'>
+                    <div>
+                        <div class="slider-inner">
+                            <ul>
+                                <li><a class="ns-img" href="img/wordclouds/MachineLearning.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/Javascript.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/compsci.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/linux.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/Python.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/Java.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/windows.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/node.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/PhP.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/csharp.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/Reactjs.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/cpp.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/reverseengineering.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/devops.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/statistics.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/opensource.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/golang.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/Ruby.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/rust.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/C_Programming.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/Swift.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/Angularjs.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/CSS.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/Django.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/userexperience.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/rails.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/html5.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/angular2.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/MacOS.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/deeplearning.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/webhosting.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/rstats.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/scala.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/database.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/Vuejs.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/jquery.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/reactnative.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/Matlab.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/HTML.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/lisp.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/Perl.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/elixir.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/typescript.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/tensorflow.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/MySQL.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/PostgreSQL.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/MongoDB.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/asm.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/ocaml.png"></a></li>
+                            </ul>
+                            <div class="fs-icon" title="Expand/Close"></div>
+                            <div id="thumbnail-slider">
+                                <div class="inner">
+                                    <ul>
+                                        <li><a class="thumb" href="img/wordclouds/MachineLearning.png"></a><span>0</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/Javascript.png"></a><span>1</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/compsci.png"></a><span>2</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/linux.png"></a><span>3</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/Python.png"></a><span>4</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/Java.png"></a><span>5</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/windows.png"></a><span>6</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/node.png"></a><span>7</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/PhP.png"></a><span>8</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/csharp.png"></a><span>9</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/Reactjs.png"></a><span>10</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/cpp.png"></a><span>11</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/reverseengineering.png"></a><span>12</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/devops.png"></a><span>13</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/statistics.png"></a><span>14</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/opensource.png"></a><span>15</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/golang.png"></a><span>16</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/Ruby.png"></a><span>17</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/rust.png"></a><span>18</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/C_Programming.png"></a><span>19</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/Swift.png"></a><span>20</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/Angularjs.png"></a><span>21</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/CSS.png"></a><span>22</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/Django.png"></a><span>23</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/userexperience.png"></a><span>24</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/rails.png"></a><span>25</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/html5.png"></a><span>26</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/angular2.png"></a><span>27</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/MacOS.png"></a><span>28</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/deeplearning.png"></a><span>29</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/webhosting.png"></a><span>30</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/rstats.png"></a><span>31</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/scala.png"></a><span>32</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/database.png"></a><span>33</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/Vuejs.png"></a><span>34</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/jquery.png"></a><span>35</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/reactnative.png"></a><span>36</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/Matlab.png"></a><span>37</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/HTML.png"></a><span>38</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/lisp.png"></a><span>39</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/Perl.png"></a><span>40</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/elixir.png"></a><span>41</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/typescript.png"></a><span>42</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/tensorflow.png"></a><span>43</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/MySQL.png"></a><span>44</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/PostgreSQL.png"></a><span>45</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/MongoDB.png"></a><span>46</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/asm.png"></a><span>47</span></li>
+                                        <li><a class="thumb" href="img/wordclouds/ocaml.png"></a><span>48</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </br>
+                </br>
+                </br>
+                <p>
+                    What we see for most of the word-clouds, is that the words are very unique for the different subreddits. A lot of the frequent words are technical terms e.g. isodate and objectid for mongodb or getchar and scanf for C_programming. 
                 </p>
                 <p>
-                Sentiment 3
+                    Furthermore, Java has the words javahelp and learnjava. Perhaps the Java subreddit is a great place to get help with java programming! 
                 </p>
-            </div>  
+                <p>
+                    There is so much information that is interesting in the word-clouds but since we have to limit the text we provide for the webpage, it is left to reader to study the word-clouds and examine them. Perhaps the reader will find new technologies to explore! 
+                </p>
+                </br>
+                </br>
+                </br>
+                <div class="col-lg-12">
+                    <h4>Word clouds - Over time</h4>
+                    <hr class="line-secondary">
+                </div>
+                <p>
+                    Given the tools we learned in the course, another interesting analysis is to look at word-clouds for different months for some of the technologies. In this setting, we only consider a single subreddit when generating the TD-IDF values and all the comments of each month is considered as a single document. By using TD-IDF, we are able generate word-clouds that contain words important for the specific months.
+
+                    Since we have 48 subreddits, we focus on a subset of 4 subreddits.
+
+                </p>
+                <p>
+                    Generally, the word clouds consists mostly of weird stuff. If we study them further we are able to spot specific events that has occurred over the year for the subreddits but only by further googling the words. This analysis does hence not seem interesting to the reader who just wants to figure out which technology related subreddits he should follow!
+                </p>
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#Python">Python</a></li>
+                    <li><a data-toggle="tab" href="#opensource">Open Source</a></li>
+                    <li><a data-toggle="tab" href="#menu2">Linux</a></li>
+                    <li><a data-toggle="tab" href="#menu3">Web Hosting</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="Python" class="tab-pane fade in active">
+                        <h4>Python</h4>
+                        <p>
+                            What we see here, is that again it is a lot of technical terms. Furthermore, when splitting the comments into months there are clearly code-variable names included in the wordclouds e.g. hardufylltar in May-2018, which comes from a submission asking for help on a code-snippet containing a lot of hardufylltar declarations and comparisons. This is not very interesting. 
+                        </p>
+                        <p>
+                            In August, manafort has been mentioned quite a lot. Paul Manafort was a republican part of tax evasion and bank fraud. He was brought to trial in August and apparently he had a weird habbit of spending money on custom mens clothing. He had spent a lot of money on stuff made of Python skin. Apparently, the subreddit most have found this funny.   
+                        </p>
+
+                        <div id='ninja-slider1'>
+                            <div>
+                                <div class="slider-inner">
+                                    <ul>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/December-2017.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/January-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/February-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/March-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/April-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/May-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/June-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/July-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/August-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/September-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/Oktober-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/Python/November-2018.png"></a></li>
+                                    </ul>
+                                    <div class="fs-icon" title="Expand/Close"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="opensource" class="tab-pane fade">
+                        <h4>Open Source</h4>
+                        <p>
+                            The first thing that really catches the eye is that in july 2018 some of the words with high scores include communism and socialism. This seems odd but is perhaps because of the article from july: Open Source vs Free Software is a bit like Socialist vs Communist. Apparently, this has been discussed on the subreddit. 
+                        </p>
+                        <div id='ninja-slider2'>
+                            <div>
+                                <div class="slider-inner">
+                                    <ul>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/December-2017.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/January-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/February-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/March-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/April-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/May-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/June-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/July-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/August-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/September-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/Oktober-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/opensource/November-2018.png"></a></li>
+                                    </ul>
+                                    <div class="fs-icon" title="Expand/Close"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="menu2" class="tab-pane fade">
+                        <h4>Linux</h4>
+                        <p>
+                            The only word that we could relate to something in the real word for Linux was wattmangtk in november 2018. It is a simple GUI to view, monitor and in the future overclock a Radeon GPU on Linux. There has been a lot of comments about this specific software in november. It makes a lot of sense since it was released in november. 
+                        </p>
+                        <div id='ninja-slider3'>
+                            <div>
+                                <div class="slider-inner">
+                                    <ul>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/December-2017.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/January-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/February-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/March-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/April-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/May-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/June-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/July-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/August-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/September-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/Oktober-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/linux/November-2018.png"></a></li>
+                                    </ul>
+                                    <div class="fs-icon" title="Expand/Close"></div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div id="menu3" class="tab-pane fade">
+                        <h3>Web Hosting</h3>
+                        <p>
+                            The webhosting wordclouds over time contain a lot of interesting words but it is hard to relate them to specific events. 
+                        </p>
+                        <div id='ninja-slider4'>
+                            <div>
+                                <div class="slider-inner">
+                                    <ul>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/December-2017.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/January-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/February-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/March-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/April-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/May-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/June-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/July-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/August-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/September-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/Oktober-2018.png"></a></li>
+                                        <li><a class="ns-img" href="img/wordclouds/webhosting/November-2018.png"></a></li>
+                                    </ul>
+                                    <div class="fs-icon" title="Expand/Close"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+
+                </br>
+                </br>
+                </br>
+                <div class="col-lg-12">
+                    <h4>Sentiment Analysis</h4>
+                    <hr class="line-secondary">
+                </div>
+                <p>
+                    Using the same function as in Assignment 2 to calculate sentiment for comments in each subreddit, we might find something interesting by looking at the means and standard deviations. Initially, we made a hypothesis that the linux community would generally have a more negative sentiment than some of the other subreddits. Is this true? 
+
+                    The plot below shows the mean sentiment for each of the subreddits with standard deviation as errorbars. 
+                </p>
+
+                <img src="img/sentiment_means.png" style="width: 100%">
+                </br>
+                </br>
+                </br>
+                </br>
+
+                <p>
+                    Clearly, there is close to no difference in the mean of comment sentiments. They are all really close to 5.6 and the standard deviation is also quite similar. 
+                </p>
+
+                <p>
+                    We can also look at the individual distributions to see whether some of subreddits sentiment means are tilted by a large amount of negative comments or positive comments. Perhaps the sentiment of comments is split into multiple groups of subreddit users.
+                </p>
+                <div id='ninja-slider5'>
+                    <div>
+                        <div class="slider-inner">
+                            <ul>
+                                <li><a class="ns-img" href="img/sentiment_imgs/Python.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/PhP.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/Java.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/Django.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/Javascript.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/Reactjs.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/Vuejs.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/csharp.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/golang.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/rust.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/C_Programming.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/Perl.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/HTML.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/CSS.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/reactnative.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/typescript.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/linux.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/MacOS.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/windows.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/MachineLearning.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/deeplearning.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/Ruby.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/Swift.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/cpp.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/Matlab.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/rstats.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/scala.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/elixir.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/MySQL.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/PostgreSQL.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/lisp.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/Angularjs.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/compsci.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/MongoDB.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/node.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/userexperience.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/tensorflow.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/statistics.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/database.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/rails.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/ocaml.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/asm.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/reverseengineering.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/webhosting.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/opensource.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/jquery.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/angular2.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/html5.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_imgs/devops.png"></a></li>
+                            </ul>
+                            <div class="fs-icon" title="Expand/Close"></div>
+                        </div>
+                    </div>
+                </div>
+                </br>
+                </br>
+                </br>
+                <p>
+                    Again, the sentiment of all subreddits is quite similar! Some subreddits contain a slightly larger prorportion of negative comments than some of the others but most of the comments no matter the subreddit have sentiment around 5.6.
+                </p>
+                <p>
+                    Perhaps the reason for this is that the text is often very technical, containing words that are not part of our predefined sentiment list. So the sentiment can be based on the common words that needs to be used in order to explain technical terms and these words probably all have similar sentiment. Therefore, it would be wise to look at other methods for calculating sentiment, since the result that all subreddits contain mean sentiment of around 5.6 is not that useful if you want to find the most positive subreddit to when expanding interests.
+                </p>
+                
+                </br>
+                </br>
+                </br>
+                <div class="col-lg-12">
+                    <h4>Sentiment Analysis - Over time</h4>
+                    <hr class="line-secondary">
+                </div>
+                <p>
+                    Instead of looking at sentiment for the whole year, we can also look at sentiments for each individual month. Perhaps there are some months for some of the subreddits that contain a lower or higher mean sentiment due to certain real life events. 
+                </p>
+
+                <div id='ninja-slider6'>
+                    <div>
+                        <div class="slider-inner">
+                            <ul>
+                                <li><a class="ns-img" href="img/sentiment_time7.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_time14.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_time21.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_time28.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_time35.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_time42.png"></a></li>
+                                <li><a class="ns-img" href="img/sentiment_time49.png"></a></li>
+                            </ul>
+                            <div class="fs-icon" title="Expand/Close"></div>
+                        </div>
+                    </div>
+                </div>
+                </br>
+                </br>
+                </br>
+
+                <p>
+                    What is not immediately evident to the eye is that subreddits with a lot of comments tend to be more stable around 5.6. This again supports the hypothesis that due to the technical language used, most of the comments are gonna have a sentiment close to 5.6. When the subreddits contain fewer comments, the line will be more "hacky" as seen for e.g. MongoDB, ocaml and asm. In june 2018 asm seems to have a negative peak. It would be interested to see whether there were events in june that could have caused this negativity. The only event that we were able to find was a developer meetup for the technology. Perhaps there were announced changes that people generally disagree with? We were not able to find anything supporting this statement so it could also be due to randomness or the data mining procedures. 
+                </p>
+
+                </br>
+                </br>
+                </br>
+                <div class="col-lg-12">
+                    <h4>Word clouds for positive and negative sentiment comments</h4>
+                    <hr class="line-secondary">
+                </div>
+                <p>
+                    At last, we can look at word clouds for negative and positive comments. If we consider the same subset of subreddits as previously when we generated word clouds over time, we can construct 8 documents and perform TF-IDF in order to determine the word-frequencies for the word clouds. It would also be possible to create TF-IDF scores for only positive comments for the 4 subreddits and hence disregard the negative comments or the other way around. However, the results seemed more interesting when creating TF-IDF scores using all documents even though you could argue that it would be more "correct" to only consider positive or negative at a time.  
+                </p>
+                <p>
+                    The results are seen below. 
+                </p>
+                <div id='ninja-slider7'>
+                    <div>
+                        <div class="slider-inner">
+                            <ul>
+                                <li><a class="ns-img" href="img/wordclouds/pos_neg/pos-Python.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/pos_neg/pos-linux.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/pos_neg/pos-opensource.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/pos_neg/pos-webhosting.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/pos_neg/neg-Python.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/pos_neg/neg-linux.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/pos_neg/neg-opensource.png"></a></li>
+                                <li><a class="ns-img" href="img/wordclouds/pos_neg/neg-webhosting.png"></a></li>
+                            </ul>
+                            <div class="fs-icon" title="Expand/Close"></div>
+                        </div>
+                    </div>
+                </div>
+                </br>
+                </br>
+                </br>
+                <p>
+                    These are some very interesting word clouds! 
+                </p>
+                <p>
+                    All of the negative word clouds contain the word deleted. People do not like when stuff gets deleted. The negative word clouds also contain a lot of "swear" words. The redditors do not seem to be afraid of using those words. For linux we see that also "bash" and "systemd". Perhaps this is "stuff" that the people do not like. For webhosting we see words such as "traffic", "spam" and "overpriced". This makes a lot of sence since too much traffic is never appreciated when hosting servers and you do not like overpriced solutions. 
+                </p>
+                <p>
+                    The positive word clouds for all subreddits contain very positive words such as "thanks", "great" and "awesome". There is also a tendency of contaning words such as "sharing" and "free". Perhaps the redditors like when stuff is free and shared, which makes a lot of sence for open-source, Python and Linux which are all open-source technologies. 
+                </p>
+                <p>
+                    Some positive words for webhosting are  "hosting", "free" and "affordable". In contrast to the negative word cloud for webhosting, the positive word cloud seems to suggest that those redditors like when webhosting is free or affordable 
+                </p>
+                <p>
+                    A lot of interesting things can be interepreted from the wordclouds. However, they do not help with the ultimate goal of helping the decision process when choosing new technologies to learn or follow. 
+                </p>
+            
+            </div>
         </div>
     </div>
 </section>
@@ -187,10 +851,19 @@
             <div class="col-lg-2 "></div>
             <div class="col-lg-8 ">
                 <p>
-                Conclusion 1
+                    In this project, we analyzed networks based on software technologies. We hoped that we were able to find results, that could help technology interested people which new technologies they should learn.
                 </p>
                 <p>
-                Conclusion 2 
+                    In the network analysis, the most interesting part was the community partitions. Clearly, the detected communities were somewhat related to groups of software technologies e.g. the "math" community or the "front end" community. Both the Wikipedia network and the subreddit network had interesting results. These communities can be used to help guide people towards new technologies to explore. Other results related to betweeness and degree distributions were generally not very interesting. 
+                </p>
+                <p>
+                    In the NLP analysis, we generated a word cloud for each of the subreddits. These can be examined and if you find words for a specific subreddit that you think sound interesting or that you've heard of before, then perhaps you should look into that technology. The NLP analysis also included word-clouds over time for a subset of subreddits, sentiment analysis, sentiment analysis over time and word clouds for positive/negative comments, also for a subset.  
+                </p>
+                <p>
+                    Generally, there is a lot of bias in the data due to the fact that only a fraction of technology related subreddits were considered. This was due to the fact that both a network and NLP analysis had to be conducted. If more time was given, it would definetly be very interesting to look at all of reddit in a similar approach to see whether we can find communities that are related to different interests. 
+                </p>
+                <p>
+                    In the end, the analysis has been quite interesting. We've learned a lot about the different technologies and how they relate. Doing this project, I've myself found some new subreddits to follow, so the project must have been a little successful. The initial goal was to provide a website that easily helps software interested people expand their interests. Even though some results might help with the goal, finding relations between different subreddits was much harder than initially thought.  
                 </p>
             </div>
             </div>

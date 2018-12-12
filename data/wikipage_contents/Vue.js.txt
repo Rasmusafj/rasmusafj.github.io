@@ -1,0 +1,157 @@
+{{Infobox software
+| name = Vue.js
+| logo = Vue.js Logo 2.svg
+| author = Evan You
+| released = {{Start date and age|2014|2}}<ref>{{Cite web |url = http://blog.evanyou.me/2014/02/11/first-week-of-launching-an-oss-project/ |title = First Week of Launching Vue.js |website = Evan You }}</ref>
+| latest release version = 2.5.17
+| latest release date = {{Start date and age|2018|8|1}}<ref>{{cite web |url = https://github.com/vuejs/vue/releases |title = Vue.js Releases |website = GitHub }}</ref>
+| status = Active
+| programming language = [[JavaScript]]
+| platform = [[Cross-platform]]
+| size = 30.67 KB production<br />279 KB development
+| genre = [[JavaScript framework]]
+| license = [[MIT License]]<ref name="license">{{cite web |title = vue/LICENSE |url = https://github.com/vuejs/vue/blob/dev/LICENSE |website = GitHub |accessdate = 17 April 2017 }}</ref>
+| website = https://vuejs.org
+}}
+'''Vue.js''' (commonly referred to as '''Vue'''; pronounced {{IPA|{{IPAc-en|v|j|uː}}}}, like '''view''') is an [[Open-source software|open-source]] [[JavaScript framework]] for building [[user interface]]s and [[single-page application]]s.<ref>{{Cite web |url = https://vuejs.org/v2/guide/#What-is-Vue-js |title = Introduction — Vue.js |access-date = 2017-03-11 |language = en }}</ref> 
+
+== Overview ==
+Vue.js features an incrementally adoptable architecture that focuses on declarative rendering and component composition. Advanced features required for complex applications such as [[routing]], [[state management]] and [[build tooling]] are offered via officially maintained supporting libraries and packages.<ref>{{Cite web|url=https://www.patreon.com/evanyou|title=Evan is creating Vue.js {{!}} Patreon|work=Patreon|access-date=2017-03-11|language=en}}</ref>
+
+== History ==
+Vue was created by Evan You after working for [[Google]] using [[AngularJS]] in a number of projects. He later summed up his thought process: "I figured, what if I could just extract the part that I really liked about Angular and build something really lightweight."<ref>{{Cite news|url=https://betweenthewires.org/2016/11/03/evan-you/|archive-url=https://web.archive.org/web/20170603052649/https://betweenthewires.org/2016/11/03/evan-you/|dead-url=yes|archive-date=2017-06-03|title=Between the Wires {{!}} Evan You|date=2016-11-03|work=Between the Wires|access-date=2017-08-26}}</ref> Vue was originally released in February 2014.
+
+== Features ==
+
+=== Templates ===
+Vue uses an [[HTML]]-based template syntax that allows binding the rendered [[Document Object Model|DOM]] to the underlying Vue instance’s data. All Vue templates are valid HTML that can be parsed by spec-compliant browsers and HTML [[Parsing|parsers]]. Under the hood, Vue compiles the templates into virtual DOM render functions. Combined with the reactivity system, Vue is able to calculate the minimal number of components to re-render and apply the minimal amount of DOM manipulations when the app state changes.
+
+Vue users can use template syntax or choose to directly write render functions using [[React (JavaScript library)#JSX|JSX]].<ref>{{Cite web |url = https://vuejs.org/v2/guide/syntax.html |title = Template Syntax — Vue.js |access-date = 2017-03-11 |language = en }}</ref> Render functions open up possibilities for powerful component-based patterns — for example, the new transition system is now completely component-based, using render functions internally.<ref>{{Cite web |url = https://medium.com/the-vue-point/vue-2-0-is-here-ef1f26acf4b8#77d9 |title = Vue 2.0 is Here! |last =  |first =  |date = 2016-09-30 |website = The Vue Point |access-date = 2017-03-11 }}</ref>
+
+=== Reactivity ===
+Vue features a reactivity system that uses plain [[JavaScript]] objects and optimized re-rendering. Each component keeps track of its reactive dependencies during its render, so the system knows precisely when to re-render, and which components to re-render.<ref>{{Cite web |url = https://vuejs.org/v2/guide/reactivity.html |title = Reactivity in Depth — Vue.js |access-date = 2017-03-11 |language = en }}</ref>
+
+=== Components ===
+Vue components extend basic [[HTML element]]s to encapsulate reusable code. At a high level, components are custom elements to which the Vue’s compiler attaches behavior. In Vue, a component is essentially a Vue instance with pre-defined options.<ref>{{Cite web |url = https://vuejs.org/v2/guide/components.html |title = Components — Vue.js |access-date = 2017-03-11 |language = en }}</ref>
+The code snippet below contains an example of a Vue component. The component presents a button and prints the number of times the button is clicked:
+{{syntaxhighlight|lang=html|code=
+<div id="tuto">
+	<buttonclicked v-bind:initial_count="0"></buttonclicked>
+</div>
+<script>
+Vue.component('buttonclicked', {
+  props: ["initial_count"],
+  data: function() {return {"count": 0} } ,
+  template: '<button v-on:click="onclick">Clicked <nowiki>{{ count }}</nowiki> times</button>',
+  methods: {
+    "onclick": function() {
+        this.count = this.count + 1;
+    }
+  },
+  mounted: function() {
+    this.count = this.initial_count;
+  }
+});
+
+new Vue({
+  el: '#tuto',
+});
+</script>
+}}
+
+=== Transitions ===
+Vue provides a variety of ways to apply transition effects when items are inserted, updated, or removed from the [[Document Object Model|DOM]]. This includes tools to:
+* automatically apply classes for [[Cascading Style Sheets|CSS]] transitions and animations
+* integrate third-party CSS animation libraries, such as Animate.css
+* use JavaScript to directly manipulate the DOM during transition hooks
+* integrate third-party JavaScript animation libraries, such as [[Velocity (JavaScript library)|Velocity.js]]
+
+When an element wrapped in a transition component is inserted or removed, this is what happens:
+# Vue will automatically sniff whether the target element has CSS transitions or animations applied. If it does, CSS transition classes will be added/removed at appropriate timings.
+# If the transition component provided JavaScript hooks, these hooks will be called at appropriate timings.
+# If no CSS transitions/animations are detected and no JavaScript hooks are provided, the DOM operations for insertion and/or removal will be executed immediately on next frame.<ref>{{Cite web |url = https://vuejs.org/v2/guide/transitions.html |title = Transition Effects — Vue.js |access-date = 2017-03-11 |language = en }}</ref><ref>{{Cite web |url = https://vuejs.org/v2/guide/transitioning-state.html |title = Transitioning State — Vue.js |access-date = 2017-03-11 |language = en }}</ref>
+
+=== Routing ===
+A traditional disadvantage of [[Single-page application|single-page applications]] (SPAs) is the inability to share links to the exact "sub" page within a specific web page. Because SPAs serve their users only one URL-based response from the server (it typically serves index.html or index.vue), saving bookmarks, or sharing links to a specific article would be impossible. To solve this problem front end routers provide artificial hash-based URLs originally split by a hashbang (#!) ''page.com/#!/''. However, with HTML5 most modern browsers support routing without the use of a hashbang. 
+
+Vue provides an interface to change what is displayed on the page based on the current URL path -- regardless of how it was changed (whether by emailed link, refresh, or in-page links). Additionally, using a front-end router allows for the intentional transition of the browser path when certain browser events (i.e. clicks) occur on buttons or links. Vue itself doesn’t come with front-end hashed [[routing]]. But the open source "vue-router" package provides an API to change browser URL, use the back button (hash history), and email password resets or email verification links with authentication parameters provided in the URL. It supports mapping nested routes to nested components and offers fine-grained transition control. With Vue, developers are already composing applications with small building blocks building larger components. With vue-router, added to the mix, components must merely be mapped to the routes they belong to, and parent/root routes must indicate where children should render.<ref>{{Cite web |url = https://vuejs.org/v2/guide/routing.html |title = Routing — Vue.js |access-date = 2017-03-11 |language = en }}</ref>
+
+{{syntaxhighlight|lang=html|code=
+<div id="app">
+  <router-view></router-view>
+</div>
+...
+
+<script>
+...
+const User = {
+  template: '<div>User <nowiki>{{ $route.params.id }}</nowiki></div>'
+}
+
+const router = new VueRouter({
+  routes: [
+    { path: '/user/:id', component: User }
+  ]
+})
+...
+</script>
+}}
+The code above:
+# Sets a front-end route at <code>websitename.com/user/<id></code>.
+# Which will render in the User component defined in (const User...)
+# Allows the User component to pass in the particular id of the user which was typed into the URL using the $route object's params key: <code>$route.params.id</code>.
+# This template (varying by the params passed into the router) will be rendered into <code><router-view></router-view></code> inside the DOM's div#app.
+# The finally generated HTML for someone typing in: <code>websitename.com/user/1</code> will be:
+{{syntaxhighlight|lang=html|code=
+<div id="app">
+  <div>
+    <div>User 1</div>
+  </div>
+</div>
+}}
+<ref>{{cite web |last1 = You |first1 = Evan |title = Vue Nested Routing (2) |url = https://router.vuejs.org/en/essentials/nested-routes.html |website = Vue Home Page (subpage) |accessdate = 10 May 2017 }}</ref>
+
+== Integrations ==
+
+A variety of third parties leverage Vue to extend the reach beyond the core framework.
+
+=== Mobility ===
+* [https://nativescript-vue.org/ NativeScript]
+* [https://weex.incubator.apache.org/ Weex]
+* [http://quasar-framework.org/ Quasar]
+
+=== UI Toolkits ===
+* [https://vuetifyjs.com/en/ Vuetify]
+* [https://www.telerik.com/kendo-vue-ui Kendo UI]
+* [https://vuematerial.io/ Vue Material]
+* [http://element.eleme.io/#/en-US Element]
+* [https://bootstrap-vue.js.org/ Bootstrap-Vue]
+* [https://jqwidgets.com/vue/ jQWidgets-Vue]
+* [http://vuecidity.wemakesites.net/ Vuecidity]
+
+== Supporting libraries ==
+* vue-router<ref>{{Cite web|url = http://router.vuejs.org/en|title = vue-router|last = |first = |date = |website = router.vuejs.org|language = en|archive-url = https://web.archive.org/web/20170305013450/https://router.vuejs.org/en/|archive-date = 2017-03-05|dead-url = yes|access-date = 2017-03-11|df = }}</ref>
+* vuex<ref>{{Cite web |url = https://vuex.vuejs.org/en/ |title = vuex |last =  |first =  |date =  |website = vuex.vuejs.org |language = en |access-date = 2017-03-11 }}</ref>
+* vue-loader<ref>{{Cite web|url = https://vue-loader.vuejs.org/en/|title = vue-loader|last = |first = |date = |website = vue-loader.vuejs.org|language = en|archive-url = https://web.archive.org/web/20170306163829/http://vue-loader.vuejs.org/en/|archive-date = 2017-03-06|dead-url = yes|access-date = 2017-03-11|df = }}</ref>
+* vueify <ref>{{Cite web |url = https://github.com/vuejs/vueify |title = vueify |last =  |first =  |date =  |website = GitHub |language = en |access-date = 2017-03-11 }}</ref>
+* vue-cli<ref>{{Cite web |url = https://github.com/vuejs/vue-cli |title = vue-cli |last =  |first =  |date =  |website = GitHub |language = en |access-date = 2017-03-11 }}</ref>
+
+== See also ==
+* [[Comparison of JavaScript frameworks]]
+* [[React (JavaScript library)|React]]
+* [[AngularJS]]
+* [[JavaScript framework]]
+* [[JavaScript library]]
+* [[Model–view–viewmodel|Model–view–ViewModel]]
+* [[Elm (programming language)]]
+
+== References ==
+{{Reflist}}
+
+__FORCETOC__
+
+[[Category:JavaScript web frameworks]]
+[[Category:Web applications|Frameworks]]
+[[Category:Web development]]
+[[Category:Software frameworks]]
+[[Category:Computer-related introductions in 2014]]
